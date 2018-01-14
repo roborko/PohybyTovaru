@@ -11,8 +11,11 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.ShoppingItem;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Osoba;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 
 /**
@@ -25,10 +28,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1;
 
-    // the DAO object we use to access the SimpleData table
-    private Dao<ShoppingItem, Integer> mShoppingItemDao = null;
+    private Dao<Miestnost, Integer> mMiestnostDAO = null;
+    private Dao<Osoba, Integer> mOsobaDAO = null;
+    private Dao<Pohyb, Integer> mPohybDAO = null;
     private Dao<Tovar, Integer> mTovarDAO = null;
-
+    private Dao<TypTransakcie, Integer> mTypTransakcieDAO = null;
 
     private static DatabaseHelper sDatabaseHelper;
 
@@ -45,7 +49,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, Tovar.class);
-            TableUtils.createTable(connectionSource, ShoppingItem.class);
+            TableUtils.createTable(connectionSource, Osoba.class);
+            TableUtils.createTable(connectionSource, Miestnost.class);
+            TableUtils.createTable(connectionSource, Pohyb.class);
+            TableUtils.createTable(connectionSource, TypTransakcie.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -57,7 +64,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, Tovar.class, true);
-            TableUtils.dropTable(connectionSource, ShoppingItem.class, true);
+            TableUtils.dropTable(connectionSource, Osoba.class, true);
+            TableUtils.dropTable(connectionSource, Miestnost.class, true);
+            TableUtils.dropTable(connectionSource, Pohyb.class, true);
+            TableUtils.dropTable(connectionSource, TypTransakcie.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
         } catch (SQLException e) {
@@ -67,31 +77,62 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     public Dao<Tovar, Integer> TovarDAO() {
-        try{
-            if(mTovarDAO == null)
+        try {
+            if (mTovarDAO == null)
                 mTovarDAO = getDao(Tovar.class);
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             Log.e("TOVAR_DAO", "Error occured while fetching DAO: " + ex.getMessage());
         }
         return mTovarDAO;
     }
 
-
-    public Dao<ShoppingItem, Integer> getShoppingItemsDao() {
+    public Dao<Osoba, Integer> OsobaDAO() {
         try {
-            if (mShoppingItemDao == null)
-                mShoppingItemDao = getDao(ShoppingItem.class);
-
+            if (mOsobaDAO == null)
+                mOsobaDAO = getDao(Osoba.class);
         } catch (SQLException ex) {
-            Log.e("DAO_EXEPTION", "Error occured while fethcing Shopping Items: " + ex.getMessage());
+            Log.e("OSOBA_DAO", "Error occured while fetching DAO: " + ex.getMessage());
         }
-        return mShoppingItemDao;
+        return mOsobaDAO;
+    }
+
+    public Dao<Miestnost, Integer> MiestnostDAO() {
+        try {
+            if (mMiestnostDAO == null)
+                mMiestnostDAO = getDao(Miestnost.class);
+        } catch (SQLException ex) {
+            Log.e("MIESTNOST_DAO", "Error occured while fetching DAO: " + ex.getMessage());
+        }
+        return mMiestnostDAO;
+    }
+
+    public Dao<Pohyb, Integer> PohybDAO() {
+        try {
+            if (mPohybDAO == null)
+                mPohybDAO = getDao(Pohyb.class);
+        } catch (SQLException ex) {
+            Log.e("POHYB_DAO", "Error occured while fetching DAO: " + ex.getMessage());
+        }
+        return mPohybDAO;
+    }
+
+    public Dao<TypTransakcie, Integer> TypTransakcieDAO() {
+        try {
+            if (mTypTransakcieDAO == null)
+                mTypTransakcieDAO= getDao(TypTransakcie.class);
+        } catch (SQLException ex) {
+            Log.e("TYPTRANSAKCIE_DAO", "Error occured while fetching DAO: " + ex.getMessage());
+        }
+        return mTypTransakcieDAO;
     }
 
     @Override
     public void close() {
         super.close();
-        mShoppingItemDao = null;
-        mCategoryDao = null;
+        mTovarDAO = null;
+        mOsobaDAO = null;
+        mMiestnostDAO = null;
+        mPohybDAO = null;
+        mTypTransakcieDAO=null;
     }
 }
