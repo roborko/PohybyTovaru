@@ -15,11 +15,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Miestnosti.ListMiestnostiActivity_"
+        <activity
+            android:name=".Miestnosti.ListMiestnostiActivity_"
             android:parentActivityName=".MainActivity_"
             android:label="@string/activity_ListMiestnosti"/>
-        <activity android:name=".Miestnosti.DetailMiestnostiActivity_"
-            android:parentActivityName=".Miestnosti.ListMiestnostiActivity_"/>
+        <activity
+            android:name=".Miestnosti.DetailMiestnostiActivity_"
+            android:label="@string/activity_DetailMiestnosti"
+            android:parentActivityName=".Miestnosti.ListMiestnostiActivity_"
+            android:theme="@style/AppTheme.DialogActivity"/>
     </application>
 
 </manifest>

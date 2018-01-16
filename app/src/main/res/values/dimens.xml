@@ -7,4 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_parent_layout">8dp</dimen>
     <dimen name="row_padding_vertical">10dp</dimen>
+    <dimen name="dialog_padding_content">24dp</dimen>
+    <dimen name="dialog_padding_actionButtons">8dp</dimen>
 </resources>
