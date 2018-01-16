@@ -5,16 +5,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_inventory"
-            android:icon="@android:drawable/ic_input_add"
-            android:title="@string/app_name" />
+            android:id="@+id/nav_miestnosti"
+            android:icon="@drawable/ic_event_seat_white_24dp"
+            android:title="@string/navigation_drawer_miestnosti" />
     </group>
 
     <item android:title="Reporty"> 
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@android:drawable/btn_dialog"
+                android:icon="@drawable/ic_event_seat_white_24dp"
                 android:title="Import" />
         </menu>
     </item>
