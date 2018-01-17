@@ -50,6 +50,10 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
 
     @AfterViews
     void ProcessAfterViews() {
+        if(miestnost != null && miestnost.getId() > 0){
+            txt_Miestnost.setText(miestnost.getNazov());
+            jeSklad.setChecked(miestnost.isJeSklad());
+        }
     }
 
 
@@ -60,10 +64,10 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
 
     @Click(R.id.btn_Save)
     void SaveChanges() {
-        String itemName = txt_Miestnost.getText().toString().trim().toLowerCase();
+        String itemName = txt_Miestnost.getText().toString().trim();
 
         //validuj miestnost, tj ci sa uz rovnaka nenachadza v databaze
-        if(duplicateNameExists(itemName)){
+        if(duplicateExists(itemName)){
             textInputLayout.setError(getString(R.string.lbl_duplicate_miestnost));
             return;
         }
@@ -72,6 +76,10 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
         Miestnost resultMiestnost = new Miestnost();
         resultMiestnost.setNazov(itemName);
         resultMiestnost.setJeSklad(jeSklad.isChecked());
+
+        //set id of miestnost
+        if(miestnost != null &&  miestnost.getId() > 0)
+            resultMiestnost.setId(miestnost.getId());
 
         Intent intent = new Intent();
         intent.putExtra("EXTRA_MIESTNOST", resultMiestnost);
@@ -84,10 +92,13 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
         this.finish();
     }
 
-    private boolean duplicateNameExists(String itemName){
+    private boolean duplicateExists(String itemName){
         for (int i = 0; i < list_miestnosti.size(); i++) {
-            if(list_miestnosti.get(i).getNazov().toLowerCase().equals(itemName))
-                return true;
+            if(list_miestnosti.get(i).getNazov().equals(itemName)) {
+                //name is the same; check if it is is sklad
+                if(list_miestnosti.get(i).isJeSklad() == jeSklad.isChecked())
+                    return true;
+            }
         }
 
         //no match found

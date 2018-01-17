@@ -6,4 +6,5 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Shared;
 
 public interface ISimpleRowClickListener<T> {
     void onItemClick(T item);
+    boolean onItemLongClick(T item);
 }

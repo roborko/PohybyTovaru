@@ -9,28 +9,44 @@
         <variable
             name="callback"
             type="pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener"/>
+
+        <import type="android.view.View"/>
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@{obj.selected ? @color/colorAccent : @color/colorWhite}"
         android:clickable="true"
+        android:animateLayoutChanges="true"
         android:focusable="true"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/row_padding_vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/row_padding_vertical"
-        android:onClick="@{() -> callback.onItemClick(obj)}">
+        android:onClick="@{() -> callback.onItemClick(obj)}"
+        android:onLongClick="@{() -> callback.onItemLongClick(obj)}">
+
+        <ImageView
+            android:layout_weight="1"
+            android:src="@drawable/ic_check_circle_white_24dp"
+            android:layout_width="wrap_content"
+            android:visibility="@{obj.selected ? View.VISIBLE : View.GONE}"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/txt_miestnost_row_nazov"
+            android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="@{obj.nazov}"
+            android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"
+            android:text="TEST"
             android:textSize="16dp"
             />
     </LinearLayout>
 </layout>
+
+    <!--android:text="@{obj.nazov}"-->

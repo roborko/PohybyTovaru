@@ -13,9 +13,8 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityLis
  * Created by Robert on 16.01.2018.
  */
 
-public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnostiRowBinding> {
+public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnostiRowBinding, Miestnost> {
     private final ISimpleRowClickListener actionCallback;
-    List<Miestnost> data = new ArrayList<>();
 
     public ListMiestnostiAdapter(int layoutId, ISimpleRowClickListener actionCallback, List<Miestnost> data) {
         super(layoutId);
@@ -32,5 +31,18 @@ public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnos
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+
+    public void startSelectionMode(){
+        for (Miestnost item : this.data) {
+            item.setSelected(true);
+        }
+    }
+
+    public void disableSelectionMode(){
+        for (Miestnost item : this.data) {
+            item.setSelected(false);
+        }
     }
 }

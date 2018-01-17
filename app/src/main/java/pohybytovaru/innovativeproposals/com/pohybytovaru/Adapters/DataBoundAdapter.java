@@ -3,6 +3,9 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Copyright (C) 2016 The Android Open Source Project
  *
@@ -19,7 +22,9 @@ import android.support.annotation.LayoutRes;
  * limitations under the License.
  */
 
-abstract public class DataBoundAdapter<T extends ViewDataBinding> extends        BaseDataBoundAdapter<T> {
+abstract public class DataBoundAdapter<T extends ViewDataBinding, U> extends        BaseDataBoundAdapter<T> {
+    public List<U> data = new ArrayList<>();
+
     @LayoutRes
     private final int mLayoutId;
 
@@ -35,5 +40,10 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding> extends       
     @Override
     public int getItemLayoutId(int position) {
         return mLayoutId;
+    }
+
+    public void AddItem(U newItem){
+        this.data.add(newItem);
+        notifyDataSetChanged();
     }
 }

@@ -11,5 +11,8 @@
     <string name="lbl_dialog_cancel">Zrusit</string>
     <string name="lbl_dialog_save">Ulozit</string>
     <string name="bool_miestnost_distinguisher">Je miestnost sklad</string>
-    <string name="lbl_duplicate_miestnost">Miestnost s rovnakym nazvom uz existuje.</string>
+    <string name="lbl_duplicate_miestnost">Miestnost s rovnakymi hodnotami uz existuje.</string>
+
+    <string name="gone">gone</string>
+    <string name="visible">visible</string>
 </resources>
