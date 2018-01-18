@@ -2,7 +2,8 @@
     <string name="app_name">Pohyby Tovaru</string>
     <string name="activity_ListMiestnosti">Zoznam Miestnosti</string>
     <string name="activity_DetailMiestnosti">Detail Miestnosti</string>
-
+    <string name="action_delete">Vymazat</string>
+    <string name="action_search">Hladaj</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,7 +13,12 @@
     <string name="lbl_dialog_save">Ulozit</string>
     <string name="bool_miestnost_distinguisher">Je miestnost sklad</string>
     <string name="lbl_duplicate_miestnost">Miestnost s rovnakymi hodnotami uz existuje.</string>
+    <string name="lbl_miestnost_type">Typ:&#160;</string>
+    <string name="lbl_miestnostType_Sklad">Sklad</string>
+    <string name="lbl_miestnostType_Miestnost">Miestnost</string>
 
     <string name="gone">gone</string>
     <string name="visible">visible</string>
+
+
 </resources>

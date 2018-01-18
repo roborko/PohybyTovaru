@@ -1,5 +1,8 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,33 +19,22 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityLis
 public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnostiRowBinding, Miestnost> {
     private final ISimpleRowClickListener actionCallback;
 
-    public ListMiestnostiAdapter(int layoutId, ISimpleRowClickListener actionCallback, List<Miestnost> data) {
+    public ListMiestnostiAdapter(@NonNull Context context, int layoutId, ISimpleRowClickListener actionCallback, List<Miestnost> data) {
         super(layoutId);
+        this.context = context;
         this.actionCallback = actionCallback;
         this.data = data;
+        this.filteredArray.addAll(this.data);
     }
 
     @Override
     protected void bindItem(DataBoundViewHolder<ActivityListMiestnostiRowBinding> holder, int position, List<Object> payloads) {
-        holder.binding.setObj(data.get(position));
+        holder.binding.setObj(filteredArray.get(position));
         holder.binding.setCallback(actionCallback);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
-    }
-
-
-    public void startSelectionMode(){
-        for (Miestnost item : this.data) {
-            item.setSelected(true);
-        }
-    }
-
-    public void disableSelectionMode(){
-        for (Miestnost item : this.data) {
-            item.setSelected(false);
-        }
+        return filteredArray.size();
     }
 }

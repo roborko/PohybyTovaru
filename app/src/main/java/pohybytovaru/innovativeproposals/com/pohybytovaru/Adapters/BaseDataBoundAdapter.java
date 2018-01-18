@@ -59,11 +59,13 @@ abstract public class BaseDataBoundAdapter<T extends ViewDataBinding>
         return vh;
     }
 
+
     @Override
     public final void onBindViewHolder(DataBoundViewHolder<T> holder, int position,
                                        List<Object> payloads) {
         // when a VH is rebound to the same item, we don't have to call the setters
         if (payloads.isEmpty() || hasNonDataBindingInvalidate(payloads)) {
+            holder.binding.getRoot().setTag(position);
             bindItem(holder, position, payloads);
         }
         holder.binding.executePendingBindings();

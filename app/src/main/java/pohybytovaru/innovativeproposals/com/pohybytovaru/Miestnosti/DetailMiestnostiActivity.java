@@ -73,7 +73,12 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
         }
 
         //no duplicate, create new miestnost
-        Miestnost resultMiestnost = new Miestnost();
+        Miestnost resultMiestnost;
+        if(miestnost == null)
+            resultMiestnost = new Miestnost();
+        else
+            resultMiestnost = miestnost;
+
         resultMiestnost.setNazov(itemName);
         resultMiestnost.setJeSklad(jeSklad.isChecked());
 

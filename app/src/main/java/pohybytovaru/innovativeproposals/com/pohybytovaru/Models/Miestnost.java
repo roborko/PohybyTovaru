@@ -9,11 +9,13 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
+
 /**
  * Created by Robert on 14.01.2018.
  */
 @DatabaseTable(tableName = "Miestnost")
-public class Miestnost extends BaseObservable implements Parcelable {
+public class Miestnost extends BaseObservable implements Parcelable, IEditableRecyclerItem {
     @DatabaseField(columnName = "Id", generatedId = true)
     private int Id;
     @DatabaseField
@@ -62,11 +64,17 @@ public class Miestnost extends BaseObservable implements Parcelable {
         return 0;
     }
 
+
+    public boolean filterFunctionResult(String searchString) {
+        return this.Nazov.toLowerCase().contains(searchString.toLowerCase().trim());
+    }
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(Id);
         parcel.writeString(Nazov);
         parcel.writeByte((byte) (JeSklad ? 1 : 0));
+        parcel.writeByte((byte) (Selected ? 1 : 0));
     }
 
     public Miestnost() {
@@ -76,6 +84,7 @@ public class Miestnost extends BaseObservable implements Parcelable {
         this.Id = in.readInt();
         this.Nazov = in.readString();
         this.JeSklad = in.readByte() != 0;
+        this.Selected= in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<Miestnost> CREATOR = new Parcelable.Creator<Miestnost>() {
@@ -94,5 +103,6 @@ public class Miestnost extends BaseObservable implements Parcelable {
     public void CopyData(Miestnost otherItem){
         this.Nazov = otherItem.Nazov;
         this.JeSklad = otherItem.JeSklad;
+        this.Selected = otherItem.Selected;
     }
 }
