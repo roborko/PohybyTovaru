@@ -10,12 +10,13 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
 /**
  * Created by Robert on 14.01.2018.
  */
 @DatabaseTable(tableName = "Miestnost")
-public class Miestnost extends BaseObservable implements Parcelable, IEditableRecyclerItem {
+public class Miestnost extends BaseObservable implements Parcelable, IEditableRecyclerItem, IFilterableItem {
     @DatabaseField(columnName = "Id", generatedId = true)
     private int Id;
     @DatabaseField

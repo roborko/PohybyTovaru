@@ -17,7 +17,4 @@ public interface IEditableRecyclerItem {
     int getId();
 
     void setId(int id);
-
-    //function used in filtering on a view
-    boolean filterFunctionResult(String searchString);
 }

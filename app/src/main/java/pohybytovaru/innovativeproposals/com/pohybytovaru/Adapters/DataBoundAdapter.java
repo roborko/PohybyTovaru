@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
 /*
  * Copyright (C) 2016 The Android Open Source Project
@@ -28,7 +29,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecycle
  * limitations under the License.
  */
 
-abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEditableRecyclerItem> extends BaseDataBoundAdapter<T> {
+abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEditableRecyclerItem & IFilterableItem> extends BaseDataBoundAdapter<T> {
     public List<U> data = new ArrayList<>();
     public List<U> filteredArray = new ArrayList<>();
     public Context context;

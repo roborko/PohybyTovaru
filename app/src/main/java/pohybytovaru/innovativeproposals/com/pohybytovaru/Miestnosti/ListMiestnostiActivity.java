@@ -114,9 +114,9 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         dataAdapter.toggleItemSelection(position);
         selectedListItems = dataAdapter.getSelectedItemsCount();
         if (selectedListItems > 0) {
-            getSupportActionBar().setTitle(String.valueOf(dataAdapter.getSelectedItemsCount()) + " items selected");
+            getSupportActionBar().setTitle(String.valueOf(dataAdapter.getSelectedItemsCount()) + " " + getResources().getString(R.string.action_hint_selecteditems));
         } else {
-            getSupportActionBar().setTitle(R.string.activity_DetailMiestnosti);
+            getSupportActionBar().setTitle(R.string.activity_ListMiestnosti);
         }
 
         this.onPrepareOptionsMenu(savedMenu);
@@ -215,7 +215,7 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
 
     private void clearSelectedItems() {
         //set original title
-        getSupportActionBar().setTitle(R.string.activity_DetailMiestnosti);
+        getSupportActionBar().setTitle(R.string.activity_ListMiestnosti);
 
         dataAdapter.clearSelectedItems();
         selectedListItems = 0;

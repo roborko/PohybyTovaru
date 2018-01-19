@@ -98,10 +98,18 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
     }
 
     private boolean duplicateExists(String itemName){
+        if(miestnost.getId() > 0){
+            //skontroluj ci sa nazov zhoduje
+            if(miestnost.getNazov().equals(itemName)){
+                //uzivatel nezmenil nazov
+                return false;
+            }
+        }
+
         for (int i = 0; i < list_miestnosti.size(); i++) {
             if(list_miestnosti.get(i).getNazov().equals(itemName)) {
                 //name is the same; check if it is is sklad
-                if(list_miestnosti.get(i).isJeSklad() == jeSklad.isChecked())
+//                if(list_miestnosti.get(i).isJeSklad() == jeSklad.isChecked())
                     return true;
             }
         }

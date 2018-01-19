@@ -2,8 +2,10 @@
     <string name="app_name">Pohyby Tovaru</string>
     <string name="activity_ListMiestnosti">Zoznam Miestnosti</string>
     <string name="activity_DetailMiestnosti">Detail Miestnosti</string>
+
     <string name="action_delete">Vymazat</string>
     <string name="action_search">Hladaj</string>
+    <string name="action_hint_selecteditems">polozka(y)</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
