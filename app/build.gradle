@@ -17,7 +17,7 @@ android {
         }
     }
     dataBinding {
-        enabled=true
+        enabled = true
     }
 }
 
@@ -39,6 +39,9 @@ dependencies {
 
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+}
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'

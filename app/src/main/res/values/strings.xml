@@ -21,6 +21,10 @@
 
     <string name="gone">gone</string>
     <string name="visible">visible</string>
+    <string name="activity_ZoznamTovarov">Zoznam Tovarov</string>
+    <string name="nav_label_ciselniky">Ciselniky</string>
+    <string name="nav_label_reports">Reporty</string>
+    <string name="navigation_drawer_tovary">Tovary</string>
 
 
 </resources>

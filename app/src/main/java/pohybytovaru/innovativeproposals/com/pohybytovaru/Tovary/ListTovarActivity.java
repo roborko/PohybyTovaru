@@ -1,4 +1,4 @@
-package pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti;
+package pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,23 +29,23 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.DetailMiestnostiActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
-@EActivity(R.layout.activity_list_miestnosti)
-public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Miestnost> {
-    public final static int MIESTNOST_REQUEST_CODE = 19;
+@EActivity(R.layout.activity_list_tovar)
+public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Tovar> {
+    public final static int TOVAR_REQUEST_CODE = 19;
 
     @ViewById
     Toolbar toolbar;
 
     @ViewById
-    RecyclerView miestnostiList;
+    RecyclerView recyclerView;
 
-    private List<Miestnost> data_list = new ArrayList<>();
-    private ListMiestnostiAdapter dataAdapter;
-
+    private List<Tovar> data_list = new ArrayList<>();
+    private ListTovarAdapter dataAdapter;
 
     @AfterViews
     void bindAdapter() {
@@ -55,30 +55,30 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         GetData();//fetch data
 
         //create new adapter
-        dataAdapter = new ListMiestnostiAdapter(this, R.layout.activity_list_miestnosti_row, this, data_list);
+        dataAdapter = new ListTovarAdapter(this, R.layout.activity_list_tovar_row, this, data_list);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        miestnostiList.setLayoutManager(layoutManager);
-        miestnostiList.setItemAnimator(new DefaultItemAnimator());
-        miestnostiList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        miestnostiList.setAdapter(dataAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(dataAdapter);
     }
 
     private void GetData() {
         try {
-            Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
-            data_list = miestnostDao.queryForAll();
+            Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
+            data_list = tovarDao.queryForAll();
 
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());
         }
     }
 
-    @OnActivityResult(MIESTNOST_REQUEST_CODE)
+    @OnActivityResult(TOVAR_REQUEST_CODE)
     void onResult(int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
             //deserialize object
-            Miestnost result = data.getParcelableExtra("EXTRA_MIESTNOST");
+            Tovar result = data.getParcelableExtra("EXTRA_MIESTNOST");
 
             //TODO Add new miestnost / Update already existing object
             if (result.getId() == 0)
@@ -92,21 +92,21 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
     public void AddNewItem() {
         Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
         intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
-        startActivityForResult(intent, MIESTNOST_REQUEST_CODE);
+        startActivityForResult(intent, TOVAR_REQUEST_CODE);
     }
 
     @Override
-    public void onItemClick(Miestnost item) {
+    public void onItemClick(Tovar item) {
         Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
         intent.putExtra("EXTRA_MIESTNOST", item);
         intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
-        startActivityForResult(intent, MIESTNOST_REQUEST_CODE);
+        startActivityForResult(intent, TOVAR_REQUEST_CODE);
     }
 
 
     //uzivatel stlacil dlho nejaku polozku
     @Override
-    public boolean onItemLongClick(View view, Miestnost item) {
+    public boolean onItemLongClick(View view, Tovar item) {
         int position = (int) view.getTag();
 
         dataAdapter.toggleItemSelection(position);
@@ -122,10 +122,10 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
     }
 
 
-    private void AddNewItem(Miestnost item) {
+    private void AddNewItem(Tovar item) {
         try {
-            Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
-            miestnostDao.create(item);
+            Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
+            tovarDao.create(item);
 
             //add item to adapter
             dataAdapter.AddItem(item);
@@ -135,10 +135,10 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
 
     }
 
-    private void UpdateExistingItem(Miestnost item) {
-        Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
+    private void UpdateExistingItem(Tovar item) {
+        Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
         try {
-            miestnostDao.update(item);
+            tovarDao.update(item);
 
             //update collection
             this.dataAdapter.UpdateItem(item);
@@ -157,8 +157,8 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
 
             //iterate from last to first element in order to keep correct positions of selected items under sparse boolean array
             for (int iItem = itemsToRemove.size()-1; iItem >= 0; iItem--) {
-                Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
-                miestnostDao.deleteById(itemsToRemove.get(iItem));
+                Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
+                tovarDao.deleteById(itemsToRemove.get(iItem));
                 dataAdapter.RemoveItemById(itemsToRemove.get(iItem));
             }
 

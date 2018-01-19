@@ -15,6 +15,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity_;
 
 @EActivity
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -43,10 +44,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
+        Intent intent;
         switch (id){
             case R.id.nav_miestnosti:
-                Intent intent = new Intent(this, ListMiestnostiActivity_.class);
+                intent = new Intent(this, ListMiestnostiActivity_.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_tovary:
+                intent = new Intent(this, ListTovarActivity_.class);
                 startActivity(intent);
                 break;
         }

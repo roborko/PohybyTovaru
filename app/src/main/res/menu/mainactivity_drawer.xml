@@ -4,13 +4,23 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_miestnosti"
-            android:icon="@drawable/ic_event_seat_white_24dp"
-            android:title="@string/navigation_drawer_miestnosti" />
+        <item android:title="@string/nav_label_ciselniky">
+            <menu>
+                <item
+                    android:id="@+id/nav_miestnosti"
+                    android:icon="@drawable/ic_event_seat_white_24dp"
+                    android:title="@string/navigation_drawer_miestnosti" />
+
+                <item
+                    android:id="@+id/nav_tovary"
+                    android:icon="@drawable/ic_settings_input_hdmi_black_24dp"
+                    android:title="@string/navigation_drawer_tovary" />
+
+            </menu>
+        </item>
     </group>
 
-    <item android:title="Reporty"> 
+    <item android:title="@string/nav_label_reports">
         <menu>
             <item
                 android:id="@+id/nav_share"
