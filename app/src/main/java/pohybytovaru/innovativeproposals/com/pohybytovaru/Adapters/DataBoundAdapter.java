@@ -31,7 +31,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
 abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEditableRecyclerItem & IFilterableItem> extends BaseDataBoundAdapter<T> {
     public List<U> data = new ArrayList<>();
-    public List<U> filteredArray = new ArrayList<>();
+    public FilterView<U> filterView = new FilterView<>();
     public Context context;
 
     private SparseBooleanArray selectedItems = new SparseBooleanArray();//selected items
@@ -54,17 +54,18 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
 
     public void AddNewCollection(List<U> data) {
         this.data = data;
-        this.filteredArray.addAll(this.data);
-        notifyDataSetChanged();
+        this.filterView.dataSourceChanged(this.data);
+
+        notifyItemRemoved(0);
+        notifyItemRangeChanged(0, data.size());
     }
 
-    public void RemoveItemId(Integer itemID) {
-        //locate item
+    public void RemoveItemById(Integer itemID) {
         Integer indexToRemove = 0;
         U itemToRemove = null;
-        for (int iFiltered = 0; iFiltered < filteredArray.size(); iFiltered++) {
-            if (filteredArray.get(iFiltered).getId() == itemID) {
-                itemToRemove = filteredArray.get(iFiltered);
+        for (int iFiltered = 0; iFiltered < filterView.size(); iFiltered++) {
+            if (filterView.get(iFiltered).getId() == itemID) {
+                itemToRemove = filterView.get(iFiltered);
                 indexToRemove = iFiltered;
                 break;
             }
@@ -83,22 +84,14 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
             }
         }
 
-        //remove item
-        boolean result = filteredArray.remove(itemToRemove);
-        if (this.filteredArray.size() > 0) {
-            notifyItemRemoved(indexToRemove);
-            notifyItemRangeChanged(indexToRemove, filteredArray.size());
-        } else {
-            //there would be nothing under filtered items and therefore return remaining original array
-            this.filteredArray.clear();
-            this.filteredArray.addAll(this.data);
-            notifyDataSetChanged();
-        }
+        filterView.dataSourceChanged(this.data);
+        notifyItemRemoved(indexToRemove);
+        notifyItemRangeChanged(indexToRemove, filterView.size());
     }
 
     public void AddItem(U newItem) {
         this.data.add(newItem);
-        this.filteredArray.add(newItem);
+        this.filterView.refresh();
         notifyDataSetChanged();
     }
 
@@ -112,14 +105,9 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
             }
         }
 
-        //change item under filtered array
-        for (int iIndex = 0; iIndex < filteredArray.size(); iIndex++) {
-            if (filteredArray.get(iIndex).getId() == updatedItem.getId()) {
-                filteredArray.set(iIndex, updatedItem);
-                notifyItemChanged(iIndex);
-                return;
-            }
-        }
+        filterView.refresh();
+        notifyDataSetChanged();
+//        notifyItemChanged(iIndex);
     }
 
     //toggles item's selection under original array
@@ -128,10 +116,10 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
         boolean selectedValue = !selectedItems.get(position, false);//setting opposite value as we want to toggle current value
         if (selectedItems.get(position, false)) {
             selectedItems.delete(position);
-            filteredArray.get(position).setSelected(selectedValue);
+            filterView.get(position).setSelected(selectedValue);
         } else {
             selectedItems.put(position, true);
-            filteredArray.get(position).setSelected(selectedValue);
+            filterView.get(position).setSelected(selectedValue);
         }
 
         notifyItemChanged(position);
@@ -147,7 +135,7 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
     public void clearSelectedItems() {
         //remove selected flag from original data first
         for (int iItem = 0; iItem < selectedItems.size(); iItem++) {
-            filteredArray.get(selectedItems.keyAt(iItem)).setSelected(false);
+            filterView.get(selectedItems.keyAt(iItem)).setSelected(false);
             notifyItemChanged(iItem);
         }
 
@@ -159,7 +147,7 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
     public List<Integer> getSelectedItemsId() {
         List<Integer> items = new ArrayList<Integer>(selectedItems.size());
         for (int iItem = 0; iItem < selectedItems.size(); iItem++) {
-            items.add(filteredArray.get(selectedItems.keyAt(iItem)).getId());
+            items.add(filterView.get(selectedItems.keyAt(iItem)).getId());
         }
 
         return items;
@@ -169,18 +157,19 @@ abstract public class DataBoundAdapter<T extends ViewDataBinding, U extends IEdi
         new Thread(new Runnable() {
             @Override
             public void run() {
+                filterView.filterTextChanged(searchText);
 
-                // Clear the filter list
-                filteredArray.clear();
-
-                if (TextUtils.isEmpty(searchText)) {
-                    filteredArray.addAll(data);
-                } else {
-                    for (U dataItem : data) {
-                        if (dataItem.filterFunctionResult(searchText))
-                            filteredArray.add(dataItem);
-                    }
-                }
+//                // Clear the filter list
+//                filteredArray.clear();
+//
+//                if (TextUtils.isEmpty(searchText)) {
+//                    filteredArray.addAll(data);
+//                } else {
+//                    for (U dataItem : data) {
+//                        if (dataItem.filterFunctionResult(searchText))
+//                            filteredArray.add(dataItem);
+//                    }
+//                }
 
                 // Set on UI Thread
                 ((Activity) context).runOnUiThread(new Runnable() {

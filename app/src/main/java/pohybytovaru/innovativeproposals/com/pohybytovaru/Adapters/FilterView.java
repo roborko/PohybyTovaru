@@ -16,6 +16,9 @@ public class FilterView<T extends IFilterableItem> {
     private String filterText;
 
     public T get(int index) {
+        if(index > filteredItems.size()){
+            return null;
+        }
         return filteredItems.get(index);
     }
 
@@ -29,8 +32,22 @@ public class FilterView<T extends IFilterableItem> {
         refresh();
     }
 
-    private void refresh() {
+    public void filterTextChanged(String filterText){
+        this.filterText = filterText;
+        refresh();
+    }
+
+    public void dataSourceChanged(List<T> dataSource){
+        this.dataSource = dataSource;
+        refresh();
+    }
+
+    public void refresh() {
         this.filteredItems.clear();
+        if(this.filterText == null || this.filterText.length() == 0) {
+            this.filteredItems.addAll(dataSource);
+            return;
+        }
 
         for (T dataItem : dataSource) {
             if(dataItem.filterFunctionResult(filterText))

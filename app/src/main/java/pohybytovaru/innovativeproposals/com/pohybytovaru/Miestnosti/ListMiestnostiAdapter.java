@@ -24,17 +24,21 @@ public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnos
         this.context = context;
         this.actionCallback = actionCallback;
         this.data = data;
-        this.filteredArray.addAll(this.data);
+        this.filterView.dataSourceChanged(this.data);
     }
 
     @Override
     protected void bindItem(DataBoundViewHolder<ActivityListMiestnostiRowBinding> holder, int position, List<Object> payloads) {
-        holder.binding.setObj(filteredArray.get(position));
+        holder.binding.setObj(this.filterView.get(position));
         holder.binding.setCallback(actionCallback);
     }
 
     @Override
     public int getItemCount() {
-        return filteredArray.size();
+        try {
+            return this.filterView.size();
+        } catch (Exception ex) {
+            return 0;
+        }
     }
 }

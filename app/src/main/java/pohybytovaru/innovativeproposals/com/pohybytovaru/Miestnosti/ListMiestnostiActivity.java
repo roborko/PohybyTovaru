@@ -128,7 +128,6 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         try {
             Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
             miestnostDao.create(item);
-//            item.setId(newIndex);
 
             //add item to adapter
             dataAdapter.AddItem(item);
@@ -162,7 +161,7 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
             for (int iItem = itemsToRemove.size()-1; iItem >= 0; iItem--) {
                 Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
                 miestnostDao.deleteById(itemsToRemove.get(iItem));
-                dataAdapter.RemoveItemId(itemsToRemove.get(iItem));
+                dataAdapter.RemoveItemById(itemsToRemove.get(iItem));
             }
 
             //recreate top menu

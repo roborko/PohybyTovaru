@@ -26,7 +26,7 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
 
     private boolean Selected;
 
-@Bindable
+    @Bindable
     public boolean isSelected() {
         return Selected;
     }
@@ -85,7 +85,7 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
         this.Id = in.readInt();
         this.Nazov = in.readString();
         this.JeSklad = in.readByte() != 0;
-        this.Selected= in.readByte() != 0;
+        this.Selected = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<Miestnost> CREATOR = new Parcelable.Creator<Miestnost>() {
@@ -101,7 +101,7 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
         }
     };
 
-    public void CopyData(Miestnost otherItem){
+    public void CopyData(Miestnost otherItem) {
         this.Nazov = otherItem.Nazov;
         this.JeSklad = otherItem.JeSklad;
         this.Selected = otherItem.Selected;
