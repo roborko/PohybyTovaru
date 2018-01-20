@@ -25,6 +25,9 @@
     <string name="nav_label_ciselniky">Ciselniky</string>
     <string name="nav_label_reports">Reporty</string>
     <string name="navigation_drawer_tovary">Tovary</string>
+    <string name="nav_label_save">Ulozit</string>
+    <string name="hint_nazovTovaru">Nazov Tovaru</string>
+    <string name="activity_ZoznamTovarov_Detail">Detail</string>
 
 
 </resources>

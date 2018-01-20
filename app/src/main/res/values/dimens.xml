@@ -9,4 +9,7 @@
     <dimen name="row_padding_vertical">10dp</dimen>
     <dimen name="dialog_padding_content">24dp</dimen>
     <dimen name="dialog_padding_actionButtons">8dp</dimen>
+    <dimen name="dimen_circular_image_size">42dp</dimen>
+    <dimen name="dimen_row_twoline_standard">72dp</dimen>
+    <dimen name="dimen_row_icon_horizontal_margin">16dp</dimen>
 </resources>

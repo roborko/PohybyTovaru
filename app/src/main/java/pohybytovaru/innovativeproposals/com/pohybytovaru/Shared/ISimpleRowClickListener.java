@@ -8,5 +8,6 @@ import android.view.View;
 
 public interface ISimpleRowClickListener<T> {
     void onItemClick(T item);
+    void onItemClick(View view, T item);
     boolean onItemLongClick(View view, T item);
 }

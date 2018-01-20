@@ -1,16 +1,24 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Models;
 
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
@@ -86,6 +94,7 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
         this.Nazov = in.readString();
         this.MinimalneMnozstvo = in.readDouble();
         this.Selected = in.readByte() != 0;
+        this.Fotografia = in.createByteArray();
     }
 
     @Override
@@ -99,6 +108,7 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
         parcel.writeString(Nazov);
         parcel.writeDouble(MinimalneMnozstvo);
         parcel.writeByte((byte) (Selected ? 1 : 0));
+        parcel.writeByteArray(Fotografia);
     }
 
     public static final Parcelable.Creator<Tovar> CREATOR = new Parcelable.Creator<Tovar>() {
@@ -113,4 +123,17 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
             return new Tovar[i];
         }
     };
+
+    //adapter used to deserialize byte array of images to imageview
+    @BindingAdapter({"bind:imageSource", "bind:error"})
+    public static void loadImage(ImageView view, byte[] imageBytes, Drawable error){
+        if(imageBytes == null || imageBytes.length == 0){
+            //Drawable noImageFound =
+            view.setImageDrawable(error);
+        }
+        else {
+            Bitmap bitmap = ImageHelpers.convertBytesToBitmap(imageBytes);
+            view.setImageBitmap(bitmap);
+        }
+    }
 }

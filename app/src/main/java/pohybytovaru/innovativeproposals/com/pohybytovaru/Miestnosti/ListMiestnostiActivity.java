@@ -103,6 +103,9 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         startActivityForResult(intent, MIESTNOST_REQUEST_CODE);
     }
 
+    public void onItemClick(View view, Miestnost item) {
+        //not implemented here
+    }
 
     //uzivatel stlacil dlho nejaku polozku
     @Override

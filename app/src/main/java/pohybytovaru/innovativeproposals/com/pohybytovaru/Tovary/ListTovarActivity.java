@@ -1,6 +1,8 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -37,6 +39,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 @EActivity(R.layout.activity_list_tovar)
 public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Tovar> {
     public final static int TOVAR_REQUEST_CODE = 19;
+    public final static String CODE_INTENT_TOVAR = "EXTRA_TOVAR";
 
     @ViewById
     Toolbar toolbar;
@@ -76,9 +79,9 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
 
     @OnActivityResult(TOVAR_REQUEST_CODE)
     void onResult(int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
+        if (resultCode == Activity.RESULT_OK && data.hasExtra(CODE_INTENT_TOVAR)) {
             //deserialize object
-            Tovar result = data.getParcelableExtra("EXTRA_MIESTNOST");
+            Tovar result = data.getParcelableExtra(CODE_INTENT_TOVAR);
 
             //TODO Add new miestnost / Update already existing object
             if (result.getId() == 0)
@@ -90,19 +93,25 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
 
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
-        Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
-        intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
+        Intent intent = new Intent(this, DetailTovarActivity_.class);
         startActivityForResult(intent, TOVAR_REQUEST_CODE);
     }
 
     @Override
     public void onItemClick(Tovar item) {
-        Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
-        intent.putExtra("EXTRA_MIESTNOST", item);
-        intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
-        startActivityForResult(intent, TOVAR_REQUEST_CODE);
+        //not implemented here
     }
 
+    @SuppressLint("RestrictedApi")
+    public void onItemClick(View view, Tovar item) {
+        Intent intent = new Intent(this, DetailTovarActivity_.class);
+        intent.putExtra(CODE_INTENT_TOVAR, item);
+        View imageView = view.findViewById(R.id.detailView_Image); // ma natvrdo v layoute devinovany src
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                ListTovarActivity.this, imageView, "detailView_Image");
+
+        startActivityForResult(intent, TOVAR_REQUEST_CODE, options.toBundle());
+    }
 
     //uzivatel stlacil dlho nejaku polozku
     @Override
@@ -151,12 +160,12 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
     //Method which triggers when user clicks 'trash' icon from app menu (erase selected items)
     private void DeleteSelectedMiestnosti() {
         //retrieve list of all selected items
-        List<Integer> itemsToRemove =  dataAdapter.getSelectedItemsId();
+        List<Integer> itemsToRemove = dataAdapter.getSelectedItemsId();
 
-        try{
+        try {
 
             //iterate from last to first element in order to keep correct positions of selected items under sparse boolean array
-            for (int iItem = itemsToRemove.size()-1; iItem >= 0; iItem--) {
+            for (int iItem = itemsToRemove.size() - 1; iItem >= 0; iItem--) {
                 Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
                 tovarDao.deleteById(itemsToRemove.get(iItem));
                 dataAdapter.RemoveItemById(itemsToRemove.get(iItem));
@@ -164,7 +173,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
 
             //recreate top menu
             clearSelectedItems();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             Log.e("LIST_MIESTNOSTI", "Cannot delete miestnost. " + ex.getMessage());
         }
     }
@@ -221,6 +230,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         this.onPrepareOptionsMenu(savedMenu);
 
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menu_delete = menu.findItem(R.id.delete);
