@@ -18,6 +18,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
@@ -33,10 +34,10 @@ public class DetailTovarActivity extends AppCompatActivity {
     ImageView tovarImage;
 
     @ViewById
-    EditText txt_TovarName;
+    EditText txt_TovarName, txt_Mnozstvo,txt_Poznamka;
 
     @ViewById
-    TextInputLayout inputLayout_MiestnostName;
+    TextInputLayout inputLayout_TovarNazov;
 
     @Extra("EXTRA_TOVAR")
     Tovar tovar;
@@ -51,6 +52,8 @@ public class DetailTovarActivity extends AppCompatActivity {
 
         if(tovar != null){
             txt_TovarName.setText(tovar.getNazov());
+            txt_Mnozstvo.setText(String.valueOf(tovar.getMinimalneMnozstvo()));
+            txt_Poznamka.setText(tovar.getPoznamka());
             tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));
         }
     }
@@ -93,11 +96,16 @@ public class DetailTovarActivity extends AppCompatActivity {
 
     //Method which serializes object and sends it back to activity
     private void SaveItem() {
+        if(validateControls() == false){
+            return;
+        }
         if(tovar == null)
             tovar = new Tovar();
 
         tovar.setNazov(txt_TovarName.getText().toString());
         tovar.setFotografia(ImageHelpers.getImageBytesFromImageView(tovarImage));
+        tovar.setMinimalneMnozstvo(Double.valueOf(txt_Mnozstvo.getText().toString()));
+        tovar.setPoznamka(txt_Poznamka.getText().toString());
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra(ListTovarActivity.CODE_INTENT_TOVAR, tovar);
@@ -105,4 +113,17 @@ public class DetailTovarActivity extends AppCompatActivity {
         this.finish();
     }
 
+    @TextChange(R.id.txt_TovarName)
+    void onNazovTextChange(){
+        inputLayout_TovarNazov.setError(null);
+    }
+
+    //validates control values
+    private boolean validateControls(){
+        if(txt_TovarName.length() == 0){
+            inputLayout_TovarNazov.setError(getString(R.string.lbl_error_hint_tovar_nazov));
+            return false;
+        }
+        return true;
+    }
 }
