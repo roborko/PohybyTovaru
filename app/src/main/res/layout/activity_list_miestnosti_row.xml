@@ -32,6 +32,7 @@
         <!--<ImageView-->
             <!--android:layout_weight="1"-->
             <!--android:src="@drawable/ic_check_circle_white_24dp"-->
+            <!--android:shadowColor="#000"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:visibility="@{obj.selected ? View.VISIBLE : View.GONE}"-->
             <!--android:layout_height="wrap_content" />-->

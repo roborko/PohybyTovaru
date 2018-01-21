@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="obj"
+            type="pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb" />
+
+        <variable
+            name="callback"
+            type="pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener" />
+
+        <variable
+            name="dataConverter"
+            type="pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.Converters.DataBindingConverters"/>
+
+        <import type="android.view.View" />
+        <import type="pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.Converters.DataBindingConverters"/>
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_row_threeline_standard"
+        android:animateLayoutChanges="true"
+        android:background="@{obj.selected ? @color/colorPrimaryDark : @android:color/transparent}"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{(theView) -> callback.onItemClick(theView, obj)}"
+        android:onLongClick="@{(theView) -> callback.onItemLongClick(theView,obj)}">
+
+        <ImageView
+            android:id="@+id/detailView_Image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dimen_row_icon_horizontal_margin"
+            android:layout_marginRight="@dimen/dimen_row_icon_horizontal_margin"
+            app:drawableSource="@{obj.selected ? obj.typPohybu.assignedResourceId_White : obj.typPohybu.assignedResourceId_Black}"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/detailView_Image"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:id="@+id/layout_threeline_main_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:text="@{obj.miestnost.nazov}"
+                    android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{obj.tovar.nazov}"
+                    android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tovar_row_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{obj.datum}"
+                    android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:singleLine="true"
+                android:text='@{obj.pocetKusov + " ks"}'
+                android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</layout>

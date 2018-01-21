@@ -4,6 +4,18 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+        <item android:title="Prehlad">
+            <menu>
+                <item
+                    android:id="@+id/nav_pohybTovaru"
+                    android:icon="@drawable/ic_swap_horiz_black_24dp"
+                    android:title="Pohyby Tovarov" />
+
+                <item
+                    android:icon="@drawable/ic_event_seat_white_24dp"
+                    android:title="Inventar v miestnosti" />
+            </menu>
+        </item>
         <item android:title="@string/nav_label_ciselniky">
             <menu>
                 <item

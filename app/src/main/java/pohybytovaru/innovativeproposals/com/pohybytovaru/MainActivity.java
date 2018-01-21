@@ -14,7 +14,9 @@ import android.view.MenuItem;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity_;
 
 @EActivity
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        //populate default values
+        DeafultValuesPopulator.PopulateDefaultValues(this);
     }
 
     @Override
@@ -52,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_tovary:
                 intent = new Intent(this, ListTovarActivity_.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_pohybTovaru:
+                intent = new Intent(this, PohybTovarActivity_.class);
                 startActivity(intent);
                 break;
         }

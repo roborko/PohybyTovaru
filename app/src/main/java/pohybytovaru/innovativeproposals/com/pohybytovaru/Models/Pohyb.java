@@ -1,16 +1,31 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.databinding.BindingConversion;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
+import android.widget.ImageView;
+
+import com.android.databinding.library.baseAdapters.BR;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
 /**
  * Created by Robert on 14.01.2018.
  */
 
 @DatabaseTable(tableName = "Pohyb")
-public class Pohyb {
+public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFilterableItem {
     @DatabaseField(columnName = "Id", generatedId = true)
     private int Id;
 
@@ -23,12 +38,27 @@ public class Pohyb {
     @DatabaseField(columnName = "Osoba", foreign = true, foreignAutoRefresh = true)
     private Osoba Osoba;
 
+    @DatabaseField(columnName = "Tovar", foreign = true, foreignAutoRefresh = true)
+    private Tovar Tovar;
+
     @DatabaseField
     private double PocetKusov;
     @DatabaseField
     private String Poznamka;
     @DatabaseField
     private Date Datum;
+
+    private boolean Selected;
+
+    @Bindable
+    public boolean isSelected() {
+        return Selected;
+    }
+
+    public void setSelected(boolean value) {
+        Selected = value;
+        notifyPropertyChanged(BR.selected);
+    }
 
     public int getId() {
         return Id;
@@ -62,6 +92,14 @@ public class Pohyb {
         Osoba = osoba;
     }
 
+    public Tovar getTovar() {
+        return Tovar;
+    }
+
+    public void setTovar(Tovar tovar) {
+        Tovar = tovar;
+    }
+
     public double getPocetKusov() {
         return PocetKusov;
     }
@@ -86,4 +124,20 @@ public class Pohyb {
         Datum = datum;
     }
 
+    @Override
+    public boolean filterFunctionResult(String searchString) {
+        if(this.Miestnost == null || this.Tovar == null)
+            return false;
+
+        return this.Miestnost.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()) ||
+                this.Tovar.getNazov().toLowerCase().contains(searchString.toLowerCase().trim());
+    }
+
+
+
+//    //adapter used to deserialize byte array of images to imageview
+//    @BindingAdapter({"bind:imageSource"})
+//    public static void loadImage(ImageView view, int imageId){
+//        view.setImageResource(imageId);
+//    }
 }

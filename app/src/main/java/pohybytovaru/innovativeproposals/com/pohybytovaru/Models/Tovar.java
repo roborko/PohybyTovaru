@@ -137,16 +137,5 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
         }
     };
 
-    //adapter used to deserialize byte array of images to imageview
-    @BindingAdapter({"bind:imageSource", "bind:error"})
-    public static void loadImage(ImageView view, byte[] imageBytes, Drawable error){
-        if(imageBytes == null || imageBytes.length == 0){
-            //Drawable noImageFound =
-            view.setImageDrawable(error);
-        }
-        else {
-            Bitmap bitmap = ImageHelpers.convertBytesToBitmap(imageBytes);
-            view.setImageBitmap(bitmap);
-        }
-    }
+
 }

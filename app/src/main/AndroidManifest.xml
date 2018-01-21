@@ -29,9 +29,16 @@
             android:name=".Tovary.ListTovarActivity_"
             android:label="@string/activity_ZoznamTovarov"
             android:parentActivityName=".MainActivity_" />
+        <activity
+            android:name=".Tovary.DetailTovarActivity_"
+            android:label="@string/activity_ZoznamTovarov_Detail" />
+        <activity
+            android:name=".Prehlady.PohybTovarov.PohybTovarActivity_"
+            android:label="@string/activity_PohybTovarov"
+            android:parentActivityName=".MainActivity_" />
 
-        <activity android:name=".Tovary.DetailTovarActivity_"
-            android:label="@string/activity_ZoznamTovarov_Detail"/>
+
+        <activity android:name=".Login.LoginActivity" />
     </application>
 
 </manifest>

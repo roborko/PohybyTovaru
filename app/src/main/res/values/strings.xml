@@ -32,4 +32,12 @@
     <string name="lbl_error_hint_tovar_nazov">Nazov tovaru musi byt vyplneny.</string>
 
 
+    <string name="TransactionType_Add">Prijem</string>
+    <string name="TransactionType_Move">Presun</string>
+    <string name="TransactionType_Remove">Vydaj</string>
+    <string name="TransactionType_Delete">Skartovanie</string>
+    <string name="activity_PohybTovarov">Pohyby Tovarov</string>
+
+
+    <string name="date_format">%1$td.%1$tm.%1$tY %1$tHH:%1$tmm</string>
 </resources>
