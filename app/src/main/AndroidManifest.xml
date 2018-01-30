@@ -36,8 +36,9 @@
             android:name=".Prehlady.PohybTovarov.PohybTovarActivity_"
             android:label="@string/activity_PohybTovarov"
             android:parentActivityName=".MainActivity_" />
-
-
+        <activity android:name=".Prehlady.PohybTovarov.PohybTovarActivityDetail_"
+            android:label=""
+            android:parentActivityName=".Prehlady.PohybTovarov.PohybTovarActivity_"></activity>
         <activity android:name=".Login.LoginActivity" />
     </application>
 

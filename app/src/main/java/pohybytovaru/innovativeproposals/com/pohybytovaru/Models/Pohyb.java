@@ -32,8 +32,11 @@ public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFil
     @DatabaseField(columnName = "TypPohybu", foreign = true, foreignAutoRefresh = true)
     private TypTransakcie TypPohybu;
 
-    @DatabaseField(columnName = "Miestnost", foreign = true, foreignAutoRefresh = true)
-    private Miestnost Miestnost;
+    @DatabaseField(columnName = "MiestnostFrom", foreign = true, foreignAutoRefresh = true)
+    private Miestnost MiestnostFrom;
+
+    @DatabaseField(columnName = "MiestnostTo", foreign = true, foreignAutoRefresh = true)
+    private Miestnost MiestnostTo;
 
     @DatabaseField(columnName = "Osoba", foreign = true, foreignAutoRefresh = true)
     private Osoba Osoba;
@@ -76,13 +79,22 @@ public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFil
         TypPohybu = typPohybu;
     }
 
-    public Miestnost getMiestnost() {
-        return Miestnost;
+    public Miestnost getMiestnostFrom() {
+        return MiestnostFrom;
     }
 
-    public void setMiestnost(Miestnost miestnost) {
-        Miestnost = miestnost;
+    public void setMiestnostFrom(Miestnost miestnost) {
+        MiestnostFrom = miestnost;
     }
+
+    public Miestnost getMiestnostTo() {
+        return MiestnostTo;
+    }
+
+    public void setMiestnostTo(Miestnost miestnost) {
+        MiestnostTo = miestnost;
+    }
+
 
     public Osoba getOsoba() {
         return Osoba;
@@ -126,10 +138,11 @@ public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFil
 
     @Override
     public boolean filterFunctionResult(String searchString) {
-        if(this.Miestnost == null || this.Tovar == null)
+        if(this.MiestnostFrom == null || this.MiestnostTo == null || this.Tovar == null)
             return false;
 
-        return this.Miestnost.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()) ||
+        return this.MiestnostFrom.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()) ||
+                this.MiestnostTo.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()) ||
                 this.Tovar.getNazov().toLowerCase().contains(searchString.toLowerCase().trim());
     }
 

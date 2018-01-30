@@ -71,6 +71,11 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
     }
 
     @Override
+    public String toString() {
+        return Nazov.toString();
+    }
+
+    @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(Id);
         parcel.writeString(Nazov);

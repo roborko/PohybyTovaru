@@ -52,4 +52,9 @@ public class TypTransakcie {
     public void setAssignedResourceId_Black(int assignedResourceId_Black) {
         AssignedResourceId_Black = assignedResourceId_Black;
     }
+
+    @Override
+    public String toString() {
+        return Nazov.toString();
+    }
 }

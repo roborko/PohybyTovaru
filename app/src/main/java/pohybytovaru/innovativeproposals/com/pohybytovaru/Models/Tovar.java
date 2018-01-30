@@ -93,6 +93,11 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
     }
 
     @Override
+    public String toString() {
+        return Nazov.toString();
+    }
+
+    @Override
     public boolean filterFunctionResult(String searchString) {
         return this.Nazov.toLowerCase().contains(searchString.toLowerCase().trim());
     }
