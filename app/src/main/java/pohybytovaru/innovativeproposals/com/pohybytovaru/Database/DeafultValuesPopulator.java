@@ -36,27 +36,31 @@ public class DeafultValuesPopulator {
             if (transakcieList.size() == 0) {
                 TypTransakcie add = new TypTransakcie();
                 add.setNazov(context.getString(R.string.TransactionType_Add));
+                add.setINTERNAL_NAME(context.getString(R.string.TransactionType_Add));
                 add.setAssignedResourceId_Black(R.drawable.ic_add_black_24dp);
                 add.setAssignedResourceId_White(R.drawable.ic_add_white_24dp);
 
                 TypTransakcie move = new TypTransakcie();
                 move.setNazov(context.getString(R.string.TransactionType_Move));
+                move.setINTERNAL_NAME(context.getString(R.string.TransactionType_Move));
                 //no icon for presun necessary
 
-                TypTransakcie remove = new TypTransakcie();
-                remove.setNazov(context.getString(R.string.TransactionType_Remove));
-                remove.setAssignedResourceId_Black(R.drawable.ic_remove_black_24dp);
-                remove.setAssignedResourceId_White(R.drawable.ic_remove_white_24dp);
+//                TypTransakcie remove = new TypTransakcie();
+//                remove.setNazov(context.getString(R.string.TransactionType_Remove));
+//                remove.setINTERNAL_NAME(context.getString(R.string.TransactionType_Remove));
+//                remove.setAssignedResourceId_Black(R.drawable.ic_remove_black_24dp);
+//                remove.setAssignedResourceId_White(R.drawable.ic_remove_white_24dp);
 
                 TypTransakcie delete = new TypTransakcie();
                 delete.setNazov(context.getString(R.string.TransactionType_Delete));
+                delete.setINTERNAL_NAME(context.getString(R.string.TransactionType_Delete));
                 delete.setAssignedResourceId_Black(R.drawable.ic_delete_black_24dp);
                 delete.setAssignedResourceId_White(R.drawable.ic_delete_white_24dp);
 
 
                 transakcieDao.create(add);
                 transakcieDao.create(move);
-                transakcieDao.create(remove);
+//                transakcieDao.create(remove);
                 transakcieDao.create(delete);
             }
         } catch (SQLException ex) {

@@ -38,6 +38,9 @@ public class DataBindingConverters {
 
     @BindingConversion
     public static String convertDateToDisplayedText(Date date){
+        if(date == null)
+            return null;
+
         return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date);
     }
 }

@@ -72,7 +72,7 @@
                     android:id="@+id/activity_pohyb_tovar_transactionType_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"></Spinner>
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <TextView
@@ -84,8 +84,22 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/activity_pohyb_tovar_selectedTovar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-15dp" />
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/activity_pohyb_tovar_inputLayout_pocetKusov"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/activity_pohyb_tovar_detail_pocetKusov"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pocet kusov"
+                    android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/activity_pohyb_tovar_layout_miestnostFrom"

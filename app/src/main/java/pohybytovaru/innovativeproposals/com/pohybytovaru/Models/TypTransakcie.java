@@ -16,6 +16,9 @@ public class TypTransakcie {
     private String Nazov;
 
     @DatabaseField
+    private String INTERNAL_NAME;
+
+    @DatabaseField
     private int AssignedResourceId_White;
 
     @DatabaseField
@@ -51,6 +54,14 @@ public class TypTransakcie {
 
     public void setAssignedResourceId_Black(int assignedResourceId_Black) {
         AssignedResourceId_Black = assignedResourceId_Black;
+    }
+
+    public String getINTERNAL_NAME() {
+        return INTERNAL_NAME;
+    }
+
+    public void setINTERNAL_NAME(String INTERNAL_NAME) {
+        this.INTERNAL_NAME = INTERNAL_NAME;
     }
 
     @Override

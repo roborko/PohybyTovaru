@@ -82,8 +82,6 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         if (resultCode == Activity.RESULT_OK && data.hasExtra(CODE_INTENT_TOVAR)) {
             //deserialize object
             Tovar result = data.getParcelableExtra(CODE_INTENT_TOVAR);
-
-            //TODO Add new miestnost / Update already existing object
             if (result.getId() == 0)
                 AddNewItem(result);
             else
