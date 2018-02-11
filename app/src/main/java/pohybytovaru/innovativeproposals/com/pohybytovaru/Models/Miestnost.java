@@ -6,7 +6,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
@@ -23,6 +25,13 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
     private String Nazov;
     @DatabaseField
     private boolean JeSklad;
+
+    @ForeignCollectionField(columnName = "AktualneMnozstvo", eager = true)
+    private ForeignCollection<AktualneMnozstvo> aktualneMnozstvo;
+
+    public ForeignCollection<AktualneMnozstvo> AktualneMnozstvo() {
+        return aktualneMnozstvo;
+    }
 
     private boolean Selected;
 

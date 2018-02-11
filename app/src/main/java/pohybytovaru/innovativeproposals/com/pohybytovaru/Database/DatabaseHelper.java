@@ -11,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.AktualneMnozstvo;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Osoba;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
@@ -33,6 +34,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<Pohyb, Integer> mPohybDAO = null;
     private Dao<Tovar, Integer> mTovarDAO = null;
     private Dao<TypTransakcie, Integer> mTypTransakcieDAO = null;
+    private Dao<AktualneMnozstvo, Integer> mAktualneMnozstvoDAO = null;
 
     private static DatabaseHelper sDatabaseHelper;
 
@@ -53,6 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Miestnost.class);
             TableUtils.createTable(connectionSource, Pohyb.class);
             TableUtils.createTable(connectionSource, TypTransakcie.class);
+            TableUtils.createTable(connectionSource, AktualneMnozstvo.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -68,6 +71,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Miestnost.class, true);
             TableUtils.dropTable(connectionSource, Pohyb.class, true);
             TableUtils.dropTable(connectionSource, TypTransakcie.class, true);
+            TableUtils.dropTable(connectionSource, AktualneMnozstvo.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
         } catch (SQLException e) {
@@ -119,11 +123,21 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public Dao<TypTransakcie, Integer> TypTransakcieDAO() {
         try {
             if (mTypTransakcieDAO == null)
-                mTypTransakcieDAO= getDao(TypTransakcie.class);
+                mTypTransakcieDAO = getDao(TypTransakcie.class);
         } catch (SQLException ex) {
             Log.e("TYPTRANSAKCIE_DAO", "Error occured while fetching DAO: " + ex.getMessage());
         }
         return mTypTransakcieDAO;
+    }
+
+    public Dao<AktualneMnozstvo, Integer> AktualneMnozstvoDAO() {
+        try {
+            if (mAktualneMnozstvoDAO == null)
+                mAktualneMnozstvoDAO = getDao(AktualneMnozstvo.class);
+        } catch (SQLException ex) {
+            Log.e("AktualneMnozstvoDAO", "Error occured while fetching DAO: " + ex.getMessage());
+        }
+        return mAktualneMnozstvoDAO;
     }
 
     @Override
@@ -133,6 +147,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         mOsobaDAO = null;
         mMiestnostDAO = null;
         mPohybDAO = null;
-        mTypTransakcieDAO=null;
+        mTypTransakcieDAO = null;
+        mAktualneMnozstvoDAO = null;
     }
 }

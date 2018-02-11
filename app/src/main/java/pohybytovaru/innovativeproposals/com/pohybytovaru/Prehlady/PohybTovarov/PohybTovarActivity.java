@@ -147,7 +147,10 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     }
 
     public void onItemClick(View view, Pohyb item) {
-        //not implemented here
+        if (dataAdapter.getSelectedItemsCount() > 0) {
+            //at least one item is selected, trigger select event instead of click event
+            this.onItemLongClick(view,item);
+        }
     }
 
     //uzivatel stlacil dlho nejaku polozku

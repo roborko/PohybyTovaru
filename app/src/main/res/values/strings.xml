@@ -30,6 +30,8 @@
     <string name="activity_ZoznamTovarov_Detail">Detail</string>
     <string name="hint_TovarMinimalneMnozstvo">Minimalne mnozstvo na sklade</string>
     <string name="lbl_error_hint_tovar_nazov">Nazov tovaru musi byt vyplneny.</string>
+    <string name="hint_movement_from">z:&#160;</string>
+    <string name="hint_movement_to">do:&#160;</string>
 
 
     <string name="TransactionType_Add">Prijem</string>
@@ -41,4 +43,5 @@
 
     <string name="date_format">%1$td.%1$tm.%1$tY %1$tHH:%1$tmm</string>
     <string name="hint_tovarLookup">Vyhladat Tovar</string>
+    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Povodny pocet kusov v miestnosti</string>
 </resources>

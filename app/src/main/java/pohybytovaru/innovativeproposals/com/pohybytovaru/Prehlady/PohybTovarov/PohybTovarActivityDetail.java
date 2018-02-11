@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.androidannotations.annotations.AfterViews;
@@ -30,6 +32,7 @@ import java.util.List;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.AktualneMnozstvo;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
@@ -70,6 +73,12 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     @ViewById(R.id.activity_pohyb_tovar_detail_pocetKusov)
     EditText pocetKusov;
 
+    @ViewById(R.id.lbl_miestnostFrom_pocetKusov)
+    TextView miestnostFrom_povodnyPocetKusovTovaru;
+
+    @ViewById(R.id.lbl_miestnostTo_pocetKusov)
+    TextView miestnostTo_povodnyPocetKusovTovaru;
+
     @ViewById(R.id.detailView_Image)
     ImageView tovarImage;
 
@@ -83,8 +92,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     Miestnost miestnostFrom;
     Miestnost miestnostTo;
 
+    AktualneMnozstvo miestnostFromMnozstvo;
+    AktualneMnozstvo miestnostToMnozstvo;
 
-//    @Extra("EXTRA_POHYB")
+    //    @Extra("EXTRA_POHYB")
     Pohyb passedInPohyb;
 
     @AfterViews
@@ -127,6 +138,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             inputLayout_pocetKusov.setError("Musite zadat hodnotu vacsiu ako 0");
             return false;
         }
+        
 
         return true;
     }
@@ -149,6 +161,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             passedInPohyb.setMiestnostFrom(null);
         }
 
+        if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Move))) {
+            //add item to designated room
+            passedInPohyb.setMiestnostFrom(miestnostFrom);
+        }
+
 
         passedInPohyb.setPocetKusov(Integer.valueOf(pocetKusov.getText().toString()));
         passedInPohyb.setTypPohybu(transactionType);
@@ -157,14 +174,48 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         passedInPohyb.setMiestnostTo(miestnostTo);
 
         Dao<Pohyb, Integer> pohybDAO = getHelper().PohybDAO();
+        Dao<AktualneMnozstvo, Integer> aktualneMnozstvoDAO = getHelper().AktualneMnozstvoDAO();
 
         try {
             if (passedInPohyb.getId() == 0) {
                 //new entry
                 pohybDAO.create(passedInPohyb);
+
             } else {
                 //already existing entry
                 pohybDAO.update(passedInPohyb);
+            }
+
+            //calculate aktualne mnozstvo To
+            if (miestnostToMnozstvo == null) {
+                //new entry, can only be +
+                AktualneMnozstvo mnozstvoTo = new AktualneMnozstvo();
+                mnozstvoTo.setTovar(selectedTovar);
+                mnozstvoTo.setMiestnost(miestnostTo);
+                mnozstvoTo.setMnozstvo(passedInPohyb.getPocetKusov());
+                aktualneMnozstvoDAO.create(mnozstvoTo);
+            } else {
+                //entry already exists, check if delete or add
+                if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
+                    //substract from original
+                    miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
+                } else {
+                    miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() + passedInPohyb.getPocetKusov());
+                }
+
+                //update
+                aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+            }
+
+            //check for MOVE
+            if (passedInPohyb.getMiestnostFrom() != null) {
+                if (miestnostFromMnozstvo != null) {
+                    //aktualne mnozstvo musi byt zadefinovane, inac nemoze povolit odobrat z danej miestnosti!
+                    miestnostFromMnozstvo.setMnozstvo(miestnostFromMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
+
+                    //update
+                    aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+                }
             }
 
             this.finish();
@@ -201,15 +252,46 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     public void tovarSelectionChanged(boolean selected, Tovar tovar) {
         selectedTovar = tovar;
         tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));
+
+        //trigger events to recalculate aktualne mnozstvo
+        miestnostFromChanged(true, miestnostFrom);
+        miestnostToChanged(true, miestnostTo);
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_miestnostFromSpinner)
     public void miestnostFromChanged(boolean selected, Miestnost miestnost) {
         miestnostFrom = miestnost;
+
+        if (miestnostFrom == null || selectedTovar == null) return;
+        miestnostFromMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
+
+        if (miestnostFromMnozstvo == null) {
+            miestnostFrom_povodnyPocetKusovTovaru.setText("0");
+        } else {
+            miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostFromMnozstvo.getMnozstvo()));
+        }
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
     public void miestnostToChanged(boolean selected, Miestnost miestnost) {
         miestnostTo = miestnost;
+        if (miestnostTo == null || selectedTovar == null) return;
+        miestnostToMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
+
+        if (miestnostToMnozstvo == null) {
+            miestnostTo_povodnyPocetKusovTovaru.setText("0");
+        } else {
+            miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostToMnozstvo.getMnozstvo()));
+        }
+    }
+
+    private AktualneMnozstvo tryGetAktualneMnozstvo(ForeignCollection<AktualneMnozstvo> mnozstva, int tovarId) {
+        for (AktualneMnozstvo aktualneMnozstvo : mnozstva) {
+            if (aktualneMnozstvo.getTovar().getId() == tovarId) {
+                return aktualneMnozstvo;
+            }
+        }
+
+        return null;
     }
 }

@@ -121,6 +121,20 @@
                     android:layout_height="wrap_content"
                     app:hintText="Vyber miestnosti"
                     app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"/>
+
+                <TextView
+                    android:id="@+id/lbl_miestnostFrom_pocetKusov"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dialog_padding_actionButtons"
+                    android:text="16"
+                    android:textSize="16sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -143,6 +157,21 @@
                     android:layout_height="wrap_content"
                     app:hintText="Vyber miestnosti"
                     app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"/>
+
+                <TextView
+                    android:id="@+id/lbl_miestnostTo_pocetKusov"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dialog_padding_actionButtons"
+                    android:text="16"
+                    android:textSize="16sp"/>
+
             </LinearLayout>
 
         </LinearLayout>

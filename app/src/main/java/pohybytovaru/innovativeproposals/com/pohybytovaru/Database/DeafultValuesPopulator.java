@@ -11,6 +11,9 @@ import org.androidannotations.annotations.App;
 import java.sql.SQLException;
 import java.util.List;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.AktualneMnozstvo;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 
@@ -23,7 +26,9 @@ public class DeafultValuesPopulator {
     public static void PopulateDefaultValues(Context context) {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         PopulateTypTransakcie(context, databaseHelper);
-
+        populateMiestnosti(context, databaseHelper);
+        populateTovar(context, databaseHelper);
+        populateAKtualneMnozstvo(context, databaseHelper);
         databaseHelper.close();
         databaseHelper = null;
         context = null;
@@ -43,6 +48,9 @@ public class DeafultValuesPopulator {
                 TypTransakcie move = new TypTransakcie();
                 move.setNazov(context.getString(R.string.TransactionType_Move));
                 move.setINTERNAL_NAME(context.getString(R.string.TransactionType_Move));
+                move.setAssignedResourceId_Black(R.drawable.ic_swap_horiz_black_24dp);
+                move.setAssignedResourceId_White(R.drawable.ic_swap_horiz_white_24dp);
+
                 //no icon for presun necessary
 
 //                TypTransakcie remove = new TypTransakcie();
@@ -64,7 +72,85 @@ public class DeafultValuesPopulator {
                 transakcieDao.create(delete);
             }
         } catch (SQLException ex) {
-            Log.e("DefaultValuesPopulator", "Cannot create default TransactionTypes: " + ex.getMessage() );
+            Log.e("DefaultValuesPopulator", "Cannot create default TransactionTypes: " + ex.getMessage());
+        }
+    }
+
+    private static void populateTovar(Context context, DatabaseHelper databaseHelper) {
+        Dao<Tovar, Integer> tovarDao = databaseHelper.TovarDAO();
+
+        try {
+            List<Tovar> tovarList = tovarDao.queryForAll();
+            if (tovarList.size() == 0) {
+                Tovar pocitac = new Tovar();
+                pocitac.setNazov("Pocitac");
+                pocitac.setMinimalneMnozstvo(0);
+
+                Tovar stolicka = new Tovar();
+                stolicka.setNazov("Stolicka");
+                stolicka.setMinimalneMnozstvo(0);
+
+
+                tovarDao.create(pocitac);
+                tovarDao.create(stolicka);
+            }
+
+        } catch (SQLException ex) {
+            Log.e("DefaultValuesPopulator", "Cannot create default TransactionTypes: " + ex.getMessage());
+        }
+    }
+
+    private static void populateMiestnosti(Context context, DatabaseHelper databaseHelper) {
+        Dao<Miestnost, Integer> miestnostsDao = databaseHelper.MiestnostDAO();
+
+        try {
+            List<Miestnost> miestnostList = miestnostsDao.queryForAll();
+
+            if (miestnostList.size() == 0) {
+                Miestnost obyvacka = new Miestnost();
+                obyvacka.setNazov("Obyvacka");
+
+                Miestnost kuchyna = new Miestnost();
+                kuchyna.setNazov("Kuchyna");
+
+                Miestnost spajza = new Miestnost();
+                spajza.setNazov("Spajza");
+                spajza.setJeSklad(true);
+
+
+                miestnostsDao.create(obyvacka);
+                miestnostsDao.create(kuchyna);
+                miestnostsDao.create(spajza);
+            }
+
+        } catch (SQLException ex) {
+            Log.e("DefaultValuesPopulator", "Cannot create default TransactionTypes: " + ex.getMessage());
+        }
+    }
+
+
+    private static void populateAKtualneMnozstvo(Context context, DatabaseHelper databaseHelper) {
+        Dao<AktualneMnozstvo, Integer> aktualneMnozstvoDao = databaseHelper.AktualneMnozstvoDAO();
+        Dao<Miestnost, Integer> miestnostsDao = databaseHelper.MiestnostDAO();
+        Dao<Tovar, Integer> tovarDao = databaseHelper.TovarDAO();
+
+        try {
+            List<AktualneMnozstvo> mnozstvoList = aktualneMnozstvoDao.queryForAll();
+
+            Miestnost firstMiestnost = miestnostsDao.queryForId(1);
+            Tovar firstTovar = tovarDao.queryForId(1);
+
+            if(mnozstvoList.size() == 0){
+                AktualneMnozstvo mnozstvo = new AktualneMnozstvo();
+                mnozstvo.setMiestnost(firstMiestnost);
+                mnozstvo.setTovar(firstTovar);
+                mnozstvo.setMnozstvo(5);
+
+                aktualneMnozstvoDao.create(mnozstvo);
+            }
+
+        } catch (SQLException ex) {
+            Log.e("DefaultValuesPopulator", "Cannot create default TransactionTypes: " + ex.getMessage());
         }
     }
 }
