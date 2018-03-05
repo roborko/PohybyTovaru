@@ -1,5 +1,6 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
+import android.graphics.Bitmap;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -79,7 +81,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     @ViewById(R.id.lbl_miestnostTo_pocetKusov)
     TextView miestnostTo_povodnyPocetKusovTovaru;
 
-    @ViewById(R.id.detailView_Image)
+    @ViewById(R.id.productImage)
     ImageView tovarImage;
 
     List<Tovar> list_tovary = new ArrayList();
@@ -137,10 +139,21 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         if (pocetKusov.getText().toString().equals("")) {
             inputLayout_pocetKusov.setError("Musite zadat hodnotu vacsiu ako 0");
             return false;
+        } else {
+            inputLayout_pocetKusov.setError(null);
         }
-        
 
+        //validacia miestnosti do -> toto je povinne
+        if (miestnostTo == null) {
+            Toast.makeText(this, "Musite najprv vybrat miestnost 'Do'. ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
+    }
+
+    //boolean to determine if we can remove items from room
+    private boolean canDeleteNumberOfItemsFromRoom(double original, double newValue) {
+        return original - newValue >= 0;
     }
 
     @OptionsItem(R.id.menu_item_save)
@@ -152,6 +165,14 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             passedInPohyb = new Pohyb();
 
         if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
+            //try to retrieve aktualne mnozstvo v miestnosti
+            AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
+
+            if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
+                inputLayout_pocetKusov.setError("Nemozete odstranit viac poloziek, ako sa ma v miestnosti povodne nachadzat.");
+                return;
+            }
+
             //remove item from designated room
             passedInPohyb.setMiestnostFrom(null);
         }
@@ -162,6 +183,21 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         }
 
         if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Move))) {
+            //validacia miestnosti z -> toto je povinne pre tento krok
+            if (miestnostFrom == null) {
+                Toast.makeText(this, "Musite najprv vybrat miestnost 'Z'. ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //try to retrieve aktualne mnozstvo v miestnosti
+            AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
+
+            if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
+                inputLayout_pocetKusov.setError("Nemozete presunut viac poloziek, ako sa povodne v miestnosti nachadza.");
+                return;
+            }
+
+
             //add item to designated room
             passedInPohyb.setMiestnostFrom(miestnostFrom);
         }
@@ -251,8 +287,13 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     @ItemSelect(R.id.activity_pohyb_tovar_selectedTovar)
     public void tovarSelectionChanged(boolean selected, Tovar tovar) {
         selectedTovar = tovar;
-        tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));
 
+        Bitmap resultImage = ImageHelpers.convertBytesToBitmap(tovar.getFotografia());
+        if (resultImage == null) {
+            tovarImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_do_not_disturb_alt_black_18dp));
+        } else {
+            tovarImage.setImageBitmap(resultImage);
+        }
         //trigger events to recalculate aktualne mnozstvo
         miestnostFromChanged(true, miestnostFrom);
         miestnostToChanged(true, miestnostTo);

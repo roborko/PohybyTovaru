@@ -20,6 +20,7 @@
 
     <style name="AppTheme.DialogActivity" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert"/>
 
+
     <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
 
     </style>

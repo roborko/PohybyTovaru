@@ -9,34 +9,15 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="exitUntilCollapsed|scroll">
-
-            <ImageView
-                android:id="@+id/detailView_Image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:transitionName="detailView_Image" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -53,58 +34,158 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_parent_layout">
+            android:padding="@dimen/padding_parent_layout"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_parent_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="@dimen/dimen_stepper_circle_size"
+                    android:height="@dimen/dimen_stepper_circle_size"
+                    android:background="@drawable/circular_background"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Krok 1 - Vyber typu transakcie"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_pohyb_tovar_layout_transactionType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginLeft="@dimen/margin_stepper_content_offset"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:text="Typ transakcie" />
 
                 <Spinner
                     android:id="@+id/activity_pohyb_tovar_transactionType_spinner"
+                    style="@android:style/Widget.Material.Spinner.Underlined"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_height="@dimen/dimen_stepper_height"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:padding="0dp" />
             </LinearLayout>
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="Vybraty tovar" />
+                android:layout_marginTop="@dimen/activity_doublevertical_margin">
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/activity_pohyb_tovar_selectedTovar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="-15dp" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/activity_pohyb_tovar_inputLayout_pocetKusov"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
-
-                <EditText
-                    android:id="@+id/activity_pohyb_tovar_detail_pocetKusov"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Pocet kusov"
-                    android:inputType="numberDecimal" />
-            </android.support.design.widget.TextInputLayout>
+                    android:width="@dimen/dimen_stepper_circle_size"
+                    android:height="@dimen/dimen_stepper_circle_size"
+                    android:background="@drawable/circular_background"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/colorWhite"
+
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Krok 2 - Vyber produktu"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_stepper_content_offset"
+                android:orientation="horizontal">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="@dimen/dimen_circular_image_size"
+                    android:layout_height="@dimen/dimen_circular_image_size"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="@dimen/dimen_row_icon_horizontal_margin"
+                    android:layout_marginRight="@dimen/dimen_row_icon_horizontal_margin"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_width="0dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Vybraty tovar" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/activity_pohyb_tovar_selectedTovar"
+                        style="@android:style/Widget.Material.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_stepper_height" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_doublevertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="@dimen/dimen_stepper_circle_size"
+                    android:height="@dimen/dimen_stepper_circle_size"
+                    android:background="@drawable/circular_background"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/colorWhite"
+
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Krok 3 - Detail transakcie"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_pohyb_tovar_layout_miestnostFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_stepper_content_offset"
                 android:orientation="vertical">
 
                 <TextView
@@ -118,29 +199,41 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/activity_pohyb_tovar_miestnostFromSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_stepper_height"
                     app:hintText="Vyber miestnosti"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom" />
+                    app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom"
+                    style="@android:style/Widget.Material.Spinner.Underlined"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/lbl_miestnostFrom_pocetKusov"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dialog_padding_actionButtons"
-                    android:text="16"
-                    android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/lbl_miestnostFrom_pocetKusov"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="@dimen/dialog_padding_actionButtons"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_pohyb_tovar_layout_miestnostTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_stepper_content_offset"
                 android:orientation="vertical">
 
                 <TextView
@@ -154,26 +247,73 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/activity_pohyb_tovar_miestnostToSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_stepper_height"
                     app:hintText="Vyber miestnosti"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom" />
+                    app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom"
+                    style="@android:style/Widget.Material.Spinner.Underlined"/>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"/>
+                    android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"
+                    android:layout_gravity="center_vertical"/>
 
                 <TextView
                     android:id="@+id/lbl_miestnostTo_pocetKusov"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dialog_padding_actionButtons"
-                    android:text="16"
-                    android:textSize="16sp"/>
-
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginLeft="@dimen/dialog_padding_actionButtons"/>
+                </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_doublevertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="@dimen/dimen_stepper_circle_size"
+                    android:height="@dimen/dimen_stepper_circle_size"
+                    android:background="@drawable/circular_background"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@color/colorWhite"
+
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Krok 4 - # kusov v transakcii"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/activity_pohyb_tovar_inputLayout_pocetKusov"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_stepper_content_offset"                >
+
+                <EditText
+                    android:id="@+id/activity_pohyb_tovar_detail_pocetKusov"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pocet kusov v transakcii"
+                    android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

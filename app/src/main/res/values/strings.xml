@@ -43,5 +43,5 @@
 
     <string name="date_format">%1$td.%1$tm.%1$tY %1$tHH:%1$tmm</string>
     <string name="hint_tovarLookup">Vyhladat Tovar</string>
-    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Povodny pocet kusov v miestnosti</string>
+    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Povodny pocet kusov v miestnosti:</string>
 </resources>
