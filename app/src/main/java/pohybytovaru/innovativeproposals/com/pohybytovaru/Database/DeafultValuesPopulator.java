@@ -78,7 +78,7 @@ public class DeafultValuesPopulator {
 
     private static void populateTovar(Context context, DatabaseHelper databaseHelper) {
         Dao<Tovar, Integer> tovarDao = databaseHelper.TovarDAO();
-
+        //lubos comment TODO 
         try {
             List<Tovar> tovarList = tovarDao.queryForAll();
             if (tovarList.size() == 0) {
