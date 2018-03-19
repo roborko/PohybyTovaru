@@ -1,0 +1,11 @@
+
+
+urob:
+- po zapise pohybu sa nerefresne list
+- zadavanie pohybu - vyber inventara - hore prepis Select Item s Zoznam inventarov
+- zadavanie pohybu - vyber meistnosti - hore prepis Select Item s Miestnost Z
+- zadavanie pohybu - vyber meistnosti - hore prepis Select Item s Miestnost Do
+- zadavanie pohybu - nahrad Close s Navrat bez ulozenia - daj najprv Dialog otazku
+- naprogramuj Inventar v miestnost
+- co robi import ?
+- urob export do pdf, csv  a mail
