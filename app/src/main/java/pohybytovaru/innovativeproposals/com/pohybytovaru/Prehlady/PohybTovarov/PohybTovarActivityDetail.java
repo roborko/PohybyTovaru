@@ -137,7 +137,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
     private boolean validateUserEntries() {
         if (pocetKusov.getText().toString().equals("")) {
-            inputLayout_pocetKusov.setError("Musite zadat hodnotu vacsiu ako 0");
+            inputLayout_pocetKusov.setError(getString(R.string.MusiteZadatHodnotuViacNezNula));
             return false;
         } else {
             inputLayout_pocetKusov.setError(null);
@@ -145,7 +145,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         //validacia miestnosti do -> toto je povinne
         if (miestnostTo == null) {
-            Toast.makeText(this, "Musite najprv vybrat miestnost 'Do'. ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.NajprvMusiteVybratMiestnost, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -202,7 +202,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             passedInPohyb.setMiestnostFrom(miestnostFrom);
         }
 
-
         passedInPohyb.setPocetKusov(Integer.valueOf(pocetKusov.getText().toString()));
         passedInPohyb.setTypPohybu(transactionType);
         passedInPohyb.setTovar(selectedTovar);
@@ -253,15 +252,12 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                     aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
                 }
             }
-
             this.finish();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
 
     @ItemSelect(R.id.activity_pohyb_tovar_transactionType_spinner)
     public void transactionTypeChanged(boolean selected, TypTransakcie typTransakcie) {
@@ -274,14 +270,17 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) {
             //add item to designated room
+
             layout_miestnostFrom.setVisibility(View.GONE);
+            //activity_pohyb_tovar_layout_miestnostFrom.set
+        } else {
+            layout_miestnostFrom.setVisibility(View.VISIBLE);
         }
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Move))) {
             //move item from one room to another
             layout_miestnostFrom.setVisibility(View.VISIBLE);
         }
-
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_selectedTovar)

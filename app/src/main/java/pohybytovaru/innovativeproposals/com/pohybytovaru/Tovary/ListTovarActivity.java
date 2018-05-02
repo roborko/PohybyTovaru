@@ -139,7 +139,6 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         } catch (SQLException ex) {
             Log.e("LIST_MIESTNOSTI", "Cannot create new miestnost. " + ex.getMessage());
         }
-
     }
 
     private void UpdateExistingItem(Tovar item) {

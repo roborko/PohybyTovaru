@@ -1,3 +1,8 @@
+2.5.18
+- upravene layouty
+- do tovaru pridany kod tovaru
+- nejake stringy s diakritikou
+
 
 
 urob:
@@ -8,4 +13,4 @@ urob:
 - zadavanie pohybu - nahrad Close s Navrat bez ulozenia - daj najprv Dialog otazku
 - naprogramuj Inventar v miestnost
 - co robi import ?
-- urob export do pdf, csv  a mail
+- urob export do pdf, csv  cez mail

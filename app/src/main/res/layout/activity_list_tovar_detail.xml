@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:contentDescription="obrazok"
                 android:transitionName="detailView_Image" />
 
             <android.support.v7.widget.Toolbar
@@ -36,8 +37,6 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
-
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -47,7 +46,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -57,7 +56,8 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/inputLayout_TovarNazov"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_parent_layout">
                 <EditText
                     android:id="@+id/txt_TovarName"
                     android:layout_width="match_parent"
@@ -70,30 +70,47 @@
                 android:id="@+id/inputLayout_Mnozstvo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:layout_constraintTop_toBottomOf="@id/inputLayout_TovarNazov">
+                android:layout_below="@id/inputLayout_TovarNazov">
                 <EditText
-                    android:id="@+id/txt_Mnozstvo"
+                    android:id="@+id/txt_MinMnozstvo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:hint="@string/hint_TovarMinimalneMnozstvo" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                app:layout_constraintTop_toBottomOf="@id/inputLayout_Mnozstvo"
+                android:id="@+id/inputLayout_KodTovaru"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/inputLayout_Mnozstvo"
+                >
+                <EditText
+                    android:id="@+id/txt_KodTovaru"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:hint="Kod tovaru" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                app:layout_constraintTop_toBottomOf="@id/inputLayout_KodTovaru"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/inputLayout_KodTovaru"
                 >
                 <EditText
                     android:id="@+id/txt_Poznamka"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textMultiLine"
-                    android:hint="@string/hint_TovarMinimalneMnozstvo" />
+                    android:hint="Poznamka" />
             </android.support.design.widget.TextInputLayout>
-        </android.support.constraint.ConstraintLayout>
+
+
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

@@ -110,7 +110,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="Krok 2 - Vyber produktu"
+                    android:text="Krok 2 - Vyber inventara"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -193,14 +193,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:text="Presun z miesnosti"
+                    android:text="Presun z miestnosti"
+                    android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/activity_pohyb_tovar_selectedTovar" />
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/activity_pohyb_tovar_miestnostFromSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_stepper_height"
-                    app:hintText="Vyber miestnosti"
+                    app:hintText="@string/VyberMiestnosti"
+                    android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom"
                     style="@android:style/Widget.Material.Spinner.Underlined"/>
 
@@ -214,6 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/activity_pohyb_tovar_detail_povodnyPocetKusov"
+                        android:visibility="visible"
                         android:layout_gravity="center_vertical"/>
 
                     <TextView
@@ -221,7 +224,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+
                         android:text="0"
+                        android:visibility="visible"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
                         android:layout_marginLeft="@dimen/dialog_padding_actionButtons"/>
@@ -241,7 +246,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:text="Presun do miesnosti"
+                    android:text="Presun do miestnosti"
                     app:layout_constraintTop_toBottomOf="@id/activity_pohyb_tovar_selectedTovar" />
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner

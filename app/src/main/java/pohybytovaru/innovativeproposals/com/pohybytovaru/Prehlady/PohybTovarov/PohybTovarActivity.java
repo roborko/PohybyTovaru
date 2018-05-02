@@ -118,6 +118,9 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         }
     }
     @OnActivityResult(POHYB_REQUEST_CODE)
+
+    // tu refreshni ked prida novy pohyb
+
     void onResult(int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
             //deserialize object
@@ -256,7 +259,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         return true;
     }
 
-
     private Integer selectedListItems = 0;
 
     private void clearSelectedItems() {
@@ -268,7 +270,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
         //update menu layout as delete icon now should disappear
         this.onPrepareOptionsMenu(savedMenu);
-
     }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

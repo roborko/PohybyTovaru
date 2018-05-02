@@ -34,6 +34,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
 @EActivity(R.layout.activity_list_miestnosti)
+
 public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Miestnost> {
     public final static int MIESTNOST_REQUEST_CODE = 19;
 

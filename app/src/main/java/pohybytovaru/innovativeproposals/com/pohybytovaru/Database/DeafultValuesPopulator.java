@@ -90,7 +90,6 @@ public class DeafultValuesPopulator {
                 stolicka.setNazov("Stolicka");
                 stolicka.setMinimalneMnozstvo(0);
 
-
                 tovarDao.create(pocitac);
                 tovarDao.create(stolicka);
             }
@@ -116,7 +115,6 @@ public class DeafultValuesPopulator {
                 Miestnost spajza = new Miestnost();
                 spajza.setNazov("Spajza");
                 spajza.setJeSklad(true);
-
 
                 miestnostsDao.create(obyvacka);
                 miestnostsDao.create(kuchyna);

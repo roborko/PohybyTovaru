@@ -36,9 +36,10 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
     private byte[] Fotografia;
     @DatabaseField
     private double MinimalneMnozstvo;
-
     @DatabaseField
     private String Poznamka;
+    @DatabaseField
+    private String KodTovaru;
 
     private boolean Selected;
 
@@ -87,10 +88,16 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
     public double getMinimalneMnozstvo() {
         return MinimalneMnozstvo;
     }
-
     public void setMinimalneMnozstvo(double minimalneMnozstvo) {
         MinimalneMnozstvo = minimalneMnozstvo;
     }
+    public String getKodTovaru() {
+        return KodTovaru;
+    }
+    public void setKodTovaru(String kodTovaru) {
+        KodTovaru = kodTovaru;
+    }
+
 
     @Override
     public String toString() {
@@ -112,6 +119,7 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
         this.Selected = in.readByte() != 0;
         this.Poznamka = in.readString();
         this.Fotografia = in.createByteArray();
+        this.KodTovaru = in.readString();
     }
 
     @Override
@@ -127,6 +135,7 @@ public class Tovar extends BaseObservable implements Parcelable, IEditableRecycl
         parcel.writeByte((byte) (Selected ? 1 : 0));
         parcel.writeString(Poznamka);
         parcel.writeByteArray(Fotografia);
+        parcel.writeString(KodTovaru);
     }
 
     public static final Parcelable.Creator<Tovar> CREATOR = new Parcelable.Creator<Tovar>() {

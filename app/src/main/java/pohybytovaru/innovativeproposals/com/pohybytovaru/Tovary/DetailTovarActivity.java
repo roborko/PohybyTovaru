@@ -34,7 +34,7 @@ public class DetailTovarActivity extends AppCompatActivity {
     ImageView tovarImage;
 
     @ViewById
-    EditText txt_TovarName, txt_Mnozstvo,txt_Poznamka;
+    EditText txt_TovarName, txt_MinMnozstvo,txt_Poznamka, txt_KodTovaru;
 
     @ViewById
     TextInputLayout inputLayout_TovarNazov;
@@ -52,8 +52,9 @@ public class DetailTovarActivity extends AppCompatActivity {
 
         if(tovar != null){
             txt_TovarName.setText(tovar.getNazov());
-            txt_Mnozstvo.setText(String.valueOf(tovar.getMinimalneMnozstvo()));
+            txt_MinMnozstvo.setText(String.valueOf(tovar.getMinimalneMnozstvo()));
             txt_Poznamka.setText(tovar.getPoznamka());
+            txt_KodTovaru.setText(tovar.getKodTovaru());
             tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));
         }
     }
@@ -104,8 +105,9 @@ public class DetailTovarActivity extends AppCompatActivity {
 
         tovar.setNazov(txt_TovarName.getText().toString());
         tovar.setFotografia(ImageHelpers.getImageBytesFromImageView(tovarImage));
-        tovar.setMinimalneMnozstvo(Double.valueOf(txt_Mnozstvo.getText().toString()));
+        tovar.setMinimalneMnozstvo(Double.valueOf(txt_MinMnozstvo.getText().toString()));
         tovar.setPoznamka(txt_Poznamka.getText().toString());
+        tovar.setKodTovaru(txt_KodTovaru.getText().toString());
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra(ListTovarActivity.CODE_INTENT_TOVAR, tovar);

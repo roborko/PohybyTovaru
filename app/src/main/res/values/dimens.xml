@@ -17,5 +17,5 @@
     <dimen name="dimen_stepper_circle_size">24dp</dimen>
     <dimen name="dimen_stepper_height">42dp</dimen>
     <dimen name="margin_stepper_content_offset">32dp</dimen>
-
+    <dimen name="padding_parent_layout24">24dp</dimen>
 </resources>

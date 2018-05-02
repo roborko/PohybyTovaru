@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/dialog_padding_content">
+        android:gravity="right"
+        android:padding="@dimen/dialog_padding_actionButtons">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputLayout_MiestnostName"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dialog_padding_content"
             android:layout_height="wrap_content">
 
             <EditText
@@ -28,27 +30,26 @@
             android:id="@+id/activity_list_miestnost_jeSklad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/inputLayout_MiestnostName"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:hint="@string/bool_miestnost_distinguisher" />
-    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:padding="@dimen/dialog_padding_actionButtons">
 
         <Button
             android:id="@+id/btn_Cancel"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_below="@id/activity_list_miestnost_jeSklad"
             android:text="@string/lbl_dialog_cancel" />
 
         <Button
             android:id="@+id/btn_Save"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_below="@id/activity_list_miestnost_jeSklad"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/btn_Cancel"
             android:text="@string/lbl_dialog_save" />
