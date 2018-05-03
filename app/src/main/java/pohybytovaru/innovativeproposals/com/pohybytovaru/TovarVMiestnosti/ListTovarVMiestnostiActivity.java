@@ -1,6 +1,8 @@
-package pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti;
+package pohybytovaru.innovativeproposals.com.pohybytovaru.TovarVMiestnosti;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,24 +31,23 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
-@EActivity(R.layout.activity_list_miestnosti)
-
-public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Miestnost> {
-    public final static int MIESTNOST_REQUEST_CODE = 19;
+@EActivity(R.layout.activity_tovar_v_miestnosti)
+public class ListTovarVMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Tovar> {
+    public final static int TOVAR_REQUEST_CODE = 19;
+    public final static String CODE_INTENT_TOVAR = "TOVAR V MIESTNOSTI";
 
     @ViewById
     Toolbar toolbar;
 
     @ViewById
-    RecyclerView miestnostiList;
+    RecyclerView recyclerView;
 
-    private List<Miestnost> data_list = new ArrayList<>();
-    private ListMiestnostiAdapter dataAdapter;
-
+    private List<Tovar> data_list = new ArrayList<>();
+    private ListTovarVMiestnostiAdapter dataAdapter;
 
     @AfterViews
     void bindAdapter() {
@@ -56,61 +57,66 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         GetData();//fetch data
 
         //create new adapter
-        dataAdapter = new ListMiestnostiAdapter(this, R.layout.activity_list_miestnosti_row, this, data_list);
+        dataAdapter = new ListTovarVMiestnostiAdapter(this, R.layout.activity_list_tovar_row, this, data_list);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        miestnostiList.setLayoutManager(layoutManager);
-        miestnostiList.setItemAnimator(new DefaultItemAnimator());
-        miestnostiList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        miestnostiList.setAdapter(dataAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(dataAdapter);
     }
 
     private void GetData() {
         try {
-            Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
-            data_list = miestnostDao.queryForAll();
+            Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
+            data_list = tovarDao.queryForAll();
 
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());
         }
     }
 
-    @OnActivityResult(MIESTNOST_REQUEST_CODE)
+    @OnActivityResult(TOVAR_REQUEST_CODE)
     void onResult(int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
-            //deserialize object
-            Miestnost result = data.getParcelableExtra("EXTRA_MIESTNOST");
 
-            //TODO Add new miestnost / Update already existing object
+   /*     if (resultCode == Activity.RESULT_OK && data.hasExtra(CODE_INTENT_TOVAR)) {
+            //deserialize object
+            Tovar result = data.getParcelableExtra(CODE_INTENT_TOVAR);
             if (result.getId() == 0)
                 AddNewItem(result);
             else
                 UpdateExistingItem(result);
-        }
+        } */
     }
 
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
-        Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
-        intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
-        startActivityForResult(intent, MIESTNOST_REQUEST_CODE);
+        Intent intent = new Intent(this, ListTovarVMiestnostiActivity_.class);
+        startActivityForResult(intent, TOVAR_REQUEST_CODE);
     }
 
     @Override
-    public void onItemClick(Miestnost item) {
-        Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
-        intent.putExtra("EXTRA_MIESTNOST", item);
-        intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
-        startActivityForResult(intent, MIESTNOST_REQUEST_CODE);
-    }
-
-    public void onItemClick(View view, Miestnost item) {
+    public void onItemClick(Tovar item) {
         //not implemented here
     }
 
+    // detail potom moze prejst do zoznamu podla miestnosti
+    @SuppressLint("RestrictedApi")
+    public void onItemClick(View view, Tovar item) {
+
+      /*  Intent intent = new Intent(this, DetailTovarActivity_.class);
+        intent.putExtra(CODE_INTENT_TOVAR, item);
+        View imageView = view.findViewById(R.id.detailView_Image); // ma natvrdo v layoute devinovany src
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                ListTovarActivity.this, imageView, "detailView_Image");
+
+        startActivityForResult(intent, TOVAR_REQUEST_CODE, options.toBundle()); */
+    }
+
+
     //uzivatel stlacil dlho nejaku polozku
     @Override
-    public boolean onItemLongClick(View view, Miestnost item) {
+    public boolean onItemLongClick(View view, Tovar item) {
         int position = (int) view.getTag();
 
         dataAdapter.toggleItemSelection(position);
@@ -125,23 +131,23 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         return true;
     }
 
-    private void AddNewItem(Miestnost item) {
+
+    private void AddNewItem(Tovar item) {
         try {
-            Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
-            miestnostDao.create(item);
+            Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
+            tovarDao.create(item);
 
             //add item to adapter
             dataAdapter.AddItem(item);
         } catch (SQLException ex) {
             Log.e("LIST_MIESTNOSTI", "Cannot create new miestnost. " + ex.getMessage());
         }
-
     }
 
-    private void UpdateExistingItem(Miestnost item) {
-        Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
+    private void UpdateExistingItem(Tovar item) {
+        Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
         try {
-            miestnostDao.update(item);
+            tovarDao.update(item);
 
             //update collection
             this.dataAdapter.UpdateItem(item);
@@ -154,20 +160,20 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
     //Method which triggers when user clicks 'trash' icon from app menu (erase selected items)
     private void DeleteSelectedMiestnosti() {
         //retrieve list of all selected items
-        List<Integer> itemsToRemove =  dataAdapter.getSelectedItemsId();
+        List<Integer> itemsToRemove = dataAdapter.getSelectedItemsId();
 
-        try{
+        try {
 
             //iterate from last to first element in order to keep correct positions of selected items under sparse boolean array
-            for (int iItem = itemsToRemove.size()-1; iItem >= 0; iItem--) {
-                Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
-                miestnostDao.deleteById(itemsToRemove.get(iItem));
+            for (int iItem = itemsToRemove.size() - 1; iItem >= 0; iItem--) {
+                Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
+                tovarDao.deleteById(itemsToRemove.get(iItem));
                 dataAdapter.RemoveItemById(itemsToRemove.get(iItem));
             }
 
             //recreate top menu
             clearSelectedItems();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             Log.e("LIST_MIESTNOSTI", "Cannot delete miestnost. " + ex.getMessage());
         }
     }
@@ -224,6 +230,7 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         this.onPrepareOptionsMenu(savedMenu);
 
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menu_delete = menu.findItem(R.id.delete);

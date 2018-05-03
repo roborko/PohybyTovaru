@@ -12,6 +12,7 @@
                     android:title="Pohyby Tovarov" />
 
                 <item
+                    android:id="@+id/nav_InventarVMiestnosti"
                     android:icon="@drawable/ic_event_seat_white_24dp"
                     android:title="Inventar v miestnosti" />
             </menu>

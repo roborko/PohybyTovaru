@@ -3,6 +3,9 @@
 - do tovaru pridany kod tovaru
 - nejake stringy s diakritikou
 
+3.5.18
+- Tovar v miestnosti - 1 .krok
+- pokus o aktualizaciu  pohybov po pridani noveho pohybu
 
 
 urob:

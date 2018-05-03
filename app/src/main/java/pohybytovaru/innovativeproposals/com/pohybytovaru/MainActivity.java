@@ -15,9 +15,16 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
+
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity_;
+
+
+import pohybytovaru.innovativeproposals.com.pohybytovaru.TovarVMiestnosti.ListTovarVMiestnostiActivity_;
+//import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity;
+//import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity;
+//import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity;
 
 @EActivity
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -52,17 +59,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
         switch (id){
             case R.id.nav_miestnosti:
-                intent = new Intent(this, ListMiestnostiActivity_.class);
+                intent = new Intent(this, ListMiestnostiActivity_.class); // tu bol podciarkovnik
                 startActivity(intent);
                 break;
             case R.id.nav_tovary:
-                intent = new Intent(this, ListTovarActivity_.class);
+                intent = new Intent(this, ListTovarActivity_.class); // tu bol podciarkovnik
                 startActivity(intent);
                 break;
             case R.id.nav_pohybTovaru:
-                intent = new Intent(this, PohybTovarActivity_.class);
+                intent = new Intent(this, PohybTovarActivity_.class); // tu bol podciarkovnik
                 startActivity(intent);
                 break;
+            case R.id.nav_InventarVMiestnosti:
+                intent = new Intent(this, ListTovarVMiestnostiActivity_.class);
+                startActivity(intent);
+                break;
+
         }
 
         drawer.closeDrawer(GravityCompat.START);

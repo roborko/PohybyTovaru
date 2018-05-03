@@ -41,6 +41,8 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
+// https://developer.android.com/guide/topics/ui/layout/recyclerview#java
+
 @EActivity(R.layout.activity_pohyb_tovar)
 public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Pohyb> {
     public final static int POHYB_REQUEST_CODE = 19;
@@ -112,14 +114,13 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 //            data_list.add(remove);
 //            data_list.add(delete);
 
-
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());
         }
     }
     @OnActivityResult(POHYB_REQUEST_CODE)
 
-    // tu refreshni ked prida novy pohyb
+    // tu refreshni ked prida novy pohyb -  neprejde cez "EXTRA_MIESTNOST xx GetData();//fetch data
 
     void onResult(int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
@@ -132,7 +133,26 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             else
                 UpdateExistingItem(result);
         }
-    }
+        else {
+            GetData();  // aktualizuje data_list
+            int pocet = data_list.size();
+
+            // refreshni screen ??
+            dataAdapter.clearSelectedItems();
+            dataAdapter.data = data_list;
+
+
+            dataAdapter.notifyDataSetChanged();
+
+            // DiffUtil ??
+            // https://android.jlelse.eu/smart-way-to-update-recyclerview-using-diffutil-345941a160e0
+
+            //    recyclerView. ?
+           // recyclerView.invalidate();
+           // recyclerView.setAdapter(dataAdapter);
+
+            }
+        }
 
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
@@ -173,7 +193,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         return true;
     }
 
-
     private void AddNewItem(Pohyb item) {
         try {
             Dao<Pohyb, Integer> pohybDao = getHelper().PohybDAO();
@@ -184,7 +203,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         } catch (SQLException ex) {
             Log.e("POHYB TOVARU", "Cannot create new pohyb tovaru. " + ex.getMessage());
         }
-
     }
 
     private void UpdateExistingItem(Pohyb item) {

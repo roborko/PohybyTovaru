@@ -257,6 +257,15 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        // aktualizuj list v PohybTovarActivity
+
+        //ukonci aktualnu aktivitu
+
+        // x Pohyb result = data.getParcelableExtra("EXTRA_MIESTNOST");
+        //Intent returnIntent = new Intent();
+        // returnIntent.putExtra("EXTRA_MIESTNOST", inventar);
+
+
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_transactionType_spinner)

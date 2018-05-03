@@ -34,6 +34,7 @@
         android:onClick="@{(theView) -> callback.onItemClick(theView, obj)}"
         android:onLongClick="@{(theView) -> callback.onItemLongClick(theView,obj)}">
 
+
         <ImageView
             android:id="@+id/detailView_Image"
             android:layout_width="24dp"

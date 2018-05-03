@@ -13,34 +13,48 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Miestnosti.ListMiestnostiActivity_"
             android:label="@string/activity_ListMiestnosti"
             android:parentActivityName=".MainActivity_" />
+
         <activity
             android:name=".Miestnosti.DetailMiestnostiActivity_"
             android:label="@string/activity_DetailMiestnosti"
             android:parentActivityName=".Miestnosti.ListMiestnostiActivity_"
             android:theme="@style/AppTheme.DialogActivity" />
+
         <activity
             android:name=".Tovary.ListTovarActivity_"
             android:label="@string/activity_ZoznamTovarov"
             android:parentActivityName=".MainActivity_" />
+
         <activity
             android:name=".Tovary.DetailTovarActivity_"
             android:label="@string/activity_ZoznamTovarov_Detail" />
+
         <activity
             android:name=".Prehlady.PohybTovarov.PohybTovarActivity_"
             android:label="@string/activity_PohybTovarov"
             android:parentActivityName=".MainActivity_" />
+
+        <activity
+            android:name=".TovarVMiestnosti.ListTovarVMiestnostiActivity_"
+            android:label="@string/AktualnePoctyTovarov"
+            android:parentActivityName=".MainActivity_" />
+
+
         <activity android:name=".Prehlady.PohybTovarov.PohybTovarActivityDetail_"
             android:label=""
             android:parentActivityName=".Prehlady.PohybTovarov.PohybTovarActivity_"></activity>
+
+
         <activity android:name=".Login.LoginActivity" />
+
     </application>
 
 </manifest>

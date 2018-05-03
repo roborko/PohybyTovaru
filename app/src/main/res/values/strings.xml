@@ -47,4 +47,6 @@
     <string name="MusiteZadatHodnotuViacNezNula">Musite zadat hodnotu vacsiu ako 0</string>
     <string name="NajprvMusiteVybratMiestnost">Musite najprv vybrat miestnost \'Do\'.</string>
     <string name="VyberMiestnosti">Vyber miestnosti</string>
+    <string name="InventarVMiestnosti">Inventár v miestnosti</string>
+    <string name="AktualnePoctyTovarov">Aktuálne množstvá</string>
 </resources>
