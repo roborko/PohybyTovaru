@@ -9,12 +9,12 @@
                 <item
                     android:id="@+id/nav_pohybTovaru"
                     android:icon="@drawable/ic_swap_horiz_black_24dp"
-                    android:title="Pohyby Tovarov" />
+                    android:title="@string/activity_PohybTovarov" />
 
                 <item
                     android:id="@+id/nav_InventarVMiestnosti"
                     android:icon="@drawable/ic_event_seat_white_24dp"
-                    android:title="Inventar v miestnosti" />
+                    android:title="@string/AktualnePoctyTovarov" />
             </menu>
         </item>
         <item android:title="@string/nav_label_ciselniky">

@@ -197,7 +197,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 return;
             }
 
-
             //add item to designated room
             passedInPohyb.setMiestnostFrom(miestnostFrom);
         }

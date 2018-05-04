@@ -17,14 +17,11 @@ import org.androidannotations.annotations.ViewById;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity;
+//import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity_;
 
-
-import pohybytovaru.innovativeproposals.com.pohybytovaru.TovarVMiestnosti.ListTovarVMiestnostiActivity_;
-//import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity;
-//import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity;
-//import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity;
 
 @EActivity
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.nav_InventarVMiestnosti:
-                intent = new Intent(this, ListTovarVMiestnostiActivity_.class);
+                intent = new Intent(this, ListMnozstvaTovarovActivity.class);
                 startActivity(intent);
                 break;
 

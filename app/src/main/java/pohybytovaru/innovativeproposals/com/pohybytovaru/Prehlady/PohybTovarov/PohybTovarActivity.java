@@ -141,8 +141,10 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             dataAdapter.clearSelectedItems();
             dataAdapter.data = data_list;
 
+            selectedListItems = pocet;
 
             dataAdapter.notifyDataSetChanged();
+
 
             // DiffUtil ??
             // https://android.jlelse.eu/smart-way-to-update-recyclerview-using-diffutil-345941a160e0

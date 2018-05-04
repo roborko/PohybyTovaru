@@ -43,9 +43,15 @@
             android:parentActivityName=".MainActivity_" />
 
         <activity
-            android:name=".TovarVMiestnosti.ListTovarVMiestnostiActivity_"
+            android:name=".Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity"
             android:label="@string/AktualnePoctyTovarov"
             android:parentActivityName=".MainActivity_" />
+
+        <activity
+            android:name=".Prehlady.MnozstvaTovarov.ListMnozstvaTovarovVMiestnostiach"
+            android:label="@string/AktualnePoctyTovarov"
+            android:parentActivityName=".Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity" />
+
 
 
         <activity android:name=".Prehlady.PohybTovarov.PohybTovarActivityDetail_"

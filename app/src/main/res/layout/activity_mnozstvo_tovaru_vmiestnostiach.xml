@@ -3,12 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Prehlady.MnozstvaTovarov.ListMnozstvaTovarovVMiestnostiach">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
+
+        <ImageView
+            android:id="@+id/tovarImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="obrazok"
+            android:transitionName="ObrazokView_Image" />
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -19,12 +29,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ListView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/list_mnozstva_tovaru_vmiestnostiach"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
 </android.support.design.widget.CoordinatorLayout>

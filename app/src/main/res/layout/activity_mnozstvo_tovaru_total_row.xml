@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_row_twoline_standard"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/detailView_Image"
+        android:layout_width="@dimen/dimen_circular_image_size"
+        android:layout_height="@dimen/dimen_circular_image_size"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dimen_row_icon_horizontal_margin"
+        android:layout_marginRight="@dimen/dimen_row_icon_horizontal_margin"
+        android:contentDescription="@string/imageViewDescription"
+        app:civ_border_color="@color/colorPrimaryDark"
+        app:civ_border_width="0dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/detailView_Image"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/tovarDescription"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/tovarnazovTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nazov"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:textStyle="bold"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/mnozstvoTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

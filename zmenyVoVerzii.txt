@@ -7,6 +7,11 @@
 - Tovar v miestnosti - 1 .krok
 - pokus o aktualizaciu  pohybov po pridani noveho pohybu
 
+4.5.18
+- Tovar total
+- Tovar v miestnosti
+
+
 
 urob:
 - po zapise pohybu sa nerefresne list
