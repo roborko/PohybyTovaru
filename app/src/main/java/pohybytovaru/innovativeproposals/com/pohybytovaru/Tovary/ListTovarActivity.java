@@ -27,6 +27,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
@@ -71,6 +73,14 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         try {
             Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
             data_list = tovarDao.queryForAll();
+
+            Collections.sort(data_list, new Comparator<Tovar>() {
+                @Override
+                public int compare(Tovar lhs, Tovar rhs) {
+                    return lhs.getNazov().compareTo(rhs.getNazov());
+                }
+            });
+
 
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());
@@ -209,10 +219,8 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
                 return false;
             }
         });
-
         return true;
     }
-
 
     private Integer selectedListItems = 0;
 
@@ -225,7 +233,6 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
 
         //update menu layout as delete icon now should disappear
         this.onPrepareOptionsMenu(savedMenu);
-
     }
 
     @Override

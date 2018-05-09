@@ -13,18 +13,20 @@
 
         <ImageView
             android:id="@+id/tovarImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:contentDescription="obrazok"
+            android:layout_gravity="center_horizontal"
             android:transitionName="ObrazokView_Image" />
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_horizontal"
             android:background="?attr/colorPrimary"
+
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

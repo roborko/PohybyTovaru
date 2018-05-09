@@ -1,12 +1,9 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Database;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
-
-import org.androidannotations.annotations.App;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,9 +23,9 @@ public class DeafultValuesPopulator {
     public static void PopulateDefaultValues(Context context) {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         PopulateTypTransakcie(context, databaseHelper);
-        populateMiestnosti(context, databaseHelper);
-        populateTovar(context, databaseHelper);
-        populateAKtualneMnozstvo(context, databaseHelper);
+    //    populateMiestnosti(context, databaseHelper);
+    //    populateTovar(context, databaseHelper);
+    //    populateAKtualneMnozstvo(context, databaseHelper);
         databaseHelper.close();
         databaseHelper = null;
         context = null;
@@ -65,11 +62,18 @@ public class DeafultValuesPopulator {
                 delete.setAssignedResourceId_Black(R.drawable.ic_delete_black_24dp);
                 delete.setAssignedResourceId_White(R.drawable.ic_delete_white_24dp);
 
+                TypTransakcie inventory = new TypTransakcie();
+                delete.setNazov(context.getString(R.string.TransactionType_Inventory));
+                delete.setINTERNAL_NAME(context.getString(R.string.TransactionType_Inventory));
+                delete.setAssignedResourceId_Black(R.drawable.ic_inventory_black);
+              //  delete.setAssignedResourceId_White(R.drawable.ic_delete_white_24dp);
+
 
                 transakcieDao.create(add);
                 transakcieDao.create(move);
 //                transakcieDao.create(remove);
-                transakcieDao.create(delete);
+                transakcieDao.create(delete);  // TODO preco nie je delete ?
+                transakcieDao.create(inventory);
             }
         } catch (SQLException ex) {
             Log.e("DefaultValuesPopulator", "Cannot create default TransactionTypes: " + ex.getMessage());

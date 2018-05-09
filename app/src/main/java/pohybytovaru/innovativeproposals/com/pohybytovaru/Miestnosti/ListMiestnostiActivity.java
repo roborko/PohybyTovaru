@@ -25,6 +25,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
@@ -69,6 +71,13 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
         try {
             Dao<Miestnost, Integer> miestnostDao = getHelper().MiestnostDAO();
             data_list = miestnostDao.queryForAll();
+            // stried podla nazvu
+            Collections.sort(data_list, new Comparator<Miestnost>() {
+                @Override
+                public int compare(Miestnost lhs, Miestnost rhs) {
+                    return lhs.getNazov().compareTo(rhs.getNazov());
+                }
+            });
 
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());

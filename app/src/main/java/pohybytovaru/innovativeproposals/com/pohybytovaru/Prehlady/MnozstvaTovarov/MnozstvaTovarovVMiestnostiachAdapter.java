@@ -69,13 +69,13 @@ public class MnozstvaTovarovVMiestnostiachAdapter extends ArrayAdapter<MnozstvaT
         //ulozenie ID-cka do riadku; ale mozeme sem ulozit aj cely objekt inventara (toto moze byy overkill pri vacsom obsahu dat)
         row.setTag(mnozstvaTovaru.getId());
 
-        if (mnozstvaTovaru.getImage() != null && mnozstvaTovaru.getImage().length > 1) {
+/*        if (mnozstvaTovaru.getImage() != null && mnozstvaTovaru.getImage().length > 1) {
             ByteArrayInputStream imageStream = new ByteArrayInputStream(mnozstvaTovaru.getImage());
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
             image.setImageBitmap(theImage);
         } else {
             image.setImageBitmap(null);
-        }
+        } */
         return row;
 
     }

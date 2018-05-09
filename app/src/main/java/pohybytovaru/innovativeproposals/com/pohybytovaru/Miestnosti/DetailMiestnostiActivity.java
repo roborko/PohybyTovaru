@@ -56,7 +56,6 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
         }
     }
 
-
     @TextChange(R.id.txt_MiestnostName)
     void onMiestnostTextChange(){
         textInputLayout.setError(null);

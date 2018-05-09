@@ -11,6 +11,11 @@
 - Tovar total
 - Tovar v miestnosti
 
+9.5.18
+- pridany pohyb inventura
+- dokoncene zobrazenie mnozstva tovaru v miestnostiach
+- zoznam miestnosti a tovaru sa striedi podla abecedy
+
 
 
 urob:

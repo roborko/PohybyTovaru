@@ -40,6 +40,7 @@
     <string name="TransactionType_Move">Presun</string>
     <string name="TransactionType_Remove">Výdaj</string>
     <string name="TransactionType_Delete">Skartovanie</string>
+    <string name="TransactionType_Inventory">Inventúra</string>
     <string name="activity_PohybTovarov">Pohyby tovarov</string>
 
 

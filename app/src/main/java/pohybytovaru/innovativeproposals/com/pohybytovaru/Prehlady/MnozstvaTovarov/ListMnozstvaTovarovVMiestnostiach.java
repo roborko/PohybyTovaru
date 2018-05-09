@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
@@ -69,8 +70,8 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
         setContentView(R.layout.activity_mnozstvo_tovaru_vmiestnostiach);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         toolbar.setTitle(myTovarName);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
@@ -79,6 +80,11 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        myObrazok = (ImageView)findViewById(R.id.tovarImage);
+        myObrazok.setImageBitmap(ImageHelpers.convertBytesToBitmap(zoznamHM.get(0).getImage()));
+
+        // tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));
 
         //   if (zoznamHM.size() != 0) {
         ListView lw = (ListView) findViewById(R.id.list_mnozstva_tovaru_vmiestnostiach);
@@ -90,7 +96,7 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
                                     View view, int position, long id) {
                 tovarnazovTV = (TextView) view.findViewById(R.id.tovarnazovTV);
                 mnozstvoTV = (TextView) view.findViewById(R.id.mnozstvoTV);
-                myObrazok = (ImageView)view.findViewById(R.id.tovarImage);
+              //  myObrazok = (ImageView)view.findViewById(R.id.tovarImage);
 
                 //  statusET = (TextView) view.findViewById(R.id.statusET);
                 //  datumET = (TextView) view.findViewById(R.id.datumET);
@@ -117,6 +123,8 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         mnozstvaTovaruVMiestnostiachAdapter = new MnozstvaTovarovVMiestnostiachAdapter(this, R.layout.activity_mnozstvo_tovaru_vmiestnostiach_row , zoznamHM);
         lw.setAdapter(mnozstvaTovaruVMiestnostiachAdapter);
 
+
+
         //  }
     }
 
@@ -132,6 +140,7 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     @Override

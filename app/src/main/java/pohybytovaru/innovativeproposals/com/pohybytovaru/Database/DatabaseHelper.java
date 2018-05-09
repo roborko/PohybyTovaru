@@ -27,7 +27,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     public static final String DATABASE_NAME = "pohybtovaru.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
+    // ver 4 - pridany pohyb inventura
 
     private Dao<Miestnost, Integer> mMiestnostDAO = null;
     private Dao<Osoba, Integer> mOsobaDAO = null;

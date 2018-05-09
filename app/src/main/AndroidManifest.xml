@@ -53,7 +53,6 @@
             android:parentActivityName=".Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity" />
 
 
-
         <activity android:name=".Prehlady.PohybTovarov.PohybTovarActivityDetail_"
             android:label=""
             android:parentActivityName=".Prehlady.PohybTovarov.PohybTovarActivity_"></activity>

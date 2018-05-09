@@ -161,7 +161,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "WHERE tovar.id = " + myId +
-                " ORDER BY  tovar.id";
+                " ORDER BY miestnost.nazov COLLATE NOCASE";
 
 
         SQLiteDatabase db = this.getWritableDatabase();
