@@ -100,7 +100,12 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         }
         else {
             GetData();  // aktualizuje data_list
-            int pocet = data_list.size();
+
+            dataAdapter.AddNewCollection(data_list);
+
+
+
+            //   int pocet = data_list.size();
 
             // refreshni screen ??
         /*    dataAdapter.clearSelectedItems();

@@ -55,7 +55,9 @@
 
         <activity android:name=".Prehlady.PohybTovarov.PohybTovarActivityDetail_"
             android:label=""
-            android:parentActivityName=".Prehlady.PohybTovarov.PohybTovarActivity_"></activity>
+            android:parentActivityName=".Prehlady.PohybTovarov.PohybTovarActivity_">
+
+        </activity>
 
 
         <activity android:name=".Login.LoginActivity" />

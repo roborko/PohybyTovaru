@@ -316,6 +316,7 @@
                     android:id="@+id/activity_pohyb_tovar_detail_pocetKusov"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:windowSoftInputMode="stateVisible"
                     android:hint="Pocet kusov v transakcii"
                     android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>

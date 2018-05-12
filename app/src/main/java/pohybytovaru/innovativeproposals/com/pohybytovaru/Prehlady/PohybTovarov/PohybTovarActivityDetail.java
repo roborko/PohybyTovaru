@@ -1,10 +1,14 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -353,8 +357,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //move item from one room to another
             layout_miestnostFrom.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_selectedTovar)
@@ -384,6 +386,22 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         } else {
             miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostFromMnozstvo.getMnozstvo()));
         }
+
+        // pokial prijem, intentura alebo skartovanie tak focusuj
+        if ((transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) ||
+                (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) ||
+                        (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))) {
+
+            pocetKusov.requestFocus();
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+//Hide:
+         //   imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//Show
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+
+        }
+
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
@@ -397,6 +415,16 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         } else {
             miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostToMnozstvo.getMnozstvo()));
         }
+
+        // tu vzdy focusuj
+        pocetKusov.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+//Hide:
+      //  imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//Show
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+
     }
 
     private AktualneMnozstvo tryGetAktualneMnozstvo(ForeignCollection<AktualneMnozstvo> mnozstva, int tovarId) {
@@ -408,4 +436,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         return null;
     }
+
+
 }
