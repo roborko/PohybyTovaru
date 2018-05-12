@@ -105,7 +105,9 @@ public class DetailTovarActivity extends AppCompatActivity {
 
         tovar.setNazov(txt_TovarName.getText().toString());
         tovar.setFotografia(ImageHelpers.getImageBytesFromImageView(tovarImage));
-        tovar.setMinimalneMnozstvo(Double.valueOf(txt_MinMnozstvo.getText().toString()));
+
+        if (!txt_MinMnozstvo.getText().toString().equalsIgnoreCase(""))
+            tovar.setMinimalneMnozstvo(Double.valueOf(txt_MinMnozstvo.getText().toString()));
         tovar.setPoznamka(txt_Poznamka.getText().toString());
         tovar.setKodTovaru(txt_KodTovaru.getText().toString());
 

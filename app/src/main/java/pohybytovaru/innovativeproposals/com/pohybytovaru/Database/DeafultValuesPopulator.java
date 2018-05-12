@@ -63,11 +63,10 @@ public class DeafultValuesPopulator {
                 delete.setAssignedResourceId_White(R.drawable.ic_delete_white_24dp);
 
                 TypTransakcie inventory = new TypTransakcie();
-                delete.setNazov(context.getString(R.string.TransactionType_Inventory));
-                delete.setINTERNAL_NAME(context.getString(R.string.TransactionType_Inventory));
-                delete.setAssignedResourceId_Black(R.drawable.ic_inventory_black);
-              //  delete.setAssignedResourceId_White(R.drawable.ic_delete_white_24dp);
-
+                inventory.setNazov(context.getString(R.string.TransactionType_Inventory));
+                inventory.setINTERNAL_NAME(context.getString(R.string.TransactionType_Inventory));
+                inventory.setAssignedResourceId_Black(R.drawable.ic_inventory_black);
+                //  delete.setAssignedResourceId_White(R.drawable.ic_delete_white_24dp);
 
                 transakcieDao.create(add);
                 transakcieDao.create(move);

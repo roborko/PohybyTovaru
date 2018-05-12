@@ -27,8 +27,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     public static final String DATABASE_NAME = "pohybtovaru.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 7;
     // ver 4 - pridany pohyb inventura
+    // ver 6 - pridane skartovanie do pohybov
+    // ver 7 - test - pozor, prepisana funkcia onUpgrade - nedropuje tabulky, len maze pohyby
+
 
     private Dao<Miestnost, Integer> mMiestnostDAO = null;
     private Dao<Osoba, Integer> mOsobaDAO = null;
@@ -65,8 +68,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+
+        /* toto odremuj
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
+
             TableUtils.dropTable(connectionSource, Tovar.class, true);
             TableUtils.dropTable(connectionSource, Osoba.class, true);
             TableUtils.dropTable(connectionSource, Miestnost.class, true);
@@ -75,6 +81,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, AktualneMnozstvo.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
+
+        } catch (SQLException e) {
+            Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
+            throw new RuntimeException(e);
+        } */
+
+        mazaniePohybov(connectionSource);
+
+    }
+
+    private void mazaniePohybov(ConnectionSource connectionSource) {
+        try {
+            TableUtils.clearTable(connectionSource,Pohyb.class);
+            TableUtils.clearTable(connectionSource,AktualneMnozstvo.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
             throw new RuntimeException(e);

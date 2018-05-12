@@ -59,7 +59,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="Krok 1 - Vyber typu transakcie"
+                    android:text="@string/krok1VyberTypuTransakcie"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="Krok 2 - Vyber inventara"
+                    android:text="@string/krok2VyberInventara"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -253,7 +253,7 @@
                     android:id="@+id/activity_pohyb_tovar_miestnostToSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_stepper_height"
-                    app:hintText="Vyber miestnosti"
+                    app:hintText="@string/VyberMiestnosti"
                     app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom"
                     style="@android:style/Widget.Material.Spinner.Underlined"/>
 

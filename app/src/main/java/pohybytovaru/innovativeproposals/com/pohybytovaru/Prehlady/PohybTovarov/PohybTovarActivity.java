@@ -79,41 +79,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             Dao<Pohyb, Integer> pohybDao = getHelper().PohybDAO();
             data_list = pohybDao.queryForAll();
 
-//            Dao<Miestnost, Integer> miestnostsDAO = getHelper().MiestnostDAO();
-//            Dao<Tovar, Integer> tovarDAO = getHelper().TovarDAO();
-//            Dao<TypTransakcie, Integer> typTransakciesDao = getHelper().TypTransakcieDAO();
-//
-//            List<Miestnost> miestnosti = miestnostsDAO.queryForAll();
-//            List<Tovar> tovary = tovarDAO.queryForAll();
-//            List<TypTransakcie> transakcieList = typTransakciesDao.queryForAll();
-//
-//
-//            Pohyb add = new Pohyb();
-//            add.setDatum(new Date());
-//            add.setMiestnostFrom(miestnosti.get(0));
-//            add.setTovar(tovary.get(0));
-//            add.setPocetKusov(5);
-//            add.setTypPohybu(transakcieList.get(0));
-//
-//            Pohyb remove = new Pohyb();
-//            remove.setDatum(new Date());
-//            remove.setMiestnostFrom(miestnosti.get(0));
-//            remove.setTovar(tovary.get(0));
-//            remove.setPocetKusov(5);
-//            remove.setTypPohybu(transakcieList.get(2));
-//
-//            Pohyb delete = new Pohyb();
-//            delete.setDatum(new Date());
-//            delete.setMiestnostFrom(miestnosti.get(0));
-//            delete.setTovar(tovary.get(0));
-//            delete.setPocetKusov(5);
-//            delete.setTypPohybu(transakcieList.get(3));
-//
-//
-//            data_list.add(add);
-//            data_list.add(remove);
-//            data_list.add(delete);
-
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());
         }
@@ -138,10 +103,10 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             int pocet = data_list.size();
 
             // refreshni screen ??
-            dataAdapter.clearSelectedItems();
+        /*    dataAdapter.clearSelectedItems();
             dataAdapter.data = data_list;
             selectedListItems = pocet;
-            dataAdapter.notifyDataSetChanged();
+            dataAdapter.notifyDataSetChanged();*/
 
             // DiffUtil ??
             // https://android.jlelse.eu/smart-way-to-update-recyclerview-using-diffutil-345941a160e0
@@ -313,17 +278,20 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                 if (selectedListItems > 0) {
                     //user wants to clear selected items array
                     clearSelectedItems();
+
                     return true;
                 }
                 //regular back button, user wants to navigate back
-                return false;
+                return false; // TODO nemoze mat 2 rozne stave
 
             case R.id.delete:
                 DeleteSelectedPohyby();
                 break;
         }
 
+        this.finish();
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -334,4 +302,10 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         }
         super.onBackPressed();
     }
+
+    /*
+    @Click(R.id.btn_Cancel)
+    void CloseWindow() {
+        this.finish();
+    }*/
 }

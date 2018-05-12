@@ -7,10 +7,9 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundAdapter;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundViewHolder;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
+
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListMiestnostiRowBinding;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListTovarRowBinding;
 
 /**
@@ -26,6 +25,7 @@ public class ListTovarAdapter extends DataBoundAdapter<ActivityListTovarRowBindi
         this.actionCallback = actionCallback;
         this.data = data;
         this.filterView.dataSourceChanged(this.data);
+
     }
 
     @Override

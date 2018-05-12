@@ -54,7 +54,6 @@ public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFil
     @DatabaseField
     private Date Datum;
 
-
     private boolean Selected;
 
     @Bindable
@@ -142,12 +141,18 @@ public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFil
 
     @Override
     public boolean filterFunctionResult(String searchString) {
-        if(this.MiestnostFrom == null || this.MiestnostTo == null || this.Tovar == null)
+        // vracaj vsetky pohyby
+
+        /*if(this.MiestnostFrom == null || this.MiestnostTo == null || this.Tovar == null)
             return false;
 
         return this.MiestnostFrom.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()) ||
                 this.MiestnostTo.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()) ||
-                this.Tovar.getNazov().toLowerCase().contains(searchString.toLowerCase().trim());
+                this.Tovar.getNazov().toLowerCase().contains(searchString.toLowerCase().trim()); */
+
+        return this.Tovar.getNazov().toLowerCase().contains(searchString.toLowerCase().trim());
+
+
     }
 
 

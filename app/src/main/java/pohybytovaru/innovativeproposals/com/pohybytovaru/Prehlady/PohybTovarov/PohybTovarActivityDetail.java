@@ -161,9 +161,21 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             inputLayout_pocetKusov.setError(null);
         }
 
-        //validacia miestnosti do -> toto je povinne
-        if (miestnostTo == null) {
-            Toast.makeText(this, R.string.NajprvMusiteVybratMiestnost, Toast.LENGTH_SHORT).show();
+        //validacia miestnosti do nwmoze byt povinne pre skartovanie
+        String hh = getString(R.string.TransactionType_Delete);
+        String aa = transactionType.toString();
+        //if ((miestnostTo == null) && (transactionType.equals(getString(R.string.TransactionType_Delete)))) {
+
+     /*   if (transactionType.toString().equalsIgnoreCase(getString(R.string.TransactionType_Delete))) {
+            //if ((miestnostTo == null) && (!transactionType.equals(hh))) {
+            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+        }*/
+
+
+
+        if ((miestnostTo == null) && (!transactionType.toString().equalsIgnoreCase(getString(R.string.TransactionType_Delete)))) {
+        //if ((miestnostTo == null) && (!transactionType.equals(hh))) {
+            Toast.makeText(this, R.string.NajprvMusiteVybratMiestnostDo, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -183,16 +195,18 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             passedInPohyb = new Pohyb();
 
         if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
-            //try to retrieve aktualne mnozstvo v miestnosti
-            AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
+            //try to retrieve aktualne mnozstvo v miestnosti TransactionType_Delete
+
+           // AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
+            AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
-                inputLayout_pocetKusov.setError("Nemozete odstranit viac poloziek, ako sa ma v miestnosti povodne nachadzat.");
+                inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
                 return;
             }
 
             //remove item from designated room
-            passedInPohyb.setMiestnostFrom(null);
+            passedInPohyb.setMiestnostTo(null); // bolo from
         }
 
         if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) {
@@ -211,7 +225,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
-                inputLayout_pocetKusov.setError("Nemozete presunut viac poloziek, ako sa povodne v miestnosti nachadza.");
+                inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
                 return;
             }
 
@@ -229,7 +243,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         passedInPohyb.setTypPohybu(transactionType);
         passedInPohyb.setTovar(selectedTovar);
         passedInPohyb.setDatum(new Date());
-        passedInPohyb.setMiestnostTo(miestnostTo);
+
+        if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))
+            passedInPohyb.setMiestnostFrom(miestnostFrom);
+        else
+            passedInPohyb.setMiestnostTo(miestnostTo);
 
         Dao<Pohyb, Integer> pohybDAO = getHelper().PohybDAO();
         Dao<AktualneMnozstvo, Integer> aktualneMnozstvoDAO = getHelper().AktualneMnozstvoDAO();
@@ -245,7 +263,8 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             }
 
             //calculate aktualne mnozstvo To
-            if (miestnostToMnozstvo == null) {
+            //if (miestnostToMnozstvo == null) {
+            if ((miestnostToMnozstvo == null) && (!transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))) {
                 //new entry, can only be +
                 AktualneMnozstvo mnozstvoTo = new AktualneMnozstvo();
                 mnozstvoTo.setTovar(selectedTovar);
@@ -254,10 +273,13 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 aktualneMnozstvoDAO.create(mnozstvoTo);
             } else {
                 //entry already exists, check if delete or add
+
+                /*   toto je zabezpecene dolu pri Check for Move
                 if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
                     //substract from original
-                    miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
-                }
+                   // miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
+                    miestnostFromMnozstvo.setMnozstvo(miestnostFromMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
+                } */
 
                 if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) {
                     //substract from original
@@ -270,7 +292,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 }
 
                 //update
-                aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))
+                    aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+                else
+                    aktualneMnozstvoDAO.update(miestnostToMnozstvo);
             }
 
             //check for MOVE
@@ -278,12 +303,20 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 if (miestnostFromMnozstvo != null) {
                     //aktualne mnozstvo musi byt zadefinovane, inac nemoze povolit odobrat z danej miestnosti!
                     miestnostFromMnozstvo.setMnozstvo(miestnostFromMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
-
-                    //update
                     aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+
+                    if(miestnostToMnozstvo != null) // pri skartacii je to null
+                    {
+                        miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() + passedInPohyb.getPocetKusov());
+                        aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                    }
                 }
             }
+
             this.finish();
+
+            // TODO sem daj kontrolu na pminimalne mnozstvo alebo nula (celkove)
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -304,7 +337,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
             //remove item from designated room
-            layout_miestnostFrom.setVisibility(View.GONE);
+           // layout_miestnostFrom.setVisibility(View.GONE);
+            layout_miestnostTo.setVisibility(View.GONE);
+            layout_miestnostFrom.setVisibility(View.VISIBLE);
         }
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add)) || typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pohyby Tovaru</string>
+    <string name="app_name">Pohyby inventára</string>
     <string name="activity_ListMiestnosti">Zoznam Miestnosti</string>
     <string name="activity_DetailMiestnosti">Detail Miestnosti</string>
 
@@ -21,15 +21,15 @@
 
     <string name="gone">gone</string>
     <string name="visible">visible</string>
-    <string name="activity_ZoznamTovarov">Zoznam Tovarov</string>
+    <string name="activity_ZoznamTovarov">Zoznam inventárov</string>
     <string name="nav_label_ciselniky">Číselníky</string>
     <string name="nav_label_reports">Reporty</string>
-    <string name="navigation_drawer_tovary">Tovary</string>
+    <string name="navigation_drawer_tovary">Inventár</string>
     <string name="nav_label_save">Uložiť</string>
-    <string name="hint_nazovTovaru">Názov Tovaru</string>
+    <string name="hint_nazovTovaru">Názov inventára</string>
     <string name="activity_ZoznamTovarov_Detail">Detail</string>
     <string name="hint_TovarMinimalneMnozstvo">Minimálne množstvo na sklade</string>
-    <string name="lbl_error_hint_tovar_nazov">Názov tovaru musí byť vyplnený.</string>
+    <string name="lbl_error_hint_tovar_nazov">Názov inventára musí byť vyplnený.</string>
     <string name="hint_movement_from">z:&#160;</string>
     <string name="hint_movement_to">do:&#160;</string>
     <string name="imageViewDescription">aa</string>
@@ -41,18 +41,18 @@
     <string name="TransactionType_Remove">Výdaj</string>
     <string name="TransactionType_Delete">Skartovanie</string>
     <string name="TransactionType_Inventory">Inventúra</string>
-    <string name="activity_PohybTovarov">Pohyby tovarov</string>
+    <string name="activity_PohybTovarov">Pohyby inventárov</string>
 
 
     <string name="date_format">%1$td.%1$tm.%1$tY %1$tHH:%1$tmm</string>
-    <string name="hint_tovarLookup">Vyhladat Tovar</string>
-    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Povodny pocet kusov v miestnosti:</string>
-    <string name="MusiteZadatHodnotuViacNezNula">Musite zadat hodnotu vacsiu ako 0</string>
-    <string name="NajprvMusiteVybratMiestnost">Musite najprv vybrat miestnost \'Do\'.</string>
-    <string name="VyberMiestnosti">Vyber miestnosti</string>
-    <string name="AktualnePoctyTovarov">Množstvá tovarov</string>
-
-
+    <string name="hint_tovarLookup">Vyhľadať inventár</string>
+    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Pôvodný počet kusov v miestnosti:</string>
+    <string name="MusiteZadatHodnotuViacNezNula">Musíte zadať hodnotu väčšiu ako 0</string>
+    <string name="NajprvMusiteVybratMiestnostDo">Musíte najprv vybrať miestnosť \'Do\'.</string>
+    <string name="VyberMiestnosti">Výber miestnosti</string>
+    <string name="AktualnePoctyTovarov">Množstvá inventárov</string>
+    <string name="krok1VyberTypuTransakcie">Krok 1 - Vyber typu transakcie</string>
+    <string name="krok2VyberInventara">Krok 2 - Výber inventára</string>
 
 
 </resources>

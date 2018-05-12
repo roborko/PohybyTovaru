@@ -16,10 +16,22 @@
 - dokoncene zobrazenie mnozstva tovaru v miestnostiach
 - zoznam miestnosti a tovaru sa striedi podla abecedy
 
+12.5.18
+- dokoncene a otestovane pohyby
+- v prehlade pohybov zobrazuje datum
+- filtruje sa len na inventar
+
+
+
 
 
 urob:
+- pri presune, inventure a skartovani ponukni len tie miestnosti, kde sa nachadza mnozstvo > 0
+- v detaile urob skakanie na dalsi komponent (- v detaile pohybu posuvaj kurzor)
+- v prehlade pohybov filtruj na miestnost alebo inventar - daj moznost exportu
+
 - po zapise pohybu sa nerefresne list
+
 - zadavanie pohybu - vyber inventara - hore prepis Select Item s Zoznam inventarov
 - zadavanie pohybu - vyber meistnosti - hore prepis Select Item s Miestnost Z
 - zadavanie pohybu - vyber meistnosti - hore prepis Select Item s Miestnost Do
@@ -27,3 +39,21 @@ urob:
 - naprogramuj Inventar v miestnost
 - co robi import ?
 - urob export do pdf, csv  cez mail
+
+***********************************************************
+Test pohybov
+1. kuchyna prijem 5 ks              (kuchyna 5ks, detska 0 ks, spolu 5 ks)
+2. z kuchyne do izby presun 2 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks)
+3. v kuchyni skartuj 1 ks           (kuchyna 2ks, detska 2 ks, spolu 4 ks)
+4. izba inventura 3 ks              (kuchyna 2ks, detska 3 ks, spolu 5 ks)
+5. z izba do kuchyna presun 1 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks)
+6. izba prijem 2 ks                 (kuchyna 3ks, detska 4 ks, spolu 7 ks)
+7. kuchyna inventura 0 ks           (kuchyna 0ks, detska 4 ks, spolu 4 ks)
+8. izba skartuj 4 ks                (kuchyna 0ks, detska 0 ks, spolu 0 ks)
+
+daj na nulu cez inventuru a skartovanie? Hlaska ze sa dosiahla nula alebo kriticke mnozstvo na uvodnu obrazovku
+
+
+
+
+
