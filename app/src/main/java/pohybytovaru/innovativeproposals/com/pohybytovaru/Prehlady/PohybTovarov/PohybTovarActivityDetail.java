@@ -46,6 +46,9 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.MnozstvaTovarovDataModel;
+
+
 
 @EActivity(R.layout.activity_pohyb_tovar_detail)
 @OptionsMenu(R.menu.menu_save)
@@ -92,7 +95,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
     List<Tovar> list_tovary = new ArrayList();
     List<TypTransakcie> list_typTransakcie = new ArrayList();
-    List<Miestnost> list_miestnost = new ArrayList();
+    List<Miestnost> list_miestnostFROM = new ArrayList();
+    List<Miestnost> list_miestnostTO = new ArrayList();
+
+    MnozstvaTovarovDataModel dm = new MnozstvaTovarovDataModel(this); // pri kopirovani do inej triedy zmen
 
     //user selections
     TypTransakcie transactionType;
@@ -103,8 +109,13 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     AktualneMnozstvo miestnostFromMnozstvo;
     AktualneMnozstvo miestnostToMnozstvo;
 
+    ArrayAdapter<Tovar> tovarAdapter;
+
     //    @Extra("EXTRA_POHYB")
     Pohyb passedInPohyb;
+
+    private ArrayAdapter<Miestnost> miestnostAdapterFROM;
+    private ArrayAdapter<Miestnost> miestnostAdapterTO;
 
     @AfterViews
     void AfterView() {
@@ -124,8 +135,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
             list_typTransakcie = typTransakcieDAO.queryForAll();
 
-            list_miestnost = miestnostDAO.queryForAll();
-            Collections.sort(list_miestnost, new Comparator<Miestnost>() {
+            list_miestnostFROM = miestnostDAO.queryForAll();
+            list_miestnostTO = miestnostDAO.queryForAll();
+            Collections.sort(list_miestnostFROM, new Comparator<Miestnost>() {
                 @Override
                 public int compare(Miestnost lhs, Miestnost rhs) {
                     return lhs.getNazov().compareTo(rhs.getNazov());
@@ -145,16 +157,20 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     }
 
     private void setupAdapters() {
-        ArrayAdapter<Tovar> adapter = new ArrayAdapter<Tovar>(this, android.R.layout.simple_dropdown_item_1line, list_tovary);
-        selectedTovarSpinner.setAdapter(adapter);
+        //ArrayAdapter<Tovar> adapter = new ArrayAdapter<Tovar>(this, android.R.layout.simple_dropdown_item_1line, list_tovary);
+        tovarAdapter = new ArrayAdapter<Tovar>(this, android.R.layout.simple_dropdown_item_1line, list_tovary);
+        selectedTovarSpinner.setAdapter(tovarAdapter);
 
         ArrayAdapter<TypTransakcie> adapter_spinner = new ArrayAdapter<TypTransakcie>(this, android.R.layout.simple_dropdown_item_1line, list_typTransakcie);
         transactionTypeSpinner.setAdapter(adapter_spinner);
         transactionTypeSpinner.setSelection(0);
 
-        ArrayAdapter<Miestnost> miestnostAdapter = new ArrayAdapter<Miestnost>(this, android.R.layout.simple_dropdown_item_1line, list_miestnost);
-        miestnostFromSpinner.setAdapter(miestnostAdapter);
-        miestnostToSpinner.setAdapter(miestnostAdapter);
+        // TODO toto zamen za vlastny layout
+     //   ArrayAdapter<Miestnost> miestnostAdapter = new ArrayAdapter<Miestnost>(this, android.R.layout.simple_dropdown_item_1line, list_miestnost);
+        miestnostAdapterFROM = new ArrayAdapter<Miestnost>(this, android.R.layout.simple_dropdown_item_1line, list_miestnostFROM);
+        miestnostAdapterTO = new ArrayAdapter<Miestnost>(this, android.R.layout.simple_dropdown_item_1line, list_miestnostTO);
+        miestnostFromSpinner.setAdapter(miestnostAdapterFROM);
+        miestnostToSpinner.setAdapter(miestnostAdapterTO);
     }
 
     private boolean validateUserEntries() {
@@ -174,7 +190,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //if ((miestnostTo == null) && (!transactionType.equals(hh))) {
             Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         }*/
-
 
 
         if ((miestnostTo == null) && (!transactionType.toString().equalsIgnoreCase(getString(R.string.TransactionType_Delete)))) {
@@ -202,7 +217,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //try to retrieve aktualne mnozstvo v miestnosti TransactionType_Delete
 
            // AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
-            AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
+            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
                 inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
@@ -226,7 +241,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             }
 
             //try to retrieve aktualne mnozstvo v miestnosti
-            AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
+            // AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
+            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
+
+
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
                 inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
@@ -342,6 +360,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
             //remove item from designated room
            // layout_miestnostFrom.setVisibility(View.GONE);
+
             layout_miestnostTo.setVisibility(View.GONE);
             layout_miestnostFrom.setVisibility(View.VISIBLE);
         }
@@ -363,6 +382,26 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     public void tovarSelectionChanged(boolean selected, Tovar tovar) {
         selectedTovar = tovar;
 
+        // TODO list_miestnost podla transakcie
+        //        - pri presune, inventure a skartovani ponukni len tie miestnosti, kde sa nachadza mnozstvo > 0
+        //                - miestnost do nemoze byt taka ista ako miestnost z
+        //   list_miestnost = getMiestnostSInventarom();
+
+        String myTransakcia = transactionTypeSpinner.getSelectedItem().toString();
+
+        if (myTransakcia.equals(getString(R.string.TransactionType_Move)) || myTransakcia.equals(getString(R.string.TransactionType_Inventory ))
+                || myTransakcia.equals(getString(R.string.TransactionType_Remove))) {
+
+            list_miestnostFROM = dm.getMiestnostSInventarom(selectedTovar.getId());
+
+        } else
+
+            list_miestnostFROM = dm.getMiestnostSInventarom(0);
+
+        miestnostAdapterFROM.clear();
+        miestnostAdapterFROM.addAll(list_miestnostFROM);
+
+
         Bitmap resultImage = ImageHelpers.convertBytesToBitmap(tovar.getFotografia());
         if (resultImage == null) {
             tovarImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_do_not_disturb_alt_black_18dp));
@@ -376,16 +415,42 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
     @ItemSelect(R.id.activity_pohyb_tovar_miestnostFromSpinner)
     public void miestnostFromChanged(boolean selected, Miestnost miestnost) {
+
         miestnostFrom = miestnost;
+        //Tovar myTovar = (Tovar) selectedTovarSpinner.getSelectedItem();
+
+       // Tovar kde = tovarAdapter.getItem(selectedTovarSpinner.getSelectedItem());
 
         if (miestnostFrom == null || selectedTovar == null) return;
-        miestnostFromMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
+       // if (miestnostFrom == null || myTovar == null) return;
+        //miestnostFromMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId()); xx
+
+        // getAktualneMnozstvoToavruZMiestnosti
+        miestnostFromMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
         if (miestnostFromMnozstvo == null) {
             miestnostFrom_povodnyPocetKusovTovaru.setText("0");
         } else {
             miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostFromMnozstvo.getMnozstvo()));
         }
+
+
+
+        // TODO v zozname miestnostTo vyhod zo zoznamu miestnostFrom
+        list_miestnostTO = dm.getMiestnostSInventarom(0);
+        // vyhod miestnostFROM
+
+        for (int i = list_miestnostTO.size() - 1; i >= 0; i--) {
+            //if (list_miestnostTO.get(i).contains("foo")) {
+            if (list_miestnostTO.get(i).getNazov().equalsIgnoreCase(miestnostFrom.getNazov())) {
+                list_miestnostTO.remove(i);
+            }
+        }
+
+        miestnostAdapterTO.clear();
+        miestnostAdapterTO.addAll(list_miestnostTO);
+
+
 
         // pokial prijem, intentura alebo skartovanie tak focusuj
         if ((transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) ||
@@ -399,16 +464,17 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
          //   imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 //Show
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-
         }
-
     }
 
     @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
     public void miestnostToChanged(boolean selected, Miestnost miestnost) {
         miestnostTo = miestnost;
+
         if (miestnostTo == null || selectedTovar == null) return;
-        miestnostToMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
+       // miestnostToMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
+        miestnostToMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
+
 
         if (miestnostToMnozstvo == null) {
             miestnostTo_povodnyPocetKusovTovaru.setText("0");
@@ -427,7 +493,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
     }
 
-    private AktualneMnozstvo tryGetAktualneMnozstvo(ForeignCollection<AktualneMnozstvo> mnozstva, int tovarId) {
+    // TODO prepisat
+    private AktualneMnozstvo tryGetAktualneMnozstvoVYMAZ(ForeignCollection<AktualneMnozstvo> mnozstva, int tovarId) {
+
         for (AktualneMnozstvo aktualneMnozstvo : mnozstva) {
             if (aktualneMnozstvo.getTovar().getId() == tovarId) {
                 return aktualneMnozstvo;

@@ -7,6 +7,8 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundAdapter;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundViewHolder;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.AktualneMnozstvo;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
@@ -185,6 +187,100 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         }
         cursor.close();
         return results;
+    }
+
+    public List<Miestnost> getMiestnostSInventarom(int tovarId )  {
+
+        ArrayList<Miestnost> results = new ArrayList<>();
+        String sSQL;
+        //String myTovarId = myFilter+"
+        //   String myKod2 =  myFilter + "%";
+
+        if(tovarId>0)
+
+            sSQL = "SELECT distinct miestnost.nazov, miestnost.id " +
+                    "FROM aktualneMnozstvo " +
+                    "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
+                    "WHERE aktualneMnozstvo.tovar = " + tovarId + " AND aktualneMnozstvo.Mnozstvo > 0 " +
+                    " ORDER BY miestnost.nazov COLLATE NOCASE";
+        else
+
+            sSQL = "SELECT distinct miestnost.nazov, miestnost.id " +  //  aktualneMnozstvo.mnozstvo
+                    "FROM aktualneMnozstvo " +
+                    "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
+                    " ORDER BY miestnost.nazov COLLATE NOCASE";
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
+
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        //kurzor na prvy zaznam
+        if (cursor.moveToFirst()) {
+            do {
+
+                Miestnost myMiestnost = new Miestnost();
+
+                myMiestnost.setNazov(cursor.getString(0));
+                myMiestnost.setId(cursor.getInt(1));
+
+                //myMiestnost.se AktualneMnozstvo
+             //   myMiestnost.AktualneMnozstvo(cursor.getDouble(1));
+                results.add(myMiestnost);
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return results;
+    }
+
+    public AktualneMnozstvo getAktualneMnozstvoToavruZMiestnosti(int tovarId, int miestnostId )  {
+
+        String sSQL;
+     //   ArrayList<AktualneMnozstvo> results = new ArrayList<>();
+
+        AktualneMnozstvo myMnozstvo = new AktualneMnozstvo();
+
+        if((tovarId>0) && (miestnostId>0)) {
+
+            sSQL = "SELECT aktualneMnozstvo.miestnost, miestnost.nazov, aktualneMnozstvo.tovar, tovar.nazov, aktualneMnozstvo.mnozstvo  " +
+                    "FROM aktualneMnozstvo " +
+                    "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
+                    "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
+            "WHERE aktualneMnozstvo.tovar = " + tovarId + " AND aktualneMnozstvo.miestnost = " + miestnostId;
+
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            SQLiteStatement selectStmt = db.compileStatement(sSQL);
+
+            Cursor cursor = db.rawQuery(sSQL, null);
+
+            //kurzor na prvy zaznam
+            if (cursor.moveToFirst()) {
+                do {
+
+               //     AktualneMnozstvo myMnozstvo = new AktualneMnozstvo();
+                    Miestnost myMiestnost = new Miestnost();
+                    Tovar myTovar = new Tovar();
+
+                    myMiestnost.setId(cursor.getInt(0));
+                    myMiestnost.setNazov(cursor.getString(1));
+
+                    myTovar.setId(cursor.getInt(2));
+                    myTovar.setNazov(cursor.getString(3));
+
+                    myMnozstvo.setMiestnost(myMiestnost);
+                    myMnozstvo.setTovar(myTovar);
+                    myMnozstvo.setMnozstvo(cursor.getDouble(4));
+
+                  //  results.add(myMnozstvo);
+
+                } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+            }
+            cursor.close();
+        }
+        return myMnozstvo;
     }
 
 

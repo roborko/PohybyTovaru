@@ -49,15 +49,10 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
     TextView tovarnazovTV;
     TextView mnozstvoTV;
 
-
-
-  //  TextView statusET;
-  //  TextView datumET;
     List<MnozstvaTovaru > zoznamHM = null;
 
     MnozstvaTovarovDataModel dm = new MnozstvaTovarovDataModel(this); // pri kopirovani do inej triedy zmen
-   //xx  CustomListInventoryAdapter customListAdapter;
-   MnozstvaTovarovAdapter mnozstvaTovaruAdapter;
+    MnozstvaTovarovAdapter mnozstvaTovaruAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

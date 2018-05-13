@@ -26,19 +26,20 @@
 - zavolana klavesnicu pre mnozstvo
 - po zapise noveho pohybu sa refresne list
 
-
-Robko:
-
-- tlacitko na export v pohyboch - Android Design Support Library expandable Floating Action Button(FAB) menu
+13.5.18
+-
+- pri presune, inventure a skartovani ponukni len tie miestnosti, kde sa nachadza mnozstvo > 0
+- miestnost do nemoze byt taka ista ako miestnost z
 
 
 
 urob:
-- pri presune, inventure a skartovani ponukni len tie miestnosti, kde sa nachadza mnozstvo > 0
-- miestnost do nemoze byt taka ista ako miestnost z
+
+
+- neprepisuje aktualne mnozstva po presune
+
 - zrus oznacovanie a mazanie poloziek pohybu
-- v detaile urob skakanie na dalsi komponent (- v detaile pohybu posuvaj kurzor)
-- v prehlade pohybov filtruj na miestnost alebo inventar - daj moznost exportu
+- v prehlade pohybov daj moznost exportu (Android Design Support Library expandable Floating Action Button(FAB) menu)
 
 - zadavanie pohybu - vyber inventara - hore prepis Select Item s Zoznam inventarov
 - zadavanie pohybu - vyber meistnosti - hore prepis Select Item s Miestnost Z
