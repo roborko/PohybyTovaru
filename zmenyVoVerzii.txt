@@ -27,16 +27,14 @@
 - po zapise noveho pohybu sa refresne list
 
 13.5.18
--
 - pri presune, inventure a skartovani ponukni len tie miestnosti, kde sa nachadza mnozstvo > 0
 - miestnost do nemoze byt taka ista ako miestnost z
 
-
+14.5.18
+- neprepisovalo aktualne mnozstva po presune, test prijem, presun, inventura , skartovanie OK
 
 urob:
 
-
-- neprepisuje aktualne mnozstva po presune
 
 - zrus oznacovanie a mazanie poloziek pohybu
 - v prehlade pohybov daj moznost exportu (Android Design Support Library expandable Floating Action Button(FAB) menu)
@@ -52,13 +50,13 @@ urob:
 
 ***********************************************************
 Test pohybov
-1. kuchyna prijem 5 ks              (kuchyna 5ks, detska 0 ks, spolu 5 ks)
-2. z kuchyne do izby presun 2 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks)
-3. v kuchyni skartuj 1 ks           (kuchyna 2ks, detska 2 ks, spolu 4 ks)
-4. izba inventura 3 ks              (kuchyna 2ks, detska 3 ks, spolu 5 ks)
-5. z izba do kuchyna presun 1 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks)
-6. izba prijem 2 ks                 (kuchyna 3ks, detska 4 ks, spolu 7 ks)
-7. kuchyna inventura 0 ks           (kuchyna 0ks, detska 4 ks, spolu 4 ks)
+1. kuchyna prijem 5 ks              (kuchyna 5ks, detska 0 ks, spolu 5 ks) ok
+2. z kuchyne do izby presun 2 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks) ok
+3. v kuchyni skartuj 1 ks           (kuchyna 2ks, detska 2 ks, spolu 4 ks) ok
+4. izba inventura 3 ks              (kuchyna 2ks, detska 3 ks, spolu 5 ks) ok
+5. z izba do kuchyna presun 1 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks) ok
+6. izba prijem 2 ks                 (kuchyna 3ks, detska 4 ks, spolu 7 ks) ok
+7. kuchyna inventura 0 ks           (kuchyna 0ks, detska 4 ks, spolu 4 ks) ok
 8. izba skartuj 4 ks                (kuchyna 0ks, detska 0 ks, spolu 0 ks)
 
 daj na nulu cez inventuru a skartovanie? Hlaska ze sa dosiahla nula alebo kriticke mnozstvo na uvodnu obrazovku

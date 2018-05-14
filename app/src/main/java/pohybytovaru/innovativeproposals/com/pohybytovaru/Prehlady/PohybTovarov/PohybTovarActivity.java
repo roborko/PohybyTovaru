@@ -27,6 +27,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +81,14 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             Dao<Pohyb, Integer> pohybDao = getHelper().PohybDAO();
             data_list = pohybDao.queryForAll();
 
+            Collections.sort(data_list, new Comparator<Pohyb>() {
+                @Override
+                public int compare(Pohyb lhs, Pohyb rhs) {
+                    return  rhs.getId() - lhs.getId(); // Ascending
+                }
+            });
+
+
         } catch (SQLException ex) {
             Log.e(this.getClass().getName(), "Unable to fetch data_list data: " + ex.getMessage());
         }
@@ -100,10 +110,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         }
         else {
             GetData();  // aktualizuje data_list
-
             dataAdapter.AddNewCollection(data_list);
-
-
 
             //   int pocet = data_list.size();
 
@@ -296,7 +303,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
         this.finish();
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override

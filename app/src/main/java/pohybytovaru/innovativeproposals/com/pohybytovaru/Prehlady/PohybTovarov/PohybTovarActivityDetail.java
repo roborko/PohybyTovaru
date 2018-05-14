@@ -144,7 +144,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 }
             });
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -217,7 +216,8 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //try to retrieve aktualne mnozstvo v miestnosti TransactionType_Delete
 
            // AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
-            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
+           // AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
+            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
                 inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
@@ -242,9 +242,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
             //try to retrieve aktualne mnozstvo v miestnosti
             // AktualneMnozstvo aktualneMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId());
-            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
-
-
+            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
                 inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
@@ -258,7 +256,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {
             // pri inventure prepis mnozstvo
             passedInPohyb.setMiestnostFrom(null);
-
         }
 
         passedInPohyb.setPocetKusov(Integer.valueOf(pocetKusov.getText().toString()));
@@ -315,9 +312,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
                 //update
                 if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))
-                    aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+                    //aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+                    dm.setMnozstvoTovaruVMiestnosti(selectedTovar.getId(), miestnostFrom.getId(), miestnostFromMnozstvo.getMnozstvo());
                 else
-                    aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                    //aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                    dm.setMnozstvoTovaruVMiestnosti(selectedTovar.getId(), miestnostTo.getId(), miestnostToMnozstvo.getMnozstvo());
             }
 
             //check for MOVE
@@ -325,12 +324,14 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 if (miestnostFromMnozstvo != null) {
                     //aktualne mnozstvo musi byt zadefinovane, inac nemoze povolit odobrat z danej miestnosti!
                     miestnostFromMnozstvo.setMnozstvo(miestnostFromMnozstvo.getMnozstvo() - passedInPohyb.getPocetKusov());
-                    aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+                    //aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
+                    dm.setMnozstvoTovaruVMiestnosti(selectedTovar.getId(), miestnostFrom.getId(), miestnostFromMnozstvo.getMnozstvo());
 
                     if(miestnostToMnozstvo != null) // pri skartacii je to null
                     {
                         miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() + passedInPohyb.getPocetKusov());
-                        aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                       // aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                        dm.setMnozstvoTovaruVMiestnosti(selectedTovar.getId(), miestnostTo.getId(), miestnostToMnozstvo.getMnozstvo());
                     }
                 }
             }
@@ -426,7 +427,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         //miestnostFromMnozstvo = tryGetAktualneMnozstvo(miestnostFrom.AktualneMnozstvo(), selectedTovar.getId()); xx
 
         // getAktualneMnozstvoToavruZMiestnosti
-        miestnostFromMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
+        miestnostFromMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
         if (miestnostFromMnozstvo == null) {
             miestnostFrom_povodnyPocetKusovTovaru.setText("0");
@@ -473,7 +474,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         if (miestnostTo == null || selectedTovar == null) return;
        // miestnostToMnozstvo = tryGetAktualneMnozstvo(miestnostTo.AktualneMnozstvo(), selectedTovar.getId());
-        miestnostToMnozstvo = dm.getAktualneMnozstvoToavruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
+        miestnostToMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
 
 
         if (miestnostToMnozstvo == null) {

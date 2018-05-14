@@ -235,7 +235,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         return results;
     }
 
-    public AktualneMnozstvo getAktualneMnozstvoToavruZMiestnosti(int tovarId, int miestnostId )  {
+    public AktualneMnozstvo getAktualneMnozstvoTovaruZMiestnosti(int tovarId, int miestnostId )  {
 
         String sSQL;
      //   ArrayList<AktualneMnozstvo> results = new ArrayList<>();
@@ -283,6 +283,50 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         return myMnozstvo;
     }
 
+    public int setMnozstvoTovaruVMiestnosti(int tovarId, int miestnostId, double myMnozstvo )  {
+
+        int result = 0;
+
+        // este zisti ci je update alebo insert
+
+     //   boolean existuje = false;
+     //   long vysledok = 0;
+
+            if((tovarId>0) && (miestnostId>0)) {
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            String sUpdateSQL = "INSERT INTO  aktualneMnozstvo (Mnozstvo,tovar,miestnost) VALUES(?,?,?)";
+
+            //String sSQL = "SELECT id  FROM aktualneMnozstvo WHERE tovar = '" + tovarId + "' AND miestnost = " + miestnostId ;
+            String sSQL = "SELECT id  FROM aktualneMnozstvo WHERE tovar = " + tovarId + " AND miestnost = " + miestnostId ;
+            Cursor cursor = db.rawQuery(sSQL, null);
+
+            //kurzor na prvy zaznam
+            if (cursor.moveToFirst()) {
+                do {
+                  //  existuje = true;
+                    sUpdateSQL = "UPDATE  aktualneMnozstvo SET Mnozstvo = ? WHERE tovar = ? AND miestnost = ? ";
+                } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+            }
+
+            cursor.close();
+
+
+
+            SQLiteStatement updateInstertStmt = db.compileStatement(sUpdateSQL);
+
+            updateInstertStmt.clearBindings();
+            // insertStmt.bindString(1, Integer.toString(this.accId));
+            updateInstertStmt.bindDouble(1, myMnozstvo) ;
+            updateInstertStmt.bindLong(2,tovarId) ;
+            updateInstertStmt.bindLong(3,miestnostId) ;
+
+            Log.d("update","Query: "+updateInstertStmt.toString());
+            updateInstertStmt.executeInsert();
+            db.close();
+        }
+       return result;
+    }
 
 }
 
