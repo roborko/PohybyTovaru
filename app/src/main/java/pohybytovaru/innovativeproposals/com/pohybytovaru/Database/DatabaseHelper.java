@@ -27,7 +27,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     public static final String DATABASE_NAME = "pohybtovaru.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 9;
     // ver 4 - pridany pohyb inventura
     // ver 6 - pridane skartovanie do pohybov
     // ver 7 - test - pozor, prepisana funkcia onUpgrade - nedropuje tabulky, len maze pohyby
@@ -69,7 +69,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
-        /* toto odremuj
+        // toto odremuj
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
 
@@ -85,7 +85,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
             throw new RuntimeException(e);
-        } */
+        }
+
+        // potialto
 
         mazaniePohybov(connectionSource);
 

@@ -33,8 +33,13 @@
 14.5.18
 - neprepisovalo aktualne mnozstva po presune, test prijem, presun, inventura , skartovanie OK
 
-urob:
+15.5.18
+- zobraz activty prekrocenie limitneho mnozstva
 
+TEST - zadaj presun a daj navrat - nemalo by to vojst do zapisu mnozstva v miestnosti !!!
+
+
+UROB:
 
 - zrus oznacovanie a mazanie poloziek pohybu
 - v prehlade pohybov daj moznost exportu (Android Design Support Library expandable Floating Action Button(FAB) menu)
@@ -45,7 +50,7 @@ urob:
 - zadavanie pohybu - nahrad Close s Navrat bez ulozenia - daj najprv Dialog otazku
 - co robi import ?
 - urob export do pdf, csv  cez mail
-- kontrolu na pminimalne mnozstvo alebo nula (celkove)
+- kontrolu na minimalne mnozstvo alebo nula (celkove)
 
 
 ***********************************************************

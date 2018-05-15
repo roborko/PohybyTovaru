@@ -17,6 +17,7 @@ import org.androidannotations.annotations.ViewById;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity;
 //import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //populate default values
         DeafultValuesPopulator.PopulateDefaultValues(this);
+
     }
 
     @Override
@@ -69,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_InventarVMiestnosti:
                 intent = new Intent(this, ListMnozstvaTovarovActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_MinimalneMnozstva:
+                intent = new Intent(this, MinimalneMnozstvaTovarovActivity.class);
                 startActivity(intent);
                 break;
 

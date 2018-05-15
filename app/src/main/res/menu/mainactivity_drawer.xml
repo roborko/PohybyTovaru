@@ -4,7 +4,7 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:title="Prehlad">
+        <item android:title="@string/Prehlad">
             <menu>
                 <item
                     android:id="@+id/nav_pohybTovaru"
@@ -15,6 +15,12 @@
                     android:id="@+id/nav_InventarVMiestnosti"
                     android:icon="@drawable/ic_event_seat_white_24dp"
                     android:title="@string/AktualnePoctyTovarov" />
+
+                <item
+                    android:id="@+id/nav_MinimalneMnozstva"
+                    android:icon="@drawable/ic_minimalne_mnozstva"
+                    android:title="@string/PrekroceneLimity" />
+
             </menu>
         </item>
         <item android:title="@string/nav_label_ciselniky">
@@ -32,7 +38,7 @@
             </menu>
         </item>
     </group>
-
+<!--
     <item android:title="@string/nav_label_reports">
         <menu>
             <item
@@ -41,5 +47,5 @@
                 android:title="Import" />
         </menu>
     </item>
-
+-->
 </menu>

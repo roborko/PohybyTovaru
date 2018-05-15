@@ -106,18 +106,10 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         ArrayList<MnozstvaTovaru> results = new ArrayList<>();
         String sSQL;
         String myNazov2 = "%"+myFilter+"%";
-     //   String myKod2 =  myFilter + "%";
-
-      /*  sSQL = "SELECT aa.Id,aa.itemdescription,aa.itembarcode,aa.status,aa.datum,bb.obrazok, aa.datumzaradenia, aa.serialnr, aa.datumvyradenia, aa.zodpovednaosoba, aa.typmajetku," +
-                "aa.obstaravaciacena, aa.extranotice, aa.datumReal " +
-                "FROM majetok aa left join  MajetokObrazky bb on bb.itembarcode = aa.itembarcode " +
-                "WHERE aa.itembarcode like '" + myKod2 +"' or aa.serialnr like '" + myKod2 +"' or aa.itemdescription like '" + myNazov2 +
-                "' or aa.extranotice like '" + myNazov2 + "' order by aa.datumREAL asc limit 100";*/
 
           sSQL = "SELECT  tovar.Id, tovar.fotografia, tovar.nazov, sum(aktualneMnozstvo.mnozstvo) " +
                  "FROM aktualneMnozstvo " +
                  "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
-              //   "WHERE tovar.nazov like '" + myNazov2 +"'" +
                   "GROUP BY  tovar.id " +
                   "ORDER BY  tovar.id";
 
@@ -207,7 +199,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
 
             sSQL = "SELECT distinct miestnost.nazov, miestnost.id " +  //  aktualneMnozstvo.mnozstvo
                     "FROM aktualneMnozstvo " +
-                    "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
+                    "LEFT OUTER JOIN aktualneMnozstvo.miestnost = miestnost on miestnost.id " +
                     " ORDER BY miestnost.nazov COLLATE NOCASE";
 
 
@@ -287,10 +279,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
 
         int result = 0;
 
-        // este zisti ci je update alebo insert
-
-     //   boolean existuje = false;
-     //   long vysledok = 0;
+        // POZOR - pri vybere  presunu to sem nema co ist - vratil som sa z detailu bez zapisu
 
             if((tovarId>0) && (miestnostId>0)) {
 
@@ -310,9 +299,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
             }
 
             cursor.close();
-
-
-
             SQLiteStatement updateInstertStmt = db.compileStatement(sUpdateSQL);
 
             updateInstertStmt.clearBindings();

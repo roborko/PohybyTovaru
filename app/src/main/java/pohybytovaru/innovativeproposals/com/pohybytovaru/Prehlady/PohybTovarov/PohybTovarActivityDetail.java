@@ -190,7 +190,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         }*/
 
-
         if ((miestnostTo == null) && (!transactionType.toString().equalsIgnoreCase(getString(R.string.TransactionType_Delete)))) {
         //if ((miestnostTo == null) && (!transactionType.equals(hh))) {
             Toast.makeText(this, R.string.NajprvMusiteVybratMiestnostDo, Toast.LENGTH_SHORT).show();
@@ -434,7 +433,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         } else {
             miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostFromMnozstvo.getMnozstvo()));
         }
-
 
 
         // TODO v zozname miestnostTo vyhod zo zoznamu miestnostFrom
