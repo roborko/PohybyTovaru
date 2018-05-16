@@ -24,7 +24,6 @@
 
 
             android:layout_gravity="center_vertical">
-            "
 
             <TextView
                 android:id="@+id/inv1"

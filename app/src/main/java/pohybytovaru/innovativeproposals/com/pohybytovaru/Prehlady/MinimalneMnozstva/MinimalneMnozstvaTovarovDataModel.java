@@ -49,7 +49,6 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
         onCreate(db);*/
     }
 
-
     public MinimalneMnozstvaTovarovDataModel(Context ctx) {
         // super(context, name, factory, version);
         super(ctx, DB_DATABAZA, null, DB_VERZIA);
@@ -67,7 +66,6 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 "GROUP BY  tovar.id " +
                 "HAVING tovar.MinimalneMnozstvo > sum(aktualneMnozstvo.mnozstvo) " +
                 "ORDER BY  tovar.id";
-
 
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);

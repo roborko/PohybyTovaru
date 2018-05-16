@@ -202,7 +202,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                     "LEFT OUTER JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost" +
                     " ORDER BY miestnost.nazov COLLATE NOCASE"; */
 
-            sSQL = "SELECT  miestnost.nazov, miestnost.id FROM miestnost ORDER BY miestnost.nazov COLLATE NOCASE";
+            sSQL = "SELECT  nazov, id FROM miestnost ORDER BY nazov COLLATE NOCASE";
 
 
         SQLiteDatabase db = this.getWritableDatabase();

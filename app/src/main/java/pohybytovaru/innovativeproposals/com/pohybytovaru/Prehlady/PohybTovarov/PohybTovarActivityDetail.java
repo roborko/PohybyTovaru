@@ -135,8 +135,8 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
             list_typTransakcie = typTransakcieDAO.queryForAll();
 
-            list_miestnostFROM = miestnostDAO.queryForAll();
-            list_miestnostTO = miestnostDAO.queryForAll();
+            list_miestnostFROM = dm.getMiestnostSInventarom(0); // bolo miestnostDAO.queryForAll();
+            list_miestnostTO = dm.getMiestnostSInventarom(0); // bolo miestnostDAO.queryForAll();
             Collections.sort(list_miestnostFROM, new Comparator<Miestnost>() {
                 @Override
                 public int compare(Miestnost lhs, Miestnost rhs) {
@@ -448,8 +448,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         miestnostAdapterTO.clear();
         miestnostAdapterTO.addAll(list_miestnostTO);
-
-
 
         // pokial prijem, intentura alebo skartovanie tak focusuj
         if ((transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) ||

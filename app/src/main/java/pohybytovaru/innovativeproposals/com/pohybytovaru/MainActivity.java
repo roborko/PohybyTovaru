@@ -45,9 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-      //  showLimitneMnozstva();
+       setContentView(R.layout.activity_main);
+
+
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,6 +61,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        //  DeafultValuesPopulator.PopulateDefaultValues(this);
 
 //        showLimitneMnozstva();
+
+        /* odtialto
+
+        MinimalneMnozstvaTovarovDataModel dm = new MinimalneMnozstvaTovarovDataModel(this); // pri kopirovani do inej triedy zmen
+        MinimalneMnozstvaTovarovAdapter minimalneMnozstvaTovaruAdapter;
+
+        List<MnozstvaTovaru> zoznamHM = null;
+
+        // xx    setContentView(R.layout.activity_minimalne_mnozstvo_tovaru); // list_mnozstva_tovaru_total
+        //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //  setSupportActionBar(toolbar);
+        //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        try {
+            // zoznam inventarov v miestnosti
+            zoznamHM = dm.getPrekroceneMinimalneMnozstvo();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        //   if (zoznamHM.size() != 0) {
+        ListView lw = (ListView) findViewById(R.id.list_min_mnozstva_tovaru);
+
+        minimalneMnozstvaTovaruAdapter = new MinimalneMnozstvaTovarovAdapter(this, R.layout.activity_minimalne_mnozstvo_tovaru_row, zoznamHM);
+        lw.setAdapter(minimalneMnozstvaTovaruAdapter);
+
+potialto
+
+        */
 
     }
 

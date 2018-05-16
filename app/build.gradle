@@ -10,8 +10,22 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+
+    signingConfigs {
+        releaseCfg {
+            keyAlias("LJApps")
+          //  storePassword System.getenv("DEMO_STORE_PASSWORD")
+
+            storePassword("DEMO_STORE_PASSWORD");
+           // keyPassword System.getenv("DEMO_STORE_PASSWORD")
+            keyPassword("DEMO_STORE_PASSWORD");
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.releaseCfg
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

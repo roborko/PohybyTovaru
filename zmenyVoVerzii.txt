@@ -36,7 +36,8 @@
 15.5.18
 - zobraz activty prekrocenie limitneho mnozstva
 
-TEST - zadaj presun a daj navrat - nemalo by to vojst do zapisu mnozstva v miestnosti !!!
+16.5.18
+- vydana verzia 0.1
 
 
 UROB:
@@ -62,7 +63,7 @@ Test pohybov
 5. z izba do kuchyna presun 1 ks    (kuchyna 3ks, detska 2 ks, spolu 5 ks) ok
 6. izba prijem 2 ks                 (kuchyna 3ks, detska 4 ks, spolu 7 ks) ok
 7. kuchyna inventura 0 ks           (kuchyna 0ks, detska 4 ks, spolu 4 ks) ok
-8. izba skartuj 4 ks                (kuchyna 0ks, detska 0 ks, spolu 0 ks)
+8. izba skartuj 4 ks                (kuchyna 0ks, detska 0 ks, spolu 0 ks) ok
 
 daj na nulu cez inventuru a skartovanie? Hlaska ze sa dosiahla nula alebo kriticke mnozstvo na uvodnu obrazovku
 
