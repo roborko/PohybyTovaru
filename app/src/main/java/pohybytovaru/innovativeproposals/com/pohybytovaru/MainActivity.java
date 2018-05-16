@@ -10,14 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.net.URISyntaxException;
+import java.util.List;
+
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovActivity;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovAdapter;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovDataModel;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity;
 //import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
@@ -40,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+      //  showLimitneMnozstva();
+
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -48,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //populate default values
-        DeafultValuesPopulator.PopulateDefaultValues(this);
+       //  DeafultValuesPopulator.PopulateDefaultValues(this);
+
+//        showLimitneMnozstva();
 
     }
 
@@ -83,5 +94,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void showLimitneMnozstva() {
+
+        MinimalneMnozstvaTovarovDataModel dm = new MinimalneMnozstvaTovarovDataModel(this); // pri kopirovani do inej triedy zmen
+        MinimalneMnozstvaTovarovAdapter minimalneMnozstvaTovaruAdapter;
+
+        List<MnozstvaTovaru> zoznamHM = null;
+
+        setContentView(R.layout.activity_minimalne_mnozstvo_tovaru); // list_mnozstva_tovaru_total
+      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        try {
+            // zoznam inventarov v miestnosti
+            zoznamHM = dm.getPrekroceneMinimalneMnozstvo();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        //   if (zoznamHM.size() != 0) {
+        ListView lw = (ListView) findViewById(R.id.list_min_mnozstva_tovaru);
+
+        minimalneMnozstvaTovaruAdapter = new MinimalneMnozstvaTovarovAdapter(this, R.layout.activity_minimalne_mnozstvo_tovaru_row, zoznamHM);
+        lw.setAdapter(minimalneMnozstvaTovaruAdapter);
+
     }
 }

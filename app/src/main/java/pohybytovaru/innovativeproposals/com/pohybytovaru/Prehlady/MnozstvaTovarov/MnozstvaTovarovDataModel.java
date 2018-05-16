@@ -197,10 +197,12 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                     " ORDER BY miestnost.nazov COLLATE NOCASE";
         else
 
-            sSQL = "SELECT distinct miestnost.nazov, miestnost.id " +  //  aktualneMnozstvo.mnozstvo
+         /*   sSQL = "SELECT distinct miestnost.nazov, miestnost.id " +  //  aktualneMnozstvo.mnozstvo
                     "FROM aktualneMnozstvo " +
-                    "LEFT OUTER JOIN aktualneMnozstvo.miestnost = miestnost on miestnost.id " +
-                    " ORDER BY miestnost.nazov COLLATE NOCASE";
+                    "LEFT OUTER JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost" +
+                    " ORDER BY miestnost.nazov COLLATE NOCASE"; */
+
+            sSQL = "SELECT  miestnost.nazov, miestnost.id FROM miestnost ORDER BY miestnost.nazov COLLATE NOCASE";
 
 
         SQLiteDatabase db = this.getWritableDatabase();

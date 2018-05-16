@@ -48,10 +48,6 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View row = convertView;
         ImageView image = null;
-    //    TextView itemBarcode = null;
-    //    TextView itemDescription = null;
-    //    TextView itemStatus = null;
-     //   TextView itemDatum = null;
 
         TextView tovarnazov = null;
         TextView mnozstvo = null;
@@ -63,10 +59,8 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
         }
 
         image = row.findViewById(R.id.detailView_Image);
-        tovarnazov = row.findViewById(R.id.tovarnazovTV );
-        mnozstvo = row.findViewById(R.id.mnozstvoTV);
-  //      itemStatus = row.findViewById(R.id.statusET);
-   //     itemDatum = row.findViewById(R.id.datumET);
+        tovarnazov = row.findViewById(R.id.tovarnazov );
+        mnozstvo = row.findViewById(R.id.aktualne_mnozstvo);
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
         tovarnazov.setText(mnozstvaTovaru.getTovar());

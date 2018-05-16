@@ -45,9 +45,10 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 
 public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
 
-    private String myTovarName;
+
     TextView tovarnazovTV;
-    TextView mnozstvoTV;
+    TextView aktualne_mnozstvoTV;
+    TextView limitne_mnozstvoTV;
 
     List<MnozstvaTovaru> zoznamHM = null;
 
@@ -57,8 +58,6 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //enable search within activity
-
-        myTovarName = "";
 
         setContentView(R.layout.activity_minimalne_mnozstvo_tovaru); // list_mnozstva_tovaru_total
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,9 +72,9 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
         }
 
         //   if (zoznamHM.size() != 0) {
-        ListView lw = (ListView) findViewById(R.id.list_mnozstva_tovaru_total);
+        ListView lw = (ListView) findViewById(R.id.list_min_mnozstva_tovaru);
 
-        minimalneMnozstvaTovaruAdapter = new MinimalneMnozstvaTovarovAdapter(this, R.layout.activity_mnozstvo_tovaru_total_row, zoznamHM);
+        minimalneMnozstvaTovaruAdapter = new MinimalneMnozstvaTovarovAdapter(this, R.layout.activity_minimalne_mnozstvo_tovaru_row, zoznamHM);
         lw.setAdapter(minimalneMnozstvaTovaruAdapter);
 
     }

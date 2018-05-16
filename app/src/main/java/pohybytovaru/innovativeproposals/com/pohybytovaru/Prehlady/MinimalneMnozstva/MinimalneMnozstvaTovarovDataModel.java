@@ -60,7 +60,7 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
         ArrayList<MnozstvaTovaru> results = new ArrayList<>();
         String sSQL;
 
-        sSQL = "SELECT  tovar.Id, tovar.fotografia, tovar.nazov, sum(aktualneMnozstvo.mnozstvo) " +
+        sSQL = "SELECT  tovar.Id, tovar.fotografia, tovar.nazov, sum(aktualneMnozstvo.mnozstvo), tovar.MinimalneMnozstvo  " +
                 "FROM aktualneMnozstvo " +
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "WHERE tovar.MinimalneMnozstvo > 0 " +
@@ -82,8 +82,8 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 newItem.setId(cursor.getInt(0));
                 newItem.setFotografia(cursor.getBlob(1));
                 newItem.setTovar(cursor.getString(2));
-                //   newItem.setMiestnost(cursor.getString(2));
                 newItem.setMnozstvo(cursor.getDouble(3));
+                newItem.setLimitne_mnozstvo(cursor.getDouble(4));
                 results.add(newItem);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam

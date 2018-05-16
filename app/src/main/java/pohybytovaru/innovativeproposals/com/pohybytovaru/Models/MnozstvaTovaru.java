@@ -8,6 +8,7 @@ public class MnozstvaTovaru implements Parcelable {
     private String tovar;
     private String miestnost;
     private double mnozstvo;
+    private double limitne_mnozstvo; // sem dotahujeme hodnoty z tovaru
     private byte[] fotografia;
 
     public int getId() {
@@ -38,12 +39,21 @@ public class MnozstvaTovaru implements Parcelable {
         this.mnozstvo = mnozstvo;
     }
 
+    public double getLimitne_mnozstvo() {
+        return limitne_mnozstvo;
+    }
+
+    public void setLimitne_mnozstvo(double limitne_mnozstvo) {
+        this.limitne_mnozstvo = limitne_mnozstvo;
+    }
+
     public byte[] getFotografia() {
         return fotografia;
     }
     public void setFotografia(byte[] fotografia) {
         this.fotografia = fotografia;
     }
+
 
 
     @Override
@@ -57,6 +67,7 @@ public class MnozstvaTovaru implements Parcelable {
         dest.writeString(tovar);
         dest.writeString(miestnost);
         dest.writeDouble(mnozstvo) ;
+        dest.writeDouble(limitne_mnozstvo) ;
         dest.writeByteArray(fotografia);
     }
 
@@ -81,6 +92,7 @@ public class MnozstvaTovaru implements Parcelable {
         this.tovar = in.readString();
         this.miestnost = in.readString();
         this.mnozstvo = in.readDouble();
+        this.limitne_mnozstvo = in.readDouble();
         this.fotografia = in.createByteArray();
     }
 
@@ -90,6 +102,7 @@ public class MnozstvaTovaru implements Parcelable {
         this.tovar = clone.tovar;
         this.miestnost = clone.miestnost;
         this.mnozstvo = clone.mnozstvo;
+        this.limitne_mnozstvo = clone.limitne_mnozstvo;
         this.fotografia  = clone.fotografia;
     }
 
