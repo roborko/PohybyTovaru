@@ -60,6 +60,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Pohyb.class);
             TableUtils.createTable(connectionSource, TypTransakcie.class);
             TableUtils.createTable(connectionSource, AktualneMnozstvo.class);
+
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -82,14 +83,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
 
+            // napln typy transakcii
+            // DeafultValuesPopulator.PopulateDefaultValues(this.getApplicationContext());
+
+
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
             throw new RuntimeException(e);
         }
 
         // potialto
-
-        mazaniePohybov(connectionSource);
+        // mazaniePohybov(connectionSource);
 
     }
 

@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        setContentView(R.layout.activity_main);
 
 
-
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //populate default values
-       //  DeafultValuesPopulator.PopulateDefaultValues(this);
+         DeafultValuesPopulator.PopulateDefaultValues(this);  // toto presun do vytvorenia databazy
 
 //        showLimitneMnozstva();
 
