@@ -3,10 +3,6 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-/**
- * Created by Robert on 11.02.2018.
- */
-
 @DatabaseTable(tableName = "AktualneMnozstvo")
 public class AktualneMnozstvo {
     @DatabaseField(columnName = "Id", generatedId = true)

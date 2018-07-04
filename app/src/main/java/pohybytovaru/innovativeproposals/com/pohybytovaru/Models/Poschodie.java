@@ -1,5 +1,6 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Models;
 
+
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
@@ -16,33 +17,17 @@ import com.j256.ormlite.table.DatabaseTable;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
-/**
- * Created by Robert on 14.01.2018.
- */
-@DatabaseTable(tableName = "Miestnost")
-public class Miestnost extends BaseObservable implements Parcelable, IEditableRecyclerItem, IFilterableItem {
+@DatabaseTable(tableName = "Poschodie")
+public class Poschodie extends BaseObservable implements Parcelable, IEditableRecyclerItem, IFilterableItem {
     @DatabaseField(columnName = "Id", generatedId = true)
     private int Id;
     @DatabaseField(columnName = "IdBudova")
     private int IdBudova;
-    @DatabaseField(columnName = "IdPoschodie")
-    private int IdPoschodie;
     @DatabaseField
     private String Nazov;
-    @DatabaseField
-    private boolean JeSklad;
 
-    @DatabaseField
-    private String KodMiestnosti;
 
-    //Miestnost: ID, IDBUDOVA, IDPOSCHODIE, NAZOV, KodTovaru
-
-    @ForeignCollectionField(columnName = "AktualneMnozstvo", eager = true)
-    private ForeignCollection<AktualneMnozstvo> aktualneMnozstvo;
-
-    public ForeignCollection<AktualneMnozstvo> AktualneMnozstvo() {
-        return aktualneMnozstvo;
-    }
+    //POSCHODIE  :     ID, IDBUDOVA, NAZOV
 
     private boolean Selected;
 
@@ -60,10 +45,6 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
         return Id;
     }
 
-    public void setId(int id) {
-        Id = id;
-    }
-
     public void setIdBudova(int idbudova) {
         IdBudova = idbudova;
     }
@@ -72,13 +53,10 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
         return IdBudova;
     }
 
-    public void setIdPoschodie(int idposchodie) {
-        IdPoschodie = idposchodie;
+    public void setId(int id) {
+        Id = id;
     }
 
-    public int getIdPoschodie() {
-        return IdPoschodie;
-    }
 
     public String getNazov() {
         return Nazov;
@@ -86,22 +64,6 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
 
     public void setNazov(String nazov) {
         Nazov = nazov;
-    }
-
-    public boolean isJeSklad() {
-        return JeSklad;
-    }
-
-    public void setJeSklad(boolean jeSklad) {
-        JeSklad = jeSklad;
-    }
-
-    public String getKodMiestnosti() {
-        return KodMiestnosti;
-    }
-
-    public void setKodMiestnosti(String kodMiestnosti) {
-        KodMiestnosti = kodMiestnosti;
     }
 
     @Override
@@ -122,43 +84,35 @@ public class Miestnost extends BaseObservable implements Parcelable, IEditableRe
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(Id);
-        parcel.writeInt(IdBudova);
-        parcel.writeInt(IdPoschodie);
         parcel.writeString(Nazov);
-        parcel.writeByte((byte) (JeSklad ? 1 : 0));
         parcel.writeByte((byte) (Selected ? 1 : 0));
     }
 
-    public Miestnost() {
+    public Poschodie() {
     }
 
-    public Miestnost(Parcel in) {
+    public Poschodie(Parcel in) {
         this.Id = in.readInt();
-        this.IdBudova = in.readInt();
-        this.IdPoschodie = in.readInt();
         this.Nazov = in.readString();
-        this.JeSklad = in.readByte() != 0;
         this.Selected = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<Miestnost> CREATOR = new Parcelable.Creator<Miestnost>() {
+    public static final Parcelable.Creator<Poschodie> CREATOR = new Parcelable.Creator<Poschodie>() {
 
         @Override
-        public Miestnost createFromParcel(Parcel parcel) {
-            return new Miestnost(parcel);
+        public Poschodie createFromParcel(Parcel parcel) {
+            return new Poschodie(parcel);
         }
 
         @Override
-        public Miestnost[] newArray(int i) {
-            return new Miestnost[i];
+        public Poschodie[] newArray(int i) {
+            return new Poschodie[i];
         }
     };
 
-    public void CopyData(Miestnost otherItem) {
-        this.IdBudova = otherItem.IdBudova;
-        this.IdPoschodie = otherItem.IdPoschodie;
+    public void CopyData(Poschodie otherItem) {
         this.Nazov = otherItem.Nazov;
-        this.JeSklad = otherItem.JeSklad;
         this.Selected = otherItem.Selected;
     }
 }
+

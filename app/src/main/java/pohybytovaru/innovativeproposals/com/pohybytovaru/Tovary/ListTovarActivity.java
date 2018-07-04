@@ -33,14 +33,13 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.DetailMiestnostiActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
 @EActivity(R.layout.activity_list_tovar)
 public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Tovar> {
-    public final static int TOVAR_REQUEST_CODE = 19;
+    public final static int TOVAR_REQUEST_CODE = 18;
     public final static String CODE_INTENT_TOVAR = "EXTRA_TOVAR";
 
     @ViewById
@@ -138,7 +137,6 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         return true;
     }
 
-
     private void AddNewItem(Tovar item) {
         try {
             Dao<Tovar, Integer> tovarDao = getHelper().TovarDAO();
@@ -184,17 +182,16 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
             Log.e("LIST_MIESTNOSTI", "Cannot delete miestnost. " + ex.getMessage());
         }
     }
-    //MENU OPTIONS MANIPULATIONS
 
-    //get access to menu object
+    //MENU OPTIONS MANIPULATIONS - get access to menu object
     private Menu savedMenu;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         this.savedMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_delete_or_search, menu);
-
 
         final MenuItem myActionMenuItem = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) myActionMenuItem.getActionView();
@@ -237,6 +234,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+
         MenuItem menu_delete = menu.findItem(R.id.delete);
         MenuItem menu_search = menu.findItem(R.id.search);
 

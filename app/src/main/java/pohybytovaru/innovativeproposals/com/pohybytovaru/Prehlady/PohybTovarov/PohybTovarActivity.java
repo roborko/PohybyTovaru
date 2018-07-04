@@ -2,9 +2,6 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,17 +26,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.DetailMiestnostiActivity_;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiAdapter;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 

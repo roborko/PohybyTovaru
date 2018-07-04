@@ -1,4 +1,4 @@
-package pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary;
+package pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,14 +8,17 @@ import java.util.List;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundAdapter;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundViewHolder;
 
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Budova;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListTovarRowBinding;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListBudovaRowBinding;
 
-public class ListTovarAdapter extends DataBoundAdapter<ActivityListTovarRowBinding, Tovar> {
+import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
+
+public class ListBudovyAdapter extends DataBoundAdapter<ActivityListBudovaRowBinding, Budova > {
+
     private final ISimpleRowClickListener actionCallback;
 
-    public ListTovarAdapter(@NonNull Context context, int layoutId, ISimpleRowClickListener actionCallback, List<Tovar> data) {
+    public ListBudovyAdapter(@NonNull Context context, int layoutId, ISimpleRowClickListener actionCallback, List<Budova> data) {
         super(layoutId);
         this.context = context;
         this.actionCallback = actionCallback;
@@ -25,7 +28,7 @@ public class ListTovarAdapter extends DataBoundAdapter<ActivityListTovarRowBindi
     }
 
     @Override
-    protected void bindItem(DataBoundViewHolder<ActivityListTovarRowBinding> holder, int position, List<Object> payloads) {
+    protected void bindItem(DataBoundViewHolder<ActivityListBudovaRowBinding> holder, int position, List<Object> payloads) {
         holder.binding.setObj(this.filterView.get(position));
         holder.binding.setCallback(actionCallback);
     }

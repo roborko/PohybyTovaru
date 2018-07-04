@@ -18,6 +18,10 @@ import org.androidannotations.annotations.ViewById;
 import java.net.URISyntaxException;
 import java.util.List;
 
+
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ListBudovaActivity;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ListBudovaActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ThreeLevelExpandableListView;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
@@ -46,8 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_main);
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 potialto
 
         */
-
     }
 
     @Override
@@ -98,7 +100,8 @@ potialto
         Intent intent;
         switch (id){
             case R.id.nav_miestnosti:
-                intent = new Intent(this, ListMiestnostiActivity_.class); // tu bol podciarkovnik
+                //intent = new Intent(this, ListMiestnostiActivity_.class); // tu bol podciarkovnik
+                intent = new Intent(this, ListBudovaActivity_.class); // tu bol podciarkovnik
                 startActivity(intent);
                 break;
             case R.id.nav_tovary:
@@ -119,6 +122,11 @@ potialto
                 startActivity(intent);
                 break;
 
+            case R.id.nav_pokus_three:
+                intent = new Intent(this, ThreeLevelExpandableListView.class);
+                startActivity(intent);
+
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

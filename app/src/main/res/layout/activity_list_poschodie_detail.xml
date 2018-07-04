@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right"
+        android:padding="@dimen/dialog_padding_actionButtons">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayout_PoschodieName"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dialog_padding_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txt_PoschodieName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/hint_nazovPoschodie" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_Cancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_below="@id/inputLayout_PoschodieName"
+            android:text="@string/lbl_dialog_cancel" />
+
+        <Button
+            android:id="@+id/btn_Save"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:textSize="20sp"
+            android:layout_below="@id/inputLayout_PoschodieName"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_dialog_save" />
+
+        <TextView
+            android:id="@+id/txMiestnost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/colorWhite"
+            android:layout_below="@id/btn_Save"
+            android:textSize="20sp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="@string/zoznam_miestnosti"
+             />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_below="@id/txMiestnost"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_newMiestnost"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/txPoschodie"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_add_white_24dp"
+            app:fabSize="normal" />
+
+    </RelativeLayout>
+</LinearLayout>

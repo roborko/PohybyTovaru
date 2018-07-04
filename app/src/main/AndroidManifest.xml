@@ -59,11 +59,26 @@
 
         </activity>
 
+        <activity android:name=".Budovy.ListBudovaActivity_"
+            android:label="@string/activity_ListBudov"
+            android:parentActivityName=".MainActivity_">
+
+        </activity>
+
+        <activity android:name=".Budovy.DetailBudovaActivity_"
+            android:label="@string/activity_DetailBudova"
+            />
+
+        <activity android:name=".Budovy.DetailPoschodieActivity_"
+
+            />
+
+        <activity android:name=".Budovy.ThreeLevelExpandableListView" />
+
         <activity
             android:name=".Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovActivity"
             android:label="@string/PrekroceneLimity"
             android:parentActivityName=".MainActivity_" />
-
 
         <activity android:name=".Login.LoginActivity" />
 

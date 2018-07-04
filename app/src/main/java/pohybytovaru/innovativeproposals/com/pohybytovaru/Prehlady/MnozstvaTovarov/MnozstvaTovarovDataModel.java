@@ -49,19 +49,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
 
     private static final String DB_DATABAZA =  DATABASE_NAME;
     private static final int DB_VERZIA = DATABASE_VERSION;
-  //  private static final String DB_TABULKA = "majetok";
-
-//public class MnozstvaTovarovAdapter extends DataBoundAdapter<ActivityListTovarRowBinding, Tovar> {
-  //  private final ISimpleRowClickListener actionCallback;
-
-/*    public MnozstvaTovarovAdapter(@NonNull Context context, int layoutId, ISimpleRowClickListener actionCallback, List<Tovar> data) {
-        super(layoutId);
-        this.context = context;
-        this.actionCallback = actionCallback;
-        this.data = data;
-        this.filterView.dataSourceChanged(this.data);
-    }
-*/
 
     // zaklad
     @Override
@@ -84,22 +71,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         // super(context, name, factory, version);
         super(ctx, DB_DATABAZA, null, DB_VERZIA);
     }
-
-    /*
-    @Override
-    protected void bindItem(DataBoundViewHolder<ActivityListTovarRowBinding> holder, int position, List<Object> payloads) {
-        holder.binding.setObj(this.filterView.get(position));
-        holder.binding.setCallback(actionCallback);
-    }
-
-    @Override
-    public int getItemCount() {
-        try {
-            return this.filterView.size();
-        } catch (Exception ex) {
-            return 0;
-        }
-    } */
 
     public List<MnozstvaTovaru> getTovarTotalList(String myFilter) throws URISyntaxException {
 
@@ -314,6 +285,31 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
             db.close();
         }
        return result;
+    }
+
+    public String[] getIdMiestnosti(String myBudova, String myPoschodie, String myMiestnost )  {
+
+        String[] result = new String[3];
+
+        String sSQL = "SELECT budova.id, poschodie.id, miestnost.id FROM miestnost " +
+                    "join poschodie on poschodie.id = miestnost.idposchodie " +
+                    "join budova on budova.id = miestnost.idbudova" +
+                    " WHERE budova.nazov = '" + myBudova + "' AND poschodie.nazov = '" + myPoschodie +  "' AND miestnost.nazov = '" + myMiestnost + "'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                result[0] = cursor.getString(0);
+                result[1] = cursor.getString(1);
+                result[2] = cursor.getString(2);
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return result;
     }
 
 }

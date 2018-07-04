@@ -13,7 +13,7 @@
 
                 <item
                     android:id="@+id/nav_InventarVMiestnosti"
-                    android:icon="@drawable/ic_event_seat_white_24dp"
+                    android:icon="@drawable/mnozstvo"
                     android:title="@string/AktualnePoctyTovarov" />
 
                 <item
@@ -27,13 +27,18 @@
             <menu>
                 <item
                     android:id="@+id/nav_miestnosti"
-                    android:icon="@drawable/ic_event_seat_white_24dp"
+                    android:icon="@drawable/budova"
                     android:title="@string/navigation_drawer_miestnosti" />
 
                 <item
                     android:id="@+id/nav_tovary"
-                    android:icon="@drawable/ic_settings_input_hdmi_black_24dp"
+                    android:icon="@drawable/ic_event_seat_white_24dp"
                     android:title="@string/navigation_drawer_tovary" />
+
+                <item
+                    android:id="@+id/nav_pokus_three"
+                    android:icon="@drawable/ic_event_seat_white_24dp"
+                    android:title="pokus zobrazenia troch vrstiev" />
 
             </menu>
         </item>

@@ -7,16 +7,10 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundAdapter;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundViewHolder;
-//import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
-//import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListMiestnostiRowBinding;
-//import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListTovarRowBinding;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityPohybTovarRowBinding;
 
-/**
- * Created by Robert on 21.01.2018.
- */
 
 public class PohybTovarAdapter extends DataBoundAdapter<ActivityPohybTovarRowBinding, Pohyb> {
     private final ISimpleRowClickListener actionCallback;

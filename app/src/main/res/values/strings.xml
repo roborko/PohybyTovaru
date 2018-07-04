@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">Pohyby inventára</string>
+    <string name="app_name">Pohyby tovaru</string>
     <string name="activity_ListMiestnosti">Zoznam Miestnosti</string>
+    <string name="activity_ListBudov">Zoznam budov</string>
     <string name="activity_DetailMiestnosti">Detail Miestnosti</string>
+    <string name="activity_DetailPoschodie">Detail Poschodia</string>
+    <string name="activity_DetailBudova">Detail Budovy</string>
 
     <string name="action_delete">Vymazať</string>
     <string name="action_search">Hľadaj</string>
@@ -9,27 +12,31 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_miestnosti">Miestnosti</string>
+    <string name="navigation_drawer_miestnosti">Budovy a miestnosti</string>
     <string name="hint_nazovMiestnosti">Názov miestnosti</string>
+    <string name="hint_nazovBudovy">Názov budovy</string>
+    <string name="hint_nazovPoschodie">Názov poschodia</string>
     <string name="lbl_dialog_cancel">Zrušiť</string>
     <string name="lbl_dialog_save">Uložiť</string>
     <string name="bool_miestnost_distinguisher">Je miestnosť sklad</string>
     <string name="lbl_duplicate_miestnost">Miestnosť s rovnakými hodnotami už existuje.</string>
+    <string name="lbl_duplicate_poschodie">Poschodie s rovnakým menom už existuje.</string>
+    <string name="lbl_duplicate_budova">Budova s rovnakým menom už existuje.</string>
     <string name="lbl_miestnost_type">Typ:&#160;</string>
     <string name="lbl_miestnostType_Sklad">Sklad</string>
     <string name="lbl_miestnostType_Miestnost">Miestnosť</string>
 
     <string name="gone">gone</string>
     <string name="visible">visible</string>
-    <string name="activity_ZoznamTovarov">Zoznam inventárov</string>
+    <string name="activity_ZoznamTovarov">Zoznam tovarov</string>
     <string name="nav_label_ciselniky">Číselníky</string>
     <string name="nav_label_reports">Reporty</string>
-    <string name="navigation_drawer_tovary">Inventár</string>
+    <string name="navigation_drawer_tovary">Tovar</string>
     <string name="nav_label_save">Uložiť</string>
-    <string name="hint_nazovTovaru">Názov inventára</string>
+    <string name="hint_nazovTovaru">Názov tovaru</string>
     <string name="activity_ZoznamTovarov_Detail">Detail</string>
     <string name="hint_TovarMinimalneMnozstvo">Minimálne množstvo na sklade</string>
-    <string name="lbl_error_hint_tovar_nazov">Názov inventára musí byť vyplnený.</string>
+    <string name="lbl_error_hint_tovar_nazov">Názov Tovaru musí byť vyplnený.</string>
     <string name="hint_movement_from">z:&#160;</string>
     <string name="hint_movement_to">do:&#160;</string>
     <string name="imageViewDescription">aa</string>
@@ -41,21 +48,26 @@
     <string name="TransactionType_Remove">Výdaj</string>
     <string name="TransactionType_Delete">Skartovanie</string>
     <string name="TransactionType_Inventory">Inventúra</string>
-    <string name="activity_PohybTovarov">Pohyby inventárov</string>
+    <string name="activity_PohybTovarov">Pohyby tovarov</string>
 
 
     <string name="date_format">%1$td.%1$tm.%1$tY %1$tHH:%1$tmm</string>
-    <string name="hint_tovarLookup">Vyhľadať inventár</string>
+    <string name="hint_tovarLookup">Vyhľadať tovar</string>
     <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Pôvodný počet kusov v miestnosti:</string>
     <string name="MusiteZadatHodnotuViacNezNula">Musíte zadať hodnotu väčšiu ako 0</string>
     <string name="NajprvMusiteVybratMiestnostDo">Musíte najprv vybrať miestnosť \'Do\'.</string>
     <string name="VyberMiestnosti">Výber miestnosti</string>
-    <string name="AktualnePoctyTovarov">Množstvá inventárov</string>
+    <string name="AktualnePoctyTovarov">Množstvá tovarov</string>
     <string name="krok1VyberTypuTransakcie">Krok 1 - Vyber typu transakcie</string>
-    <string name="krok2VyberInventara">Krok 2 - Výber inventára</string>
+    <string name="krok2VyberInventara">Krok 2 - Výber tovaru</string>
     <string name="PrekroceneLimity">Prekročené limity</string>
     <string name="Prehlad">Prehľady</string>
     <string name="mnozstvo_aktual_limit">množstvo akt./limit</string>
+    <string name="zoznam_poschodi">Zoznam poschodí</string>
+    <string name="zoznam_miestnosti">Zoznam miestností</string>
+    <string name="presun_z_miestnosti">Presun z miestnosti</string>
+    <string name="presun_do_miestnosti">Presun do miestnosti</string>
+    <string name="nedefinovanamiestnost">Nedefinovaná miestnosť</string>
 
 
 </resources>

@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ListMiestnostiAdapter;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
@@ -38,7 +39,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 @EActivity(R.layout.activity_list_miestnosti)
 
 public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Miestnost> {
-    public final static int MIESTNOST_REQUEST_CODE = 19;
+    public final static int MIESTNOST_REQUEST_CODE = 20;
 
     @ViewById
     Toolbar toolbar;

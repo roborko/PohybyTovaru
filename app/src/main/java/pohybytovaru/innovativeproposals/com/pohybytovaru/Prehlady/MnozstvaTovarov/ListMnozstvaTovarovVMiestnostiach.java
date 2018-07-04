@@ -96,6 +96,7 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
                                     View view, int position, long id) {
                 tovarnazovTV = (TextView) view.findViewById(R.id.tovarnazovTV);
                 mnozstvoTV = (TextView) view.findViewById(R.id.mnozstvoTV);
+
               //  myObrazok = (ImageView)view.findViewById(R.id.tovarImage);
 
                 //  statusET = (TextView) view.findViewById(R.id.statusET);

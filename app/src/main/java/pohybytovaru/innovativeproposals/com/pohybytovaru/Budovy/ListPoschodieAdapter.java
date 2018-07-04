@@ -1,34 +1,33 @@
-package pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti;
+package pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundAdapter;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Adapters.DataBoundViewHolder;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
+
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Poschodie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListMiestnostiRowBinding;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListBudovaRowBinding;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.databinding.ActivityListPoschodieRowBinding;
 
-/**
- * Created by Robert on 16.01.2018.
- */
+public class ListPoschodieAdapter extends DataBoundAdapter<ActivityListPoschodieRowBinding, Poschodie > {
 
-public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnostiRowBinding, Miestnost> {
     private final ISimpleRowClickListener actionCallback;
 
-    public ListMiestnostiAdapter(@NonNull Context context, int layoutId, ISimpleRowClickListener actionCallback, List<Miestnost> data) {
+    public ListPoschodieAdapter(@NonNull Context context, int layoutId, ISimpleRowClickListener actionCallback, List<Poschodie> data) {
         super(layoutId);
         this.context = context;
         this.actionCallback = actionCallback;
         this.data = data;
         this.filterView.dataSourceChanged(this.data);
+
     }
 
     @Override
-    protected void bindItem(DataBoundViewHolder<ActivityListMiestnostiRowBinding> holder, int position, List<Object> payloads) {
+    protected void bindItem(DataBoundViewHolder<ActivityListPoschodieRowBinding> holder, int position, List<Object> payloads) {
         holder.binding.setObj(this.filterView.get(position));
         holder.binding.setCallback(actionCallback);
     }
@@ -42,3 +41,4 @@ public class ListMiestnostiAdapter extends DataBoundAdapter<ActivityListMiestnos
         }
     }
 }
+

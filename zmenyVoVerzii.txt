@@ -39,9 +39,23 @@
 16.5.18
 - vydana verzia 0.1
 
+11.6.18
+- doplnenie databazy o tabulky:
+    BUDOVA          ID, NAZOV
+    POSCHODIE       ID, IDBUDOVA,NAZOV
+    MIESTNOST       ID, IDBUDOVA, IDPOSCHODIE, NAZOV
+
+04.07.18
+- dorobene zadavanie budov, poschodi a miestnosti, hotovo vyber miestnosti
+
 
 UROB:
+pridaj do miestnosti KodMiestnosti
+neviem kliknut na budovu
+android listview onclick method does not working
+https://stackoverflow.com/questions/16437673/onitemclicklistener-and-onclicklistener-not-working-for-listview
 
+- oprav layout tovar_row
 - zrus oznacovanie a mazanie poloziek pohybu
 - v prehlade pohybov daj moznost exportu (Android Design Support Library expandable Floating Action Button(FAB) menu)
 
@@ -52,6 +66,8 @@ UROB:
 - co robi import ?
 - urob export do pdf, csv  cez mail
 - kontrolu na minimalne mnozstvo alebo nula (celkove)
+
+
 
 
 ***********************************************************
