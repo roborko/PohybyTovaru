@@ -82,6 +82,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     @ViewById(R.id.activity_pohyb_tovar_miestnostToSpinner)
     SearchableSpinner miestnostToSpinner; */
 
+
     @ViewById(R.id.activity_pohyb_tovar_inputLayout_pocetKusov)
     TextInputLayout inputLayout_pocetKusov;
 
@@ -126,12 +127,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     AktualneMnozstvo miestnostToMnozstvo;
 
     ArrayAdapter<Tovar> tovarAdapter;
-
-    //    @Extra("EXTRA_POHYB")
     Pohyb passedInPohyb;
 
     private ArrayAdapter<Miestnost> miestnostAdapterFROM;
     private ArrayAdapter<Miestnost> miestnostAdapterTO;
+    private String header4Budovy = "";
 
     @AfterViews
     void AfterView() {
@@ -169,21 +169,19 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupAdapters();
 
-
-
     }
 
     public void onButtonMiestnostFromClick(View target) {
         Intent intent = new Intent(this, ThreeLevelExpandableListView.class);
+        intent.putExtra("header", header4Budovy);
         startActivityForResult(intent, 1);
     }
 
-
     public void onButtonMiestnostToClick(View target) {
         Intent intent = new Intent(this, ThreeLevelExpandableListView.class);
+        intent.putExtra("header", header4Budovy);
         startActivityForResult(intent, 2);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -203,7 +201,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 miestnostFrom.setIdPoschodie(Integer.parseInt( myUmiestnenieId[1]));
                 miestnostFrom.setId(Integer.parseInt( myUmiestnenieId[2]));
                 miestnostFrom.setNazov(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
-
+                miestnostFromChanged(true, miestnostFrom);
             }
         }
 
@@ -222,19 +220,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 miestnostTo.setId(Integer.parseInt( myUmiestnenieId[2]));
                 miestnostTo.setNazov(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
 
+                miestnostToChanged(true, miestnostTo);
             }
         }
-
     }
-
-    /*
-    @Override
-    public void onClick(View v) {
-
-        Intent intent = new Intent(this, ThreeLevelExpandableListView.class);
-        startActivityForResult(intent, 1);
-
-    } */
 
     private void setupAdapters() {
         //ArrayAdapter<Tovar> adapter = new ArrayAdapter<Tovar>(this, android.R.layout.simple_dropdown_item_1line, list_tovary);
@@ -415,23 +404,40 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
     @ItemSelect(R.id.activity_pohyb_tovar_transactionType_spinner)
     public void transactionTypeChanged(boolean selected, TypTransakcie typTransakcie) {
+
         transactionType = typTransakcie;
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
             //remove item from designated room
             layout_miestnostTo.setVisibility(View.GONE);
             layout_miestnostFrom.setVisibility(View.VISIBLE);
+            btMiestnostFrom.setText(R.string.v_miestnosti);
+            header4Budovy = "Miestnosť pre skartáciu";
         }
 
-        if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add)) || typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {
+        if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add)))  {
             //add item to designated room
+            layout_miestnostTo.setVisibility(View.VISIBLE); // pridal som
             layout_miestnostFrom.setVisibility(View.GONE);
+            btMiestnostTo.setText(R.string.do_miestnosti);
+            header4Budovy = "Miestnosť pre príjem";
 
+        }
+
+        if ( typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {
+            //set quantity of item to designated room
+            layout_miestnostTo.setVisibility(View.VISIBLE); // pridal som
+            layout_miestnostFrom.setVisibility(View.GONE);
+            btMiestnostTo.setText(R.string.v_miestnosti);
+            header4Budovy = "Miestnosť pre inventúru";
         }
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Move))) {
             //move item from one room to another
             layout_miestnostFrom.setVisibility(View.VISIBLE);
+            btMiestnostFrom.setText(R.string.z_miestnosti);
+            btMiestnostTo.setText(R.string.do_miestnosti);
+            header4Budovy = "Miestnosť pre výdaj";
         }
     }
 
@@ -473,9 +479,8 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         miestnostToChanged(true, miestnostTo);
     }
 
-
    // @ItemSelect(R.id.activity_pohyb_tovar_miestnostFromSpinner)
-    @ItemSelect(R.id.lbl_miestnostFrom)
+    //@ItemSelect(R.id.lbl_miestnostFrom)
     public void miestnostFromChanged(boolean selected, Miestnost miestnost) {
 
         miestnostFrom = miestnost;
@@ -525,14 +530,13 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     }
 
   //  @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
-  @ItemSelect(R.id.lbl_MiestnostTo)
+ // @ItemSelect(R.id.lbl_MiestnostTo)
     public void miestnostToChanged(boolean selected, Miestnost miestnost) {
         miestnostTo = miestnost;
 
         if (miestnostTo.getId() == 0 || selectedTovar == null) return;
 
         miestnostToMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
-
 
         if (miestnostToMnozstvo == null) {
             miestnostTo_povodnyPocetKusovTovaru.setText("0");

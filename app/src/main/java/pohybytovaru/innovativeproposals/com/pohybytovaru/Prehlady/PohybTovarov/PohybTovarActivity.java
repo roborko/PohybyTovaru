@@ -2,6 +2,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,8 @@ import java.util.List;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.MyAlertDialogFragmentOK;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.MnozstvaTovarovDataModel;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
@@ -48,6 +51,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
     private List<Pohyb> data_list = new ArrayList<>();
     private PohybTovarAdapter dataAdapter;
+    MnozstvaTovarovDataModel dm = new MnozstvaTovarovDataModel(this);
 
 
     @AfterViews
@@ -123,8 +127,20 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
+
+        // kontrola ci existuje tovar a miestnost
+        // boolean ako = dm.jeZaznamVTabulke("miestnost");
+        if(!dm.jeZaznamVTabulke("miestnost")) {
+            showDialogFragment("Definujte aspoň jednu miestnosť");
+            return;
+        }
+
+        if(!dm.jeZaznamVTabulke("tovar")) {
+            showDialogFragment("Definujte aspoň jednu miestnosť");
+            return;
+        }
+
         Intent intent = new Intent(this, PohybTovarActivityDetail_.class);
-//        intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
         startActivityForResult(intent, POHYB_REQUEST_CODE);
     }
 
@@ -161,6 +177,9 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     }
 
     private void AddNewItem(Pohyb item) {
+
+        // zapis miestnosti?
+
         try {
             Dao<Pohyb, Integer> pohybDao = getHelper().PohybDAO();
             pohybDao.create(item);
@@ -305,9 +324,10 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         super.onBackPressed();
     }
 
-    /*
-    @Click(R.id.btn_Cancel)
-    void CloseWindow() {
-        this.finish();
-    }*/
+    private void showDialogFragment(String Mymessage) {
+        FragmentManager fm = getSupportFragmentManager();
+        MyAlertDialogFragmentOK editNameDialogFragment = MyAlertDialogFragmentOK.newInstance(Mymessage);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
 }

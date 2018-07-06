@@ -47,6 +47,8 @@
 
 04.07.18
 - dorobene zadavanie budov, poschodi a miestnosti, hotovo vyber miestnosti
+06.07.18
+- hotovo zadavanie budov, poschodi a miestnosti, hotovo vyber miestnosti
 
 
 UROB:

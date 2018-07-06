@@ -192,7 +192,7 @@
                 <Button
                     android:id="@+id/btPohyb_tovar_miestnostFrom"
                     android:layout_width="wrap_content"
-                    android:text="@string/presun_z_miestnosti"
+                    android:text="@string/z_miestnosti"
                     android:onClick="onButtonMiestnostFromClick"
                     android:layout_height="wrap_content" />
 
@@ -255,7 +255,7 @@
                 <Button
                     android:id="@+id/btPohyb_tovar_miestnostTo"
                     android:layout_width="wrap_content"
-                    android:text="@string/presun_do_miestnosti"
+                    android:text="@string/do_miestnosti"
                     android:onClick="onButtonMiestnostToClick"
                     android:layout_height="wrap_content" />
 

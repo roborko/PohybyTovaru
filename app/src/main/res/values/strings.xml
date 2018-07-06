@@ -65,9 +65,11 @@
     <string name="mnozstvo_aktual_limit">množstvo akt./limit</string>
     <string name="zoznam_poschodi">Zoznam poschodí</string>
     <string name="zoznam_miestnosti">Zoznam miestností</string>
-    <string name="presun_z_miestnosti">Presun z miestnosti</string>
-    <string name="presun_do_miestnosti">Presun do miestnosti</string>
+    <string name="z_miestnosti">Z miestnosti</string>
+    <string name="do_miestnosti">Do miestnosti</string>
     <string name="nedefinovanamiestnost">Nedefinovaná miestnosť</string>
+    <string name="xxx">do_miestnosti</string>
+    <string name="v_miestnosti">V miestnosti</string>
 
 
 </resources>

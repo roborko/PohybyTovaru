@@ -9,5 +9,5 @@
 
     android:paddingTop="10px"
     android:paddingBottom="10px"
-    android:textSize="70px"
+    android:textSize="60px"
     android:textStyle="bold" />

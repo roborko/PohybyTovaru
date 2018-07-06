@@ -51,7 +51,6 @@ join budova on budova.id = miestnost.idbudova
 
      */
 
-
     public phoneExpandableListAdapter(ThreeLevelExpandableListView threelevelexpandablelistview,
                                       ExpandableListView expandableListView, String[][][][] mietnostiList, Context myContext, Activity activity) {
         // TODO Auto-generated constructor stub
@@ -129,6 +128,10 @@ join budova on budova.id = miestnost.idbudova
             v = convertView;
         else
             v = inflater.inflate(R.layout.threelevelexpandablelistview_row_first, parent, false);
+
+      //  intent.putExtra("header", "Nadpis");
+
+
         String gt = (String)getGroup( groupPosition ); // toto vracia hodnoty 1 urovne, ale aj druhej
         TextView phoneGroup = (TextView)v.findViewById( R.id.groupname );
         if( gt != null ) {
@@ -137,6 +140,8 @@ join budova on budova.id = miestnost.idbudova
         }
         return v;
     }
+
+
 
     @Override
     public View getChildView(int groupPosition, int childPosition,
@@ -184,9 +189,8 @@ join budova on budova.id = miestnost.idbudova
                     activity.setResult(RESULT_OK, intent);
                     activity.finish();
 
-                    Toast.makeText(v.getContext(),"Entered: "+myBudova+ ", " + myPoschodie + ", " + myMiestnost  ,Toast.LENGTH_SHORT).show();
+                   //  Toast.makeText(v.getContext(),"Entered: "+myBudova+ ", " + myPoschodie + ", " + myMiestnost  ,Toast.LENGTH_SHORT).show();
                     parent.collapseGroup( groupPosition );
-
 
                     return false;
                 }
@@ -227,8 +231,8 @@ join budova on budova.id = miestnost.idbudova
             for( int n = 1 ; n < mietnostiList[groupPosition][i].length ; ++n ) {
                 HashMap child = new HashMap();
 
-                String hh = mietnostiList[groupPosition][i][n][0];
-                String hh1 = mietnostiList[groupPosition][i][n][1];
+           //     String hh = mietnostiList[groupPosition][i][n][0];
+           //     String hh1 = mietnostiList[groupPosition][i][n][1];
 
                 if(mietnostiList[groupPosition][i][n][1] != null && mietnostiList[groupPosition][i][n][1] != null) {
 
@@ -248,8 +252,23 @@ join budova on budova.id = miestnost.idbudova
         int rowCtr = 0; // pocita riadku ktore sa rozkliknu?
         for( int i = 0 ; i < level2GroupCount ; ++i ) {
             ++rowCtr;       // for the group row
-            if( ( object != null ) && ( object.isGroupExpanded( i ) ) )
-                rowCtr += mietnostiList[groupPosition][i].length - 1;	// then add the children too (minus the group descriptor)
+            if( ( object != null ) && ( object.isGroupExpanded( i ) ) ) {
+
+                int kolkoChildren = 0;
+                for( int n = 1 ; n < mietnostiList[groupPosition][i].length -1 ; ++n ) {
+                    HashMap child = new HashMap();
+
+                    //     String hh = mietnostiList[groupPosition][i][n][0];
+                    //     String hh1 = mietnostiList[groupPosition][i][n][1];
+
+                    if(mietnostiList[groupPosition][i][n][1] != null && mietnostiList[groupPosition][i][n][1] != null) {
+                        ++kolkoChildren;
+                    }
+                }
+
+                //rowCtr += mietnostiList[groupPosition][i].length - 1;    // then add the children too (minus the group descriptor)
+                rowCtr += kolkoChildren;
+            }
         }
 
         int kolko = rowCtr;

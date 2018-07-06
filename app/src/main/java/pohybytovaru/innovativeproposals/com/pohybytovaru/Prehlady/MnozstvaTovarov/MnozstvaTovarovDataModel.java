@@ -27,24 +27,6 @@ import java.util.List;
 import static pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper.DATABASE_NAME;
 import static pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper.DATABASE_VERSION;
 
-
-
-/*
-select  tovar.nazov as Tovar, miestnost.nazov as Miestnost, aktualneMnozstvo.mnozstvo
-        from aktualneMnozstvo
-        join miestnost on miestnost.id = aktualneMnozstvo.miestnost
-        join tovar on tovar.id = aktualneMnozstvo.tovar
-        order by  tovar.nazov, miestnost.nazov
-
-
-select tovar.id, tovar.fotografia,  tovar.nazov as Tovar, sum(aktualneMnozstvo.mnozstvo)
-from aktualneMnozstvo
-join tovar on tovar.id = aktualneMnozstvo.tovar
-group by  tovar.id
-order by  tovar.id
-
-*/
-
 public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
 
     private static final String DB_DATABAZA =  DATABASE_NAME;
@@ -83,7 +65,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                  "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                   "GROUP BY  tovar.id " +
                   "ORDER BY  tovar.id";
-
 
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
@@ -127,7 +108,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "WHERE tovar.id = " + myId +
                 " ORDER BY miestnost.nazov COLLATE NOCASE";
-
 
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
@@ -175,7 +155,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
 
             sSQL = "SELECT  nazov, id FROM miestnost ORDER BY nazov COLLATE NOCASE";
 
-
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
 
@@ -203,8 +182,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
     public AktualneMnozstvo getAktualneMnozstvoTovaruZMiestnosti(int tovarId, int miestnostId )  {
 
         String sSQL;
-     //   ArrayList<AktualneMnozstvo> results = new ArrayList<>();
-
         AktualneMnozstvo myMnozstvo = new AktualneMnozstvo();
 
         if((tovarId>0) && (miestnostId>0)) {
@@ -310,6 +287,27 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         }
         cursor.close();
         return result;
+    }
+
+    public boolean jeZaznamVTabulke(String myTable)  {
+
+        boolean isOK = false;
+
+        String sSQL = "SELECT id FROM " + myTable ;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                int aa  = cursor.getInt(0);
+                if(aa > 0)
+                    isOK = true;
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return isOK;
     }
 
 }
