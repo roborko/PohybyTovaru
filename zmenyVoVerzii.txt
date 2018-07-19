@@ -49,13 +49,26 @@
 - dorobene zadavanie budov, poschodi a miestnosti, hotovo vyber miestnosti
 06.07.18
 - hotovo zadavanie budov, poschodi a miestnosti, hotovo vyber miestnosti
-
+19.07.18
+- pokus s mailom atd
 
 UROB:
 pridaj do miestnosti KodMiestnosti
-neviem kliknut na budovu
-android listview onclick method does not working
+
+vytvor pdf:
+    https://developer.android.com/reference/android/print/pdf/PrintedPdfDocument
+    navod tu dolu https://stackoverflow.com/questions/2499960/how-to-create-pdfs-in-an-android-app
+    http://tutorials.jenkov.com/java-itext/image.html
+
+posli mail:
+    https://stackoverflow.com/questions/39852015/send-a-mail-through-an-android-app
+    https://stackoverflow.com/questions/4345032/how-to-send-a-simple-email-programatically-exists-a-simple-way-to-do-it/4345084#4345084
+    https://stackoverflow.com/questions/4345032/how-to-send-a-simple-email-programatically-exists-a-simple-way-to-do-it
+    https://stackoverflow.com/questions/28809776/sending-an-email-with-attachments-programmatically-on-android
+
+
 https://stackoverflow.com/questions/16437673/onitemclicklistener-and-onclicklistener-not-working-for-listview
+
 
 - oprav layout tovar_row
 - zrus oznacovanie a mazanie poloziek pohybu

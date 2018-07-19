@@ -1,6 +1,9 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -11,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnClickListener{
 
@@ -19,7 +23,11 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
     // private EditText mEditText;
     private TextView tvMessage;
     private Button btOK;
-
+    private Button btCancel;
+    public boolean zobrazCancel = false;
+    public int stlacenyButton = 0;
+    // OK = 1
+    // Cancel = 2
 
 
     public MyAlertDialogFragmentOK() {
@@ -40,17 +48,63 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dialog, container);
+
+        // musim poskytnut View
+        View theView = inflater.inflate(R.layout.fragment_dialog, container, false);
+        // prepojime dialogove tlacidla
+        View yesButton = theView.findViewById(R.id.buttonOK);
+        View noButton = theView.findViewById(R.id.buttonCancel);
+
+         yesButton.setOnClickListener(this);
+        /*yesButton.setOnClickListener(new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                MyDialog dialog = new MyDialog();
+                dialog.setTargetFragment(MainFragment.this, REQ_CODE);
+                dialog.show(getFragmentManager(), "dialog");
+            }
+        });
+        */
+
+
+        noButton.setOnClickListener(this);
+
+        yesButton.requestFocus(); // vyzaduje focus
+
+        // Takyto dialog sa vsak zavrie ak kliknem mimo neho. To sa nastavuje v dialogu
+        Dialog theDialog = getDialog();
+        String title = getArguments().getString("title", "Enter Name");
+        getDialog().setTitle(title);
+      //  theDialog.setTitle("Nazov dialogu");
+        theDialog.setCanceledOnTouchOutside(false); // zakaze zmiznutie dialogu pri kliknuti mimo dialogu
+        if(zobrazCancel)
+            noButton.setVisibility(View.VISIBLE);
+
+
+        return theView;
+
+
+        // bolo len toto
+        //return inflater.inflate(R.layout.fragment_dialog, container);
     }
 
+    /*
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState ) {
 
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
         tvMessage = (TextView) view.findViewById(R.id.lbl_message);
+
         btOK = (Button)view.findViewById(R.id.buttonOK);
+        btCancel = (Button)view.findViewById(R.id.buttonCancel);
+
+        if(zobrazCancel)
+            btCancel.setVisibility(View.VISIBLE);
+
         btOK.setOnClickListener(this);
+        btCancel.setOnClickListener(this);
 
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title", "Enter Name");
@@ -64,10 +118,20 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
         // vyvolanie klavesnice
         // getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
-
+*/
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.buttonCancel:
+                stlacenyButton = 2;
+                break;
+            case R.id.buttonOK:
+                stlacenyButton = 1;
+                break;
+        }
+
         dismiss();
 
     }

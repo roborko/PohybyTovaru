@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,6 +70,10 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     @ViewById(R.id.btn_Save)
     Button btn_Save;
 
+    @ViewById(R.id.fab_newMiestnost)
+    FloatingActionButton fab_btn_Miestnost;
+
+
 
     private List<Miestnost> data_list = new ArrayList<>();
     private ListMiestnostiAdapter dataAdapterMiestnosti;
@@ -82,6 +87,10 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
+
+
+     //   fab_btn_Miestnost = findViewById(R.id.fab_newMiestnost);
+     //   fab_btn_Miestnost.setVisibility(View.INVISIBLE); // daj len pri zavolani klavesnice
 
         if (extras != null) {
             myBudovaId = getIntent().getIntExtra("budovaID",0);
@@ -153,13 +162,14 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
         intent.putExtra("budovaID", myBudovaId);
         intent.putExtra("poschodieID", myPoschodieId);
         startActivityForResult(intent, MIESTNOST_REQUEST_CODE); // aby som to dokazal odchytit v OnActivityResult
-       // startActivity(intent);
+
     }
 
     @TextChange(R.id.txt_PoschodieName)
     void onBudovaTextChange(){
         textInputLayout.setError(null);
         btn_Save.setVisibility(View.VISIBLE);
+        fab_btn_Miestnost.setVisibility(View.INVISIBLE);
     }
 
 
@@ -178,6 +188,8 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
 
     @Click(R.id.btn_Save)
     void SaveChanges() {
+
+        fab_btn_Miestnost.setVisibility(View.VISIBLE);
         String itemName = txt_Poschodie.getText().toString().trim();
 
         //validuj miestnost, tj ci sa uz rovnaka nenachadza v databaze
@@ -249,10 +261,10 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
 
     }
 
+
     @Override
     public void onItemClick(View view, Miestnost item) {
-        int aa = 0;
-        ++aa;
+
 
     }
 

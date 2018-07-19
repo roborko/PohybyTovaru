@@ -70,6 +70,7 @@
     <string name="nedefinovanamiestnost">Nedefinovaná miestnosť</string>
     <string name="xxx">do_miestnosti</string>
     <string name="v_miestnosti">V miestnosti</string>
+    <string name="cancel">Zrušiť</string>
 
 
 </resources>

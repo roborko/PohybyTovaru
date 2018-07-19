@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import java.util.List;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Budova;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.MyAlertDialogFragmentOK;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
@@ -29,6 +32,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
+
+
 
 // google : android expandablelistview three levels from sqlite
 // https://stackoverflow.com/questions/32880281/how-to-add-three-level-listview-in-expandablelistview-in-android
@@ -54,6 +59,8 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     private List<Budova> data_list = new ArrayList<>();
     private ListBudovyAdapter dataAdapter;
     ListBudovaDataModel dm = new ListBudovaDataModel(this);
+    private MyAlertDialogFragmentOK editNameDialogFragment;
+    private int idVybratejBudovy;
 
     @AfterViews
     void bindAdapter() {
@@ -74,6 +81,21 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(dataAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+/*
+        if (editNameDialogFragment.stlacenyButton == 1) {
+            // stlacil OK
+            dataAdapter.RemoveItemById(idVybratejBudovy);
+            // TODO sem este daj sql kontrolu, ci sa Idcko nenachadza v poschodiach
+            dm.deleteRowFromTable("Budova", idVybratejBudovy);
+        }
+*/
+
     }
 
     @OnActivityResult(BUDOVA_REQUEST_CODE)
@@ -124,21 +146,32 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     @Override
     public boolean onItemLongClick(View view, Budova item) {
 
-       // int position = (int) view.getTag();
-      //  dataAdapter.toggleItemSelection(position);
 
-        // intent.putExtra("EXTRA_BUDOVA", item);
+        idVybratejBudovy = item.getId();
+
+        sendEmail();
+
+/* bolo
+        FragmentManager fm = getSupportFragmentManager();
+        editNameDialogFragment = MyAlertDialogFragmentOK.newInstance("Chcete zmazať budovu? ");
+        editNameDialogFragment.zobrazCancel = true;
+
+        editNameDialogFragment.setShowsDialog(true);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+*/
 
 
-      //  List<Integer> itemsToRemove = dataAdapter.getSelectedItemsId();
+        FragmentManager fm = getSupportFragmentManager();
+        editNameDialogFragment = MyAlertDialogFragmentOK.newInstance("Chcete zmazať budovu? ");
+        editNameDialogFragment.zobrazCancel = true;
+        editNameDialogFragment.show(fm, "fragment_edit_name");
 
-        //dataAdapter.AddItem(result);
-        dataAdapter.RemoveItemById(item.getId());
-
-        // TODO sem este daj sql delete, otazku na vymazanie a kontrolu na existujuce zaznamy v poschodiach
-
-        dm.deleteRowFromTable("Budova", item.getId());
-
+        if (editNameDialogFragment.stlacenyButton == 1) {
+            // stlacil OK
+            dataAdapter.RemoveItemById(item.getId());
+            // TODO sem este daj sql kontrolu, ci sa Idcko nenachadza v poschodiach
+            dm.deleteRowFromTable("Budova", item.getId());
+        }
         return true;
     }
 
@@ -149,6 +182,7 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
 
     }
+
 
 
     //MENU OPTIONS MANIPULATIONS - get access to menu object
@@ -248,6 +282,29 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             return;
         }
         super.onBackPressed();
+    }
+
+    public void sendEmail()
+    {
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "body text");
+
+      /*   odoslanie prilohy
+        File root = Environment.getExternalStorageDirectory();
+        String pathToMyAttachedFile = "temp/attachement.xml";
+        File file = new File(root, pathToMyAttachedFile);
+        if (!file.exists() || !file.canRead()) {
+            return;
+        }
+        Uri uri = Uri.fromFile(file);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        */
+        startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+
     }
 
 }

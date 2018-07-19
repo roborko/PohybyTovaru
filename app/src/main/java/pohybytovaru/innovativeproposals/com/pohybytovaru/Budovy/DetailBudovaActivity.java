@@ -3,6 +3,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy;
 import android.app.Activity;
 import android.content.Intent;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,8 +68,12 @@ public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRo
     @ViewById(R.id.btn_Save)
     Button btn_Save;
 
+    @ViewById(R.id.fab_newPoschodie)
+    FloatingActionButton fab_btn_Poschodie;
+
+
+
     private List<Poschodie> data_list = new ArrayList<>();
- //   private ListBudovyAdapter dataAdapter;
     private ListPoschodieAdapter dataAdapterPoschodie;
     ListBudovaDataModel dm = new ListBudovaDataModel(this);
 
@@ -107,7 +112,12 @@ public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRo
     @Click(R.id.fab_newPoschodie)
     public void AddNewItem() {
 
+        // ukry tlacitko +
+
+       // fab_btn_Poschodie.setVisibility(View.INVISIBLE);
+
         // pridam nove poschodie
+
         Intent intent = new Intent(this, DetailPoschodieActivity_.class);
         intent.putExtra("budovaID", budova.getId());
         //startActivity(intent);
@@ -161,7 +171,7 @@ public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRo
             resultBudova = budova;
 
         resultBudova.setNazov(itemName);
-       // long aa = dm.ulozBudova(resultBudova);
+        long aa = dm.ulozBudova(resultBudova);
 
         Intent intent = new Intent();
         intent.putExtra("EXTRA_BUDOVA", resultBudova);
@@ -210,8 +220,7 @@ public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRo
 
     @Override
     public void onItemClick(View view, Poschodie item) {
-        int aa = 0;
-        ++aa;
+
     }
 
     @Override
