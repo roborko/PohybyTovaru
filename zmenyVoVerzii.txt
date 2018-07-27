@@ -51,6 +51,9 @@
 - hotovo zadavanie budov, poschodi a miestnosti, hotovo vyber miestnosti
 19.07.18
 - pokus s mailom atd
+27.7.18
+- odosli mailom pohyby - su aj vyfiltrovane?
+
 
 UROB:
 pridaj do miestnosti KodMiestnosti

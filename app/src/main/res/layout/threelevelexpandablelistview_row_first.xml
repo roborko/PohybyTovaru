@@ -4,10 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
 
-    android:paddingLeft="50px"
+    android:paddingLeft="30dp"
     android:text="Main Group Header"
 
-    android:paddingTop="10px"
-    android:paddingBottom="10px"
-    android:textSize="60px"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:textSize="20sp"
     android:textStyle="bold" />

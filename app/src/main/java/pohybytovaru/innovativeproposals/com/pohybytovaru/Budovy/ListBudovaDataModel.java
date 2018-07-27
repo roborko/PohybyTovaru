@@ -14,6 +14,7 @@ import android.util.Log;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper.DATABASE_NAME;
 import static pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper.DATABASE_VERSION;
@@ -163,15 +164,38 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
     }
 
 
-/*
-    public ArrayList getZoznamMiestnostiSBudovami() {
-    } */
+    public int getPocetVyplnenychBudov()  {
+
+        int results = 0;
+        String sSQL = "select count(distinct budova.nazov) from miestnost  " +
+                "join poschodie on poschodie.id = miestnost.idposchodie " +
+                "join budova on budova.id = miestnost.idbudova " +
+                "ORDER BY budova.nazov " ;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
+
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        //kurzor na prvy zaznam
+        if (cursor.moveToFirst()) {
+            do {
+
+                //Miestnost newItem = new Miestnost();
+                results = cursor.getInt(0);
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return results;
+    }
+
+
 
     public  String [][][][] getZoznamMiestnostiSBudovami()  {
 
-        int maxBudov = dajMaxId("Budova");
-        int maxPoschodi = dajMaxId("Poschodie");
-        int maxMiestnosti = dajMaxId("Miestnost");
+        int maxBudov = getPocetVyplnenychBudov(); // bolo dajMaxId
+        int maxPoschodi = dajPocet("Poschodie");
+        int maxMiestnosti = dajPocet("Miestnost");
 
         String results[][][][] = new String[maxBudov][maxPoschodi][maxMiestnosti][2];
 
@@ -216,8 +240,6 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
                     tempBudova =cursor.getString(0);
                     ++budovaId;
                     poschodieId = -1;
-                  //  kolkyRetazec = 0;
-                 //   kolkoMiestnostiVArray = 0;
                 }
 
                 if(!tempPoschodie.equals(cursor.getString(1))) {
@@ -225,11 +247,6 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
                     ++poschodieId;
 
                     //maxPoschodi = dajPocet("Poschodie","IdBudova =" + cursor.getString(3));
-
-               /*     tempArray = tempArray + (cursor.getString(0);
-                    tempArray = tempArray + "^";
-                    tempArray = tempArray + (cursor.getString(1);
-                    tempArray = tempArray + "^"; */
 
                     results[budovaId][poschodieId][0][0] = cursor.getString(0); // budova je v nulke na poslednej pozicii
                     results[budovaId][poschodieId][0][1] = cursor.getString(1); // poschodie je v jednotke na poslednej pozicii
@@ -239,10 +256,6 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
 
                 ++miestnostId;  // 1, 0, 2
                 results[budovaId][poschodieId][miestnostId][1] = cursor.getString(2); // misetnosti zacinaju od jednotky
-                //tempArray = tempArray + (cursor.getString(2);
-                //tempArray = tempArray + "^";
-                //++kolkoMiestnostiVArray;
-
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam
         }
@@ -429,6 +442,26 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
         return result;
     }
 
+    public int dajPocet(String tableName) {
+
+        int result = 0;
+        String sSQL = "SELECT count(*) FROM '" + tableName + "'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        //kurzor na prvy zaznam
+        if (cursor.moveToFirst()) {
+            do {
+
+                result = cursor.getInt(0);
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return result;
+    }
+
     public int dajPocet(String tableName, String podmienka) {
 
         int result = 0;
@@ -448,6 +481,7 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
         cursor.close();
         return result;
     }
+
 
     public void deleteRowFromTable(String tableName, int myID) {
 
@@ -478,8 +512,4 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
 
 
 }
-
-
-
-
 

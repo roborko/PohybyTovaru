@@ -215,7 +215,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 // zisti id miestnostiFrom
                 String[] myUmiestnenieId = dm.getIdMiestnosti(umiestnenie[0], umiestnenie[1], umiestnenie[2]);
 
-                miestnostTo.setIdBudova(Integer.parseInt( myUmiestnenieId[0]));
+                miestnostTo.setIdBudova(Integer.parseInt( myUmiestnenieId[0])); // tu to padlo ked som mal rozkliknute obe budovyu aj s poschodiami a klikol som na nejaku miestnost v druhej budove
                 miestnostTo.setIdPoschodie(Integer.parseInt( myUmiestnenieId[1]));
                 miestnostTo.setId(Integer.parseInt( myUmiestnenieId[2]));
                 miestnostTo.setNazov(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);

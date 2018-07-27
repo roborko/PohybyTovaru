@@ -28,6 +28,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.FocusChange;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
@@ -74,7 +75,6 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     FloatingActionButton fab_btn_Miestnost;
 
 
-
     private List<Miestnost> data_list = new ArrayList<>();
     private ListMiestnostiAdapter dataAdapterMiestnosti;
     ListBudovaDataModel dm = new ListBudovaDataModel(this);
@@ -85,12 +85,8 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         Bundle extras = getIntent().getExtras();
-
-
      //   fab_btn_Miestnost = findViewById(R.id.fab_newMiestnost);
-     //   fab_btn_Miestnost.setVisibility(View.INVISIBLE); // daj len pri zavolani klavesnice
 
         if (extras != null) {
             myBudovaId = getIntent().getIntExtra("budovaID",0);
@@ -102,9 +98,8 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     void ProcessAfterViews() {
 
         if(poschodie != null && poschodie.getId() > 0){
+
             txt_Poschodie.setText(poschodie.getNazov());
-
-
             toolbar.setTitle(dm.dajNazovByID("Budova",myBudovaId));
             setSupportActionBar(toolbar);
 
@@ -132,8 +127,20 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
             recyclerView.requestFocus();
             btn_Save.setVisibility(View.INVISIBLE);
 
+        } // else
+          //  fab_btn_Miestnost.setVisibility(View.INVISIBLE);
+
+    }
+
+    @FocusChange(R.id.txt_PoschodieName)
+    public void onFocusChange(View view, boolean hasFocus) {
+        if (hasFocus) {
+            fab_btn_Miestnost.setVisibility(View.INVISIBLE);
+        } else {
+            fab_btn_Miestnost.setVisibility(View.VISIBLE);
         }
     }
+
 
     @OnActivityResult(MIESTNOST_REQUEST_CODE)
     void onResult(int resultCode, Intent data) {
@@ -166,10 +173,12 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     }
 
     @TextChange(R.id.txt_PoschodieName)
-    void onBudovaTextChange(){
+    void onPoschodieTextChange(){
+
+       // fab_btn_Miestnost.setVisibility(View.INVISIBLE);
         textInputLayout.setError(null);
         btn_Save.setVisibility(View.VISIBLE);
-        fab_btn_Miestnost.setVisibility(View.INVISIBLE);
+
     }
 
 
@@ -189,6 +198,7 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     @Click(R.id.btn_Save)
     void SaveChanges() {
 
+       // ulozenie mena poschodia
         fab_btn_Miestnost.setVisibility(View.VISIBLE);
         String itemName = txt_Poschodie.getText().toString().trim();
 
@@ -261,10 +271,8 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
 
     }
 
-
     @Override
     public void onItemClick(View view, Miestnost item) {
-
 
     }
 
@@ -370,8 +378,6 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
         }
         super.onBackPressed();
     }
-
-
 
 }
 

@@ -2,6 +2,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -23,6 +24,10 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +41,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.MyAlertDialogFragmentOK
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.MnozstvaTovarovDataModel;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
+
 
 // https://developer.android.com/guide/topics/ui/layout/recyclerview#java
 
@@ -208,7 +214,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     private void DeleteSelectedPohyby() {
         //retrieve list of all selected items
         List<Integer> itemsToRemove =  dataAdapter.getSelectedItemsId();
-
         try{
 
             //iterate from last to first element in order to keep correct positions of selected items under sparse boolean array
@@ -252,7 +257,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             @Override
             public boolean onQueryTextChange(String s) {
                 //tu sa odohrava event, kde sa zmenil search text
-
                 dataAdapter.FilterArray(s);
 
                 Log.i("QUERY CHANGED", "Search Text: " + s);
@@ -279,13 +283,16 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menu_delete = menu.findItem(R.id.delete);
         MenuItem menu_search = menu.findItem(R.id.search);
+        MenuItem menu_export = menu.findItem(R.id.export);
 
         if (selectedListItems == 0) {
             //hide trash icon
             menu_search.setVisible(true);
+            menu_export.setVisible(true);
             menu_delete.setVisible(false);
         } else {
             menu_search.setVisible(false);
+            menu_export.setVisible(false);
             menu_delete.setVisible(true);
         }
 
@@ -306,13 +313,71 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                 //regular back button, user wants to navigate back
                 return false; // TODO nemoze mat 2 rozne stave
 
+            case R.id.export:
+                try {
+                    ExportSelectedPohyby();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                    showDialogFragment(e.toString());
+
+                }
+                break;
+
             case R.id.delete:
                 DeleteSelectedPohyby();
                 break;
+
+
         }
 
         this.finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void ExportSelectedPohyby() throws IOException {
+
+        //String filePath = getBaseContext().getFilesDir().getPath().toString() + "/pohyby.csv";
+        File yourFile = new File(getBaseContext().getFilesDir().getPath().toString() + "pohyby.csv");
+
+        if(yourFile.exists())
+            yourFile.delete();
+
+        yourFile.createNewFile(); // if file already exists will do nothing
+        FileOutputStream writer  = new FileOutputStream(yourFile, false);
+        writer.write(("tovar;pocet;datum;miestnostOD;miestnostDo\n").getBytes());
+
+        int kolko = data_list.size();
+        Pohyb xx;
+        String tovar;
+        String osoba, datum, miestnostOd, miestostDo;
+        int pocet;
+
+        for (int iItem = 0; iItem < kolko; iItem++) {
+
+            osoba = "";
+            miestnostOd = "";
+            miestostDo = "";
+            xx = data_list.get(iItem);
+            tovar = xx.getTovar().toString();
+            if(xx.getOsoba() != null)
+                osoba = xx.getOsoba().toString();
+            datum = xx.getDatum().toString();
+            if(xx.getMiestnostFrom() != null)
+                miestnostOd = xx.getMiestnostFrom().toString();
+            if(xx.getMiestnostTo() != null)
+                miestostDo = xx.getMiestnostTo().toString();
+            pocet = (int) xx.getPocetKusov();
+
+            writer.write((tovar+";"+String.valueOf(pocet)+";"+datum+";"+miestnostOd+";"+miestostDo+"\n").getBytes());
+
+        }
+
+        writer.close();
+
+
+        sendEmail(yourFile);
+
     }
 
     @Override
@@ -329,5 +394,34 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         MyAlertDialogFragmentOK editNameDialogFragment = MyAlertDialogFragmentOK.newInstance(Mymessage);
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
+
+    public void sendEmail(File myFile)
+    {
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "body text");
+
+        emailIntent.setType("text/html");
+        Uri uri = Uri.fromFile(myFile);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+
+          /*   odoslanie prilohy
+            File root = Environment.getExternalStorageDirectory();
+            String pathToMyAttachedFile = "temp/attachement.xml";
+            File file = new File(root, pathToMyAttachedFile);
+            if (!file.exists() || !file.canRead()) {
+                return;
+            }
+            Uri uri = Uri.fromFile(file);
+            emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            */
+        startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+
+    }
+
 
 }

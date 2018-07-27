@@ -67,7 +67,6 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
         });
         */
 
-
         noButton.setOnClickListener(this);
 
         yesButton.requestFocus(); // vyzaduje focus

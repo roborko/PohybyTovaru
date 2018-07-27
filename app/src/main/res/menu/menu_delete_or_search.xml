@@ -8,9 +8,16 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
     <item
+        android:id="@+id/export"
+        android:title="Export udajov"
+        android:icon="@drawable/export"
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/delete"
         android:title="@string/action_delete"
         android:icon="@drawable/ic_delete_white_24dp"
-        android:visible="true"
+        android:visibility="gone"
         app:showAsAction="always" />
+
 </menu>

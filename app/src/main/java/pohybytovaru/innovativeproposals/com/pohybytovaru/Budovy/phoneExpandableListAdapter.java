@@ -67,7 +67,7 @@ join budova on budova.id = miestnost.idbudova
     public int getGroupCount() {
         // TODO Auto-generated method stub
 
-     //   int aa = listPhone.length; // 5 = pocet riadkov pod urovnou na ktoru sa kliklo
+       // int aa = mietnostiList.length; // 2 = pocet riadkov pod urovnou na ktoru sa kliklo
 
         return mietnostiList.length;
     }
@@ -82,22 +82,22 @@ join budova on budova.id = miestnost.idbudova
     public Object getGroup(int groupPosition) {
         // TODO Auto-generated method stub
 
-       // Object xx = listPhone[groupPosition][0][0][0];  // obsah riadku 1. urovne, cize nazov
+        //Object xx = mietnostiList[groupPosition][0][0][0];  // obsah riadku 1. urovne, cize nazov
 
         return mietnostiList[groupPosition][0][0][0];
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        // TODO Auto-generated method stub
+        // poschodie
 
-        //Object xx = listPhone[groupPosition][childPosition];
+        Object xx = mietnostiList[groupPosition][childPosition];
         return mietnostiList[groupPosition][childPosition];
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        // TODO Auto-generated method stub
+        // id budovy
 
         //long xx = (long)(groupPosition*1024); // groupPosition = cislo riadku 1. urovne * 1024. Pri rozkliku zistuje GroupId
 
@@ -106,9 +106,9 @@ join budova on budova.id = miestnost.idbudova
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        // TODO Auto-generated method stub
+        // id poschodia
 
-       // long xx = (long)(groupPosition*1024+childPosition);
+        long xx = (long)(groupPosition*1024+childPosition);
 
         return (long)(groupPosition*1024+childPosition);
     }
@@ -122,32 +122,30 @@ join budova on budova.id = miestnost.idbudova
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
+        // co je toto?
         View v = null;
         if( convertView != null )
             v = convertView;
         else
             v = inflater.inflate(R.layout.threelevelexpandablelistview_row_first, parent, false);
 
-      //  intent.putExtra("header", "Nadpis");
-
-
-        String gt = (String)getGroup( groupPosition ); // toto vracia hodnoty 1 urovne, ale aj druhej
+       // String gt = (String)getGroup( groupPosition ); // toto vracia hodnoty 1 urovne, ale aj druhej
         TextView phoneGroup = (TextView)v.findViewById( R.id.groupname );
-        if( gt != null ) {
-            phoneGroup.setText(gt);
+        if( (String)getGroup( groupPosition ) != null ) { // bolo gt
+            phoneGroup.setText((String)getGroup( groupPosition )); // bolo gt : nazov budovy
           //  myBudova = gt;
         }
         return v;
     }
 
-
-
     @Override
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
+        // pocet poschodi?
         View view = null;
+
+        int aa = calculateRowCount(groupPosition, null);
+
         if(listViewManager[groupPosition]!=null){
             view = listViewManager[groupPosition];
         }
@@ -157,11 +155,11 @@ join budova on budova.id = miestnost.idbudova
             handle.setAdapter(
                     new handleSimpleExpandableListAdapter(
                             threelevelexpandablelistview, // context
-                            createGroupList(groupPosition), // groupData
+                            createGroupList(groupPosition), // BUDOVY
                             R.layout.threelevelexpandablelistview_row_second, // groupLayout
                             new String[]{ KEY_BUDOVA}, // groupForm
                             new int[] { R.id.childname }, // groupTo
-                            createChildList(groupPosition), // List childData
+                            createChildList(groupPosition), // POSCHODIA
                             R.layout.threelevelexpandablelistview_row_second, // childLayout
                             new String [] {POSCHODIE,MIESTNOST}, // childFrom string
                             new int[] { R.id.childname, R.id.version } // childTo int
@@ -202,7 +200,7 @@ join budova on budova.id = miestnost.idbudova
     }
 
     private List createGroupList(int groupPosition) {
-        // TODO Auto-generated method stub
+        // tu sa naplnaju budovy
 
         myBudova = (String)getGroup( groupPosition );
         myBudovaId = groupPosition;
@@ -213,55 +211,75 @@ join budova on budova.id = miestnost.idbudova
 
             String hh = mietnostiList[groupPosition][i][0][1];
 
-            if(mietnostiList[groupPosition][i][0][1] != null) {
+            if(mietnostiList[groupPosition][i][0][1] != null) {  // VZOR OK
 
-            m.put( KEY_BUDOVA,mietnostiList[groupPosition][i][0][1] );
-            result.add( m );
+                m.put( KEY_BUDOVA,mietnostiList[groupPosition][i][0][1] );
+                result.add( m );
             }
         }
         return (List)result;
     }
 
     private List createChildList(int groupPosition) {
-        // TODO Auto-generated method stub
+        // vytvorenie zoznamu poschodi
+
         ArrayList result = new ArrayList();
+
         for( int i = 0 ; i < mietnostiList[groupPosition].length ; ++i ) {
-            // Second-level lists
+
+            // rozklik budovy
+            // String hh0 = mietnostiList[groupPosition][i][0][1];
+
             ArrayList secList = new ArrayList();
             for( int n = 1 ; n < mietnostiList[groupPosition][i].length ; ++n ) {
                 HashMap child = new HashMap();
 
-           //     String hh = mietnostiList[groupPosition][i][n][0];
-           //     String hh1 = mietnostiList[groupPosition][i][n][1];
+             //   String hh = mietnostiList[groupPosition][i][n][0];
+             //   String hh1 = mietnostiList[groupPosition][i][n][1];
 
-                if(mietnostiList[groupPosition][i][n][1] != null && mietnostiList[groupPosition][i][n][1] != null) {
+               // if(mietnostiList[groupPosition][i][n][1] != null && mietnostiList[groupPosition][i][n][1] != null) { // bolo
+                if(mietnostiList[groupPosition][i][n][1] != null ) {
 
                     child.put(POSCHODIE, mietnostiList[groupPosition][i][n][0]);
                     child.put(MIESTNOST, mietnostiList[groupPosition][i][n][1]);  // todo tu by som pridal dalsiu layout
                     secList.add(child);
                 }
             }
-            result.add( secList );
+
+            if(secList.size()>0)
+                result.add( secList );
         }
         return result;
     }
 
     private int calculateRowCount(int groupPosition, ExpandableListView object) {
-        // TODO Auto-generated method stub
-        int level2GroupCount = mietnostiList[groupPosition].length;
+        // toto je rozhodujuce
+        int level2GroupCount = 0; // mietnostiList[groupPosition].length;
+
+        for( int x = 1 ; x < mietnostiList[groupPosition].length  ; ++x ) {
+
+            if(mietnostiList[groupPosition][x][0][0] != null)
+             ++ level2GroupCount;
+        }
+
+
         int rowCtr = 0; // pocita riadku ktore sa rozkliknu?
-        for( int i = 0 ; i < level2GroupCount ; ++i ) {
+
+        for( int i = 0 ; i < mietnostiList[groupPosition].length ; ++i ) {
             ++rowCtr;       // for the group row
             if( ( object != null ) && ( object.isGroupExpanded( i ) ) ) {
-
+               // ++rowCtr; // posunul som to sem
                 int kolkoChildren = 0;
                 for( int n = 1 ; n < mietnostiList[groupPosition][i].length -1 ; ++n ) {
                     HashMap child = new HashMap();
 
-                    //     String hh = mietnostiList[groupPosition][i][n][0];
-                    //     String hh1 = mietnostiList[groupPosition][i][n][1];
+                    //if(mietnostiList[groupPosition][i][0][1] != null) dopln?
 
-                    if(mietnostiList[groupPosition][i][n][1] != null && mietnostiList[groupPosition][i][n][1] != null) {
+                        String hh = mietnostiList[groupPosition][i][n][0];
+                         String hh1 = mietnostiList[groupPosition][i][n][1];
+
+                    // bolo if(mietnostiList[groupPosition][i][n][1] != null && mietnostiList[groupPosition][i][n][1] != null) {
+                    if(mietnostiList[groupPosition][i][n][0] != null && mietnostiList[groupPosition][i][n][1] != null) {
                         ++kolkoChildren;
                     }
                 }
@@ -283,7 +301,6 @@ join budova on budova.id = miestnost.idbudova
     }
     public void onGroupCollapsed (int groupPosition) {}
     public void onGroupExpanded(int groupPosition) {}
-
 
     class Level2GroupExpandListener implements ExpandableListView.OnGroupClickListener {
 
@@ -310,10 +327,7 @@ join budova on budova.id = miestnost.idbudova
             expandableListView.requestLayout();
             return true;
         }
-
-
     }
-
 
 }
 

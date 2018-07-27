@@ -2,10 +2,12 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -146,32 +148,42 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     @Override
     public boolean onItemLongClick(View view, Budova item) {
 
-
         idVybratejBudovy = item.getId();
+      //  sendEmail();
 
-        sendEmail();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // set title
+        alertDialogBuilder.setTitle("Skutočne chcete zmazať budovu ?");
 
-/* bolo
-        FragmentManager fm = getSupportFragmentManager();
-        editNameDialogFragment = MyAlertDialogFragmentOK.newInstance("Chcete zmazať budovu? ");
-        editNameDialogFragment.zobrazCancel = true;
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Pokiaľ áno, stlačte ZMAZAŤ")
+                .setCancelable(false)
+                .setPositiveButton("ZMAZAŤ",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
 
-        editNameDialogFragment.setShowsDialog(true);
-        editNameDialogFragment.show(fm, "fragment_edit_name");
-*/
+                        dataAdapter.RemoveItemById(idVybratejBudovy);
+                        // TODO sem este daj sql kontrolu, ci sa Idcko nenachadza v poschodiach
+                        dm.deleteRowFromTable("Budova", idVybratejBudovy);
 
+                        dialog.cancel();
+                     //xx   MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("NIE",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
 
-        FragmentManager fm = getSupportFragmentManager();
-        editNameDialogFragment = MyAlertDialogFragmentOK.newInstance("Chcete zmazať budovu? ");
-        editNameDialogFragment.zobrazCancel = true;
-        editNameDialogFragment.show(fm, "fragment_edit_name");
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
 
-        if (editNameDialogFragment.stlacenyButton == 1) {
-            // stlacil OK
-            dataAdapter.RemoveItemById(item.getId());
-            // TODO sem este daj sql kontrolu, ci sa Idcko nenachadza v poschodiach
-            dm.deleteRowFromTable("Budova", item.getId());
-        }
+        // show it
+        alertDialog.show();
+
         return true;
     }
 
@@ -284,27 +296,5 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         super.onBackPressed();
     }
 
-    public void sendEmail()
-    {
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "body text");
-
-      /*   odoslanie prilohy
-        File root = Environment.getExternalStorageDirectory();
-        String pathToMyAttachedFile = "temp/attachement.xml";
-        File file = new File(root, pathToMyAttachedFile);
-        if (!file.exists() || !file.canRead()) {
-            return;
-        }
-        Uri uri = Uri.fromFile(file);
-        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        */
-        startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
-
-    }
 
 }
