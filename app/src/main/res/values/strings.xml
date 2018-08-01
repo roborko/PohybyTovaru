@@ -41,8 +41,6 @@
     <string name="hint_movement_to">do:&#160;</string>
     <string name="imageViewDescription">aa</string>
 
-
-
     <string name="TransactionType_Add">Príjem</string>
     <string name="TransactionType_Move">Presun</string>
     <string name="TransactionType_Remove">Výdaj</string>
@@ -60,9 +58,9 @@
     <string name="AktualnePoctyTovarov">Množstvá tovarov</string>
     <string name="krok1VyberTypuTransakcie">Krok 1 - Vyber typu transakcie</string>
     <string name="krok2VyberInventara">Krok 2 - Výber tovaru</string>
-    <string name="PrekroceneLimity">Prekročené limity</string>
+    <string name="PrekroceneLimity">Chýbajúce množstvá</string>
     <string name="Prehlad">Prehľady</string>
-    <string name="mnozstvo_aktual_limit">množstvo akt./limit</string>
+    <string name="mnozstvo_aktual_limit">akt.množstvo/limit</string>
     <string name="zoznam_poschodi">Zoznam poschodí</string>
     <string name="zoznam_miestnosti">Zoznam miestností</string>
     <string name="z_miestnosti">Z miestnosti</string>
@@ -71,6 +69,7 @@
     <string name="xxx">do_miestnosti</string>
     <string name="v_miestnosti">V miestnosti</string>
     <string name="cancel">Zrušiť</string>
+    <string name="minimalne_mnozstvo">Minimálne množstvo</string>
 
 
 </resources>

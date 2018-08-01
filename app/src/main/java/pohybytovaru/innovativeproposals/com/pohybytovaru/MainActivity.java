@@ -59,10 +59,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN); // stale necha otvorene navigation bar
+
+
         //populate default values
          DeafultValuesPopulator.PopulateDefaultValues(this);  // toto presun do vytvorenia databazy
 
-//        showLimitneMnozstva();
+        //        showLimitneMnozstva();
 
         /* odtialto
 

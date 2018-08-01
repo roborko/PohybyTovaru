@@ -7,12 +7,7 @@
         android:icon="@drawable/ic_search_white_24dp"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/export"
-        android:title="Export udajov"
-        android:icon="@drawable/export"
-        android:visible="true"
-        app:showAsAction="always" />
+
     <item
         android:id="@+id/delete"
         android:title="@string/action_delete"

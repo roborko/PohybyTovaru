@@ -52,21 +52,13 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
         // musim poskytnut View
         View theView = inflater.inflate(R.layout.fragment_dialog, container, false);
         // prepojime dialogove tlacidla
+
+        tvMessage = (TextView) theView.findViewById(R.id.lbl_message);
+
         View yesButton = theView.findViewById(R.id.buttonOK);
         View noButton = theView.findViewById(R.id.buttonCancel);
 
-         yesButton.setOnClickListener(this);
-        /*yesButton.setOnClickListener(new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                MyDialog dialog = new MyDialog();
-                dialog.setTargetFragment(MainFragment.this, REQ_CODE);
-                dialog.show(getFragmentManager(), "dialog");
-            }
-        });
-        */
-
+        yesButton.setOnClickListener(this);
         noButton.setOnClickListener(this);
 
         yesButton.requestFocus(); // vyzaduje focus
@@ -75,7 +67,8 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
         Dialog theDialog = getDialog();
         String title = getArguments().getString("title", "Enter Name");
         getDialog().setTitle(title);
-      //  theDialog.setTitle("Nazov dialogu");
+        tvMessage.setText(title);
+
         theDialog.setCanceledOnTouchOutside(false); // zakaze zmiznutie dialogu pri kliknuti mimo dialogu
         if(zobrazCancel)
             noButton.setVisibility(View.VISIBLE);
@@ -83,12 +76,9 @@ public class MyAlertDialogFragmentOK extends DialogFragment implements View.OnCl
 
         return theView;
 
-
-        // bolo len toto
-        //return inflater.inflate(R.layout.fragment_dialog, container);
     }
 
-    /*
+/*
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState ) {
 

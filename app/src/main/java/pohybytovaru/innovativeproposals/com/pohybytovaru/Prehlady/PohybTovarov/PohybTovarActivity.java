@@ -2,8 +2,11 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+//import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -27,9 +31,9 @@ import org.androidannotations.annotations.ViewById;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,13 +51,17 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 
 @EActivity(R.layout.activity_pohyb_tovar)
 public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> implements ISimpleRowClickListener<Pohyb> {
+
     public final static int POHYB_REQUEST_CODE = 19;
+    private String filtrovanyVyraz = "";
+
 
     @ViewById
     Toolbar toolbar;
 
     @ViewById
     RecyclerView recyclerView;
+
 
     private List<Pohyb> data_list = new ArrayList<>();
     private PohybTovarAdapter dataAdapter;
@@ -70,8 +78,11 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         //create new adapter
         dataAdapter = new PohybTovarAdapter(this, R.layout.activity_pohyb_tovar_row, this, data_list);
 
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(dataAdapter);
@@ -95,9 +106,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         }
     }
     @OnActivityResult(POHYB_REQUEST_CODE)
-
     // tu refreshni ked prida novy pohyb -  neprejde cez "EXTRA_MIESTNOST xx GetData();//fetch data
-
     void onResult(int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
             //deserialize object
@@ -130,6 +139,18 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
             }
         }
+
+    @Click(R.id.fab_newExport)
+    public void exportZoznam() {
+
+        try {
+            ExportSelectedPohyby();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            showDialogFragment("Žiadne údaje");
+        }
+    }
 
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
@@ -240,7 +261,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_delete_or_search, menu);
 
-
         final MenuItem myActionMenuItem = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -257,6 +277,9 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             @Override
             public boolean onQueryTextChange(String s) {
                 //tu sa odohrava event, kde sa zmenil search text
+
+                filtrovanyVyraz = s;
+
                 dataAdapter.FilterArray(s);
 
                 Log.i("QUERY CHANGED", "Search Text: " + s);
@@ -272,7 +295,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     private void clearSelectedItems() {
         //set original title
         getSupportActionBar().setTitle(R.string.activity_PohybTovarov);
-
+        filtrovanyVyraz = ""; // dobre ?
         dataAdapter.clearSelectedItems();
         selectedListItems = 0;
 
@@ -283,16 +306,16 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menu_delete = menu.findItem(R.id.delete);
         MenuItem menu_search = menu.findItem(R.id.search);
-        MenuItem menu_export = menu.findItem(R.id.export);
+      //  MenuItem menu_export = menu.findItem(R.id.export);
 
         if (selectedListItems == 0) {
             //hide trash icon
             menu_search.setVisible(true);
-            menu_export.setVisible(true);
+          //  menu_export.setVisible(true);
             menu_delete.setVisible(false);
         } else {
             menu_search.setVisible(false);
-            menu_export.setVisible(false);
+          //  menu_export.setVisible(false);
             menu_delete.setVisible(true);
         }
 
@@ -313,7 +336,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                 //regular back button, user wants to navigate back
                 return false; // TODO nemoze mat 2 rozne stave
 
-            case R.id.export:
+           /* case R.id.export:
                 try {
                     ExportSelectedPohyby();
                 } catch (IOException e) {
@@ -322,10 +345,10 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                     showDialogFragment(e.toString());
 
                 }
-                break;
+                break; */
 
             case R.id.delete:
-                DeleteSelectedPohyby();
+           //     DeleteSelectedPohyby(); // zakazane, opravit cez inventuru !!!
                 break;
 
 
@@ -338,28 +361,36 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     private void ExportSelectedPohyby() throws IOException {
 
         //String filePath = getBaseContext().getFilesDir().getPath().toString() + "/pohyby.csv";
-        File yourFile = new File(getBaseContext().getFilesDir().getPath().toString() + "pohyby.csv");
 
-        if(yourFile.exists())
-            yourFile.delete();
+        File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
+        File yourFile = new File(filePath + File.separator + "pohyby.csv");
+        yourFile.createNewFile(); // vytvorenie !!!
 
-        yourFile.createNewFile(); // if file already exists will do nothing
         FileOutputStream writer  = new FileOutputStream(yourFile, false);
-        writer.write(("tovar;pocet;datum;miestnostOD;miestnostDo\n").getBytes());
+
+
+        writer.write(("tovar;pohyb;pocet;datum;miestnostOD;miestnostDo\n").getBytes());
 
         int kolko = data_list.size();
         Pohyb xx;
-        String tovar;
-        String osoba, datum, miestnostOd, miestostDo;
+        String tovar = "";
+
+        String osoba, datum, miestnostOd, miestostDo,typPohybu, kod;
         int pocet;
 
         for (int iItem = 0; iItem < kolko; iItem++) {
 
-            osoba = "";
             miestnostOd = "";
             miestostDo = "";
             xx = data_list.get(iItem);
             tovar = xx.getTovar().toString();
+            typPohybu = xx.getTypPohybu().toString();
+
+            kod = "";
+            if(xx.getTovar().getKodTovaru()!=null)
+                kod = xx.getTovar().getKodTovaru();
+
+            osoba = "";
             if(xx.getOsoba() != null)
                 osoba = xx.getOsoba().toString();
             datum = xx.getDatum().toString();
@@ -369,14 +400,31 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                 miestostDo = xx.getMiestnostTo().toString();
             pocet = (int) xx.getPocetKusov();
 
-            writer.write((tovar+";"+String.valueOf(pocet)+";"+datum+";"+miestnostOd+";"+miestostDo+"\n").getBytes());
+            writer.write((tovar+";"+typPohybu+";"+String.valueOf(pocet)+";"+datum+";"+miestnostOd+";"+miestostDo+"\n").getBytes());
 
         }
 
         writer.close();
 
+        String myArtikel = "";
 
-        sendEmail(yourFile);
+        if(filtrovanyVyraz=="")
+            myArtikel = " vsetky tovary";
+        else
+            myArtikel = " tovar " + filtrovanyVyraz;
+
+        Uri uri = FileProvider.getUriForFile(this, "pohybytovaru.innovativeproposals.com.FileProvider", yourFile);
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(uri);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Export pohybov pre " + myArtikel);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Vyexportovane pohyby");
+
+        startActivity(Intent.createChooser(emailIntent, "Share"));
 
     }
 
@@ -390,35 +438,55 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     }
 
     private void showDialogFragment(String Mymessage) {
+
         FragmentManager fm = getSupportFragmentManager();
         MyAlertDialogFragmentOK editNameDialogFragment = MyAlertDialogFragmentOK.newInstance(Mymessage);
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
-    public void sendEmail(File myFile)
+
+
+
+    public void sendEmail(String myFilePath, String myArtikel)
     {
 
+        // prerob takto ??
+        // https://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a?rq=1
+
+        if(myArtikel=="")
+            myArtikel = " vsetky pohyby";
+        else
+            myArtikel = " invetar " + myArtikel;
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "body text");
-
-        emailIntent.setType("text/html");
-        Uri uri = Uri.fromFile(myFile);
-        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Export pohybov pre " + myArtikel);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Vyexportovane pohyby");
 
 
-          /*   odoslanie prilohy
-            File root = Environment.getExternalStorageDirectory();
-            String pathToMyAttachedFile = "temp/attachement.xml";
+
+       /* Uri uri = Uri.fromFile(myFile);
+        myFile.setReadable(true, false);
+        emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri); */
+
+        // startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+       // startActivityForResult(Intent.createChooser(emailIntent, "Send email..."),12);
+
+
+           //  odoslanie prilohy
+          /*  File root = Environment.getExternalStorageDirectory();
+            String pathToMyAttachedFile = myFilePath; // "temp/attachement.xml";
+
             File file = new File(root, pathToMyAttachedFile);
             if (!file.exists() || !file.canRead()) {
                 return;
             }
             Uri uri = Uri.fromFile(file);
-            emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            */
+            emailIntent.putExtra(Intent.EXTRA_STREAM, uri); */
+
+        emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + myFilePath));
+
         startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
 
     }

@@ -54,8 +54,13 @@
 27.7.18
 - odosli mailom pohyby - su aj vyfiltrovane?
 
+01.08.18
+- hotovo mailom pohyby aj chybajuce mnozstva
+
+
 
 UROB:
+mailom mnozstva uplne a po miestnostiach
 pridaj do miestnosti KodMiestnosti
 
 vytvor pdf:

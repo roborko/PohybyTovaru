@@ -2,8 +2,14 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnoz
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -30,25 +36,22 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.util.ArrayList;
+//import java.sql.SQLException;
+//import java.util.ArrayList;
 import java.util.List;
 
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
+
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
 
+//@EActivity(R.layout.activity_minimalne_mnozstvo_tovaru)
 public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
-
-
-    TextView tovarnazovTV;
-    TextView aktualne_mnozstvoTV;
-    TextView limitne_mnozstvoTV;
 
     List<MnozstvaTovaru> zoznamHM = null;
 
@@ -76,6 +79,69 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
 
         minimalneMnozstvaTovaruAdapter = new MinimalneMnozstvaTovarovAdapter(this, R.layout.activity_minimalne_mnozstvo_tovaru_row, zoznamHM);
         lw.setAdapter(minimalneMnozstvaTovaruAdapter);
+
+
+        View exportnyButton = findViewById(R.id.fab_newExport);
+        exportnyButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    ExportTovarov();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void ExportTovarov() throws IOException {
+
+        // Creating a folder in the data/data/pkg/files directory
+        // https://infinum.co/the-capsized-eight/share-files-using-fileprovider
+
+        File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
+        File yourFile = new File(filePath + File.separator + "chybajuceMnozstvo.csv");
+        yourFile.createNewFile(); // vytvorenie !!!
+
+        FileOutputStream writer  = new FileOutputStream(yourFile, false);
+
+        writer.write(("tovar;aktualne mnozstvo;minimalne mnozstvo\n").getBytes());
+
+        int kolko = zoznamHM.size();
+        MnozstvaTovaru xx;
+        String tovar = "";
+        String osoba, datum, miestnostOd, miestostDo;
+        int aktMnozstvo, minimMnozstvo;
+
+        for (int iItem = 0; iItem < kolko; iItem++) {
+
+            xx = zoznamHM.get(iItem);
+            tovar = xx.getTovar().toString();
+
+            aktMnozstvo = (int) xx.getMnozstvo();
+            minimMnozstvo = (int) xx.getLimitne_mnozstvo();
+
+            writer.write((tovar+";"+String.valueOf(aktMnozstvo)+";"+String.valueOf(minimMnozstvo)+"\n").getBytes());
+
+        }
+
+        writer.close();
+
+      //zle  Uri uri = FileProvider.getUriForFile(this, "${applicationId}", new File(yourFile.toString()));
+       Uri uri = FileProvider.getUriForFile(this, "pohybytovaru.innovativeproposals.com.FileProvider", yourFile);
+
+       Intent emailIntent = new Intent(Intent.ACTION_SEND);
+       emailIntent.setData(uri);
+       emailIntent.setType("text/plain");
+       emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+       emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+       emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+       emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Chybajúce množstvá tovarov ");
+       emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam tovarov s mnozstvom nizsim nez zadefinovanym");
+
+       startActivity(Intent.createChooser(emailIntent, "Share"));
+
 
     }
 

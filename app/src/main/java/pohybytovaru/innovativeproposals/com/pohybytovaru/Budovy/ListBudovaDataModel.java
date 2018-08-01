@@ -196,6 +196,7 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
         int maxBudov = getPocetVyplnenychBudov(); // bolo dajMaxId
         int maxPoschodi = dajPocet("Poschodie");
         int maxMiestnosti = dajPocet("Miestnost");
+        ++maxMiestnosti; // o jednu viac, pretoze jednu okupuje budova
 
         String results[][][][] = new String[maxBudov][maxPoschodi][maxMiestnosti][2];
 
@@ -243,6 +244,8 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
                 }
 
                 if(!tempPoschodie.equals(cursor.getString(1))) {
+
+                    // nove poschodie
                     tempPoschodie =cursor.getString(1);
                     ++poschodieId;
 
@@ -254,7 +257,15 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
 
                 }
 
+                String a1 = cursor.getString(0);
+                String a2 = cursor.getString(1);
+                String a3 = cursor.getString(2);
+
+
                 ++miestnostId;  // 1, 0, 2
+
+                // ArrayIndexOutOfBoundsException: length=2; index=2, pricom MAX je  1 - 1 - 2
+                results[budovaId][poschodieId][miestnostId][0] = cursor.getString(1); // toto som pridal, asi TREBA
                 results[budovaId][poschodieId][miestnostId][1] = cursor.getString(2); // misetnosti zacinaju od jednotky
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam
