@@ -14,54 +14,41 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/dimen_row_icon_horizontal_margin"
         android:layout_marginRight="@dimen/dimen_row_icon_horizontal_margin"
-        android:contentDescription="@string/imageViewDescription"
         app:civ_border_color="@color/colorPrimaryDark"
-        app:civ_border_width="0dp"
-        />
+        app:civ_border_width="0dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/detailView_Image"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <LinearLayout
-            android:id="@+id/tovarDescription"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="@dimen/activity_horizontal_margin">
-
-            <TextView
-                android:id="@+id/tovarnazov"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nazov"
-                android:singleLine="true"
-                android:ellipsize="marquee"
-                android:textStyle="bold"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tovarnazov"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:layout_weight="3"
+            android:text="Nazov"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/aktualne_mnozstvo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:text="0"
-                />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/aktualne_mnozstvo"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+
+            android:text="0"
+            android:textSize="16sp" />
+
+
     </LinearLayout>
 
 

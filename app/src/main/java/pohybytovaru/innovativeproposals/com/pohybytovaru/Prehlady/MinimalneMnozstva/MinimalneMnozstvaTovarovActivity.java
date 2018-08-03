@@ -40,9 +40,12 @@ import org.androidannotations.annotations.ViewById;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 //import java.sql.SQLException;
 //import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
@@ -80,7 +83,6 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
         minimalneMnozstvaTovaruAdapter = new MinimalneMnozstvaTovarovAdapter(this, R.layout.activity_minimalne_mnozstvo_tovaru_row, zoznamHM);
         lw.setAdapter(minimalneMnozstvaTovaruAdapter);
 
-
         View exportnyButton = findViewById(R.id.fab_newExport);
         exportnyButton.setOnClickListener(new View.OnClickListener() {
 
@@ -100,13 +102,26 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
         // Creating a folder in the data/data/pkg/files directory
         // https://infinum.co/the-capsized-eight/share-files-using-fileprovider
 
+        SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        String format = s.format(new Date());
+
+
         File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
         File yourFile = new File(filePath + File.separator + "chybajuceMnozstvo.csv");
         yourFile.createNewFile(); // vytvorenie !!!
 
-        FileOutputStream writer  = new FileOutputStream(yourFile, false);
+       // FileOutputStream writer  = new FileOutputStream(yourFile, false);
 
-        writer.write(("tovar;aktualne mnozstvo;minimalne mnozstvo\n").getBytes());
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(yourFile, false),
+                "ISO-8859-2");  // "windows-1252" , "UTF-8"
+
+
+        writer.append("Dňa: "+ format +" \n");
+        writer.append("ľščťžýáíé: "+ format +" \n");
+
+
+     //   writer.write(("tovar;aktualne mnozstvo;minimalne mnozstvo\n").getBytes());
+        writer.append("tovar;aktualne mnozstvo;minimalne mnozstvo\n");
 
         int kolko = zoznamHM.size();
         MnozstvaTovaru xx;
@@ -122,11 +137,13 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
             aktMnozstvo = (int) xx.getMnozstvo();
             minimMnozstvo = (int) xx.getLimitne_mnozstvo();
 
-            writer.write((tovar+";"+String.valueOf(aktMnozstvo)+";"+String.valueOf(minimMnozstvo)+"\n").getBytes());
+            writer.append(tovar+";"+String.valueOf(aktMnozstvo)+";"+String.valueOf(minimMnozstvo)+"\n");
 
         }
 
         writer.close();
+
+
 
       //zle  Uri uri = FileProvider.getUriForFile(this, "${applicationId}", new File(yourFile.toString()));
        Uri uri = FileProvider.getUriForFile(this, "pohybytovaru.innovativeproposals.com.FileProvider", yourFile);
@@ -141,7 +158,6 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
        emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam tovarov s mnozstvom nizsim nez zadefinovanym");
 
        startActivity(Intent.createChooser(emailIntent, "Share"));
-
 
     }
 

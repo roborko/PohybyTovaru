@@ -79,7 +79,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 newItem.setId(cursor.getInt(0));
                 newItem.setFotografia(cursor.getBlob(1));
                 newItem.setTovar(cursor.getString(2));
-             //   newItem.setMiestnost(cursor.getString(2));
                 newItem.setMnozstvo(cursor.getDouble(3));
                 results.add(newItem);
 

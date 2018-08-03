@@ -113,6 +113,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
     public void onItemClick(View view, Tovar item) {
         Intent intent = new Intent(this, DetailTovarActivity_.class);
         intent.putExtra(CODE_INTENT_TOVAR, item);
+
         View imageView = view.findViewById(R.id.detailView_Image); // ma natvrdo v layoute devinovany src
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 ListTovarActivity.this, imageView, "detailView_Image");

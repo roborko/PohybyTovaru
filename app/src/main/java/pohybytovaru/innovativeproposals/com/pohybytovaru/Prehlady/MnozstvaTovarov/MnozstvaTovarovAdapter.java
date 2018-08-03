@@ -52,6 +52,9 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
         TextView tovarnazov = null;
         TextView mnozstvo = null;
 
+     //   Bitmap bitmap= BitmapFactory.decodeResource(MnozstvaTovarovAdapter.this.getResources(), R.drawable.ic_delete_black_24dp);
+
+
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -64,7 +67,7 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
         tovarnazov.setText(mnozstvaTovaru.getTovar());
-      //  itemDescription.setText(mnozstvaTovaru.getItemDescription());
+
         mnozstvo.setText(String.valueOf(mnozstvaTovaru.getMnozstvo()));
 
         //datum je string, netreba konvertovat
@@ -97,7 +100,8 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
             image.setImageBitmap(theImage);
         } else {
-            image.setImageBitmap(null);
+            //image.setImageBitmap(null); // bolo null @drawable/ic_do_not_disturb_alt_white_18dp
+            image.setImageResource(R.drawable.ic_do_not_disturb_alt_black_18dp);
         }
         return row;
 

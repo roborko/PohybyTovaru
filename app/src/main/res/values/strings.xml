@@ -33,7 +33,7 @@
     <string name="nav_label_reports">Reporty</string>
     <string name="navigation_drawer_tovary">Tovar</string>
     <string name="nav_label_save">Uložiť</string>
-    <string name="hint_nazovTovaru">Názov tovaru</string>
+    <string name="hint_nazovTovaru">Názov</string>
     <string name="activity_ZoznamTovarov_Detail">Detail</string>
     <string name="hint_TovarMinimalneMnozstvo">Minimálne množstvo na sklade</string>
     <string name="lbl_error_hint_tovar_nazov">Názov Tovaru musí byť vyplnený.</string>
@@ -70,6 +70,7 @@
     <string name="v_miestnosti">V miestnosti</string>
     <string name="cancel">Zrušiť</string>
     <string name="minimalne_mnozstvo">Minimálne množstvo</string>
+    <string name="mnozstvo">Množstvo</string>
 
 
 </resources>

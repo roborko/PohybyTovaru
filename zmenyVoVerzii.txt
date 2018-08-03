@@ -57,6 +57,9 @@
 01.08.18
 - hotovo mailom pohyby aj chybajuce mnozstva
 
+3.8.18
+- doladovacky
+
 
 
 UROB:

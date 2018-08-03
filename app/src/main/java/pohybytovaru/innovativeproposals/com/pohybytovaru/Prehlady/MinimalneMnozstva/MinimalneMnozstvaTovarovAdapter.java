@@ -75,7 +75,8 @@ public class MinimalneMnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
             image.setImageBitmap(theImage);
         } else {
-            image.setImageBitmap(null);
+            //image.setImageBitmap(null);
+            image.setImageResource(R.drawable.ic_do_not_disturb_alt_black_18dp);
         }
         return row;
 
