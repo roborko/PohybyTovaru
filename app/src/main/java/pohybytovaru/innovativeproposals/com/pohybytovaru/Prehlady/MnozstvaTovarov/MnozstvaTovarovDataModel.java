@@ -60,7 +60,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         String sSQL;
         String myNazov2 = "%"+myFilter+"%";
 
-          sSQL = "SELECT  tovar.Id, tovar.fotografia, tovar.nazov, sum(aktualneMnozstvo.mnozstvo) " +
+          sSQL = "SELECT aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.Nazov, sum(aktualneMnozstvo.mnozstvo) " +
                  "FROM aktualneMnozstvo " +
                  "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                   "GROUP BY  tovar.id " +
@@ -78,8 +78,9 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 MnozstvaTovaru newItem = new MnozstvaTovaru();
                 newItem.setId(cursor.getInt(0));
                 newItem.setFotografia(cursor.getBlob(1));
-                newItem.setTovar(cursor.getString(2));
-                newItem.setMnozstvo(cursor.getDouble(3));
+                newItem.setTovar(cursor.getInt(2));
+                newItem.setTovarName(cursor.getString(3));
+                newItem.setMnozstvo(cursor.getDouble(4));
                 results.add(newItem);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam
@@ -92,21 +93,13 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
 
         ArrayList<MnozstvaTovaru> results = new ArrayList<>();
         String sSQL;
-        //String myTovarId = myFilter+"
-        //   String myKod2 =  myFilter + "%";
 
-      /*  sSQL = "SELECT aa.Id,aa.itemdescription,aa.itembarcode,aa.status,aa.datum,bb.obrazok, aa.datumzaradenia, aa.serialnr, aa.datumvyradenia, aa.zodpovednaosoba, aa.typmajetku," +
-                "aa.obstaravaciacena, aa.extranotice, aa.datumReal " +
-                "FROM majetok aa left join  MajetokObrazky bb on bb.itembarcode = aa.itembarcode " +
-                "WHERE aa.itembarcode like '" + myKod2 +"' or aa.serialnr like '" + myKod2 +"' or aa.itemdescription like '" + myNazov2 +
-                "' or aa.extranotice like '" + myNazov2 + "' order by aa.datumREAL asc limit 100";*/
-
-        sSQL = "SELECT  miestnost.Id, tovar.fotografia, tovar.nazov, miestnost.nazov, aktualneMnozstvo.mnozstvo " +
+        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, miestnost.id, miestnost.nazov, aktualneMnozstvo.mnozstvo " +
                 "FROM aktualneMnozstvo " +
                 "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "WHERE tovar.id = " + myId +
-                " ORDER BY miestnost.nazov COLLATE NOCASE";
+                " ORDER BY miestnost.nazov COLLATE NOCASE"; // limit 100
 
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
@@ -120,9 +113,11 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 MnozstvaTovaru newItem = new MnozstvaTovaru();
                 newItem.setId(cursor.getInt(0));
                 newItem.setFotografia(cursor.getBlob(1));
-                newItem.setTovar(cursor.getString(2));
-                newItem.setMiestnost(cursor.getString(3));
-                newItem.setMnozstvo(cursor.getDouble(4));
+                newItem.setTovar(cursor.getInt(2));
+                newItem.setTovarName(cursor.getString(3));
+                newItem.setMiestnost(cursor.getInt(4));
+                newItem.setMiestnostName(cursor.getString(5)); // tuto to pripadne rozsir o budova - poschodie - miestnost
+                newItem.setMnozstvo(cursor.getDouble(6));
                 results.add(newItem);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam
@@ -147,11 +142,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                     " ORDER BY miestnost.nazov COLLATE NOCASE";
         else
 
-         /*   sSQL = "SELECT distinct miestnost.nazov, miestnost.id " +  //  aktualneMnozstvo.mnozstvo
-                    "FROM aktualneMnozstvo " +
-                    "LEFT OUTER JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost" +
-                    " ORDER BY miestnost.nazov COLLATE NOCASE"; */
-
             sSQL = "SELECT  nazov, id FROM miestnost ORDER BY nazov COLLATE NOCASE";
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -168,8 +158,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 myMiestnost.setNazov(cursor.getString(0));
                 myMiestnost.setId(cursor.getInt(1));
 
-                //myMiestnost.se AktualneMnozstvo
-             //   myMiestnost.AktualneMnozstvo(cursor.getDouble(1));
                 results.add(myMiestnost);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam
@@ -201,7 +189,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
 
-               //     AktualneMnozstvo myMnozstvo = new AktualneMnozstvo();
                     Miestnost myMiestnost = new Miestnost();
                     Tovar myTovar = new Tovar();
 
@@ -215,7 +202,6 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                     myMnozstvo.setTovar(myTovar);
                     myMnozstvo.setMnozstvo(cursor.getDouble(4));
 
-                  //  results.add(myMnozstvo);
 
                 } while (cursor.moveToNext()); // kurzor na dalsi zaznam
             }
@@ -308,6 +294,58 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         cursor.close();
         return isOK;
     }
+
+    public String[] getKoordinatyMiestnosti(int myMiestnostId )  {
+
+        String[] result = new String[3];
+
+        String sSQL = "SELECT budova.nazov, poschodie.Nazov, miestnost.Nazov FROM miestnost " +
+                "join poschodie on poschodie.id = miestnost.idposchodie " +
+                "join budova on budova.id = miestnost.idbudova" +
+            //    " WHERE budova.nazov = '" + myBudova + "' AND poschodie.nazov = '" + myPoschodie +  "' AND miestnost.nazov = '" + myMiestnost + "'";
+                " WHERE  miestnost.id = " + myMiestnostId ;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                result[0] = cursor.getString(0);
+                result[1] = cursor.getString(1);
+                result[2] = cursor.getString(2);
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return result;
+    }
+
+    public Tovar getTovar(int myTovarId)  {
+
+        Tovar myTovar = new Tovar();
+
+        String sSQL = "SELECT id, kodtovaru, MinimalneMnozstvo, Nazov, Poznamka, Fotografia FROM tovar where id = " + myTovarId;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                myTovar.setId(cursor.getInt(0));
+                myTovar.setKodTovaru(cursor.getString(1));
+                myTovar.setMinimalneMnozstvo(cursor.getDouble(2));
+                myTovar.setNazov(cursor.getString(3));
+                myTovar.setPoznamka(cursor.getString(4));
+                myTovar.setFotografia(cursor.getBlob(5));
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return myTovar;
+    }
+
 
 }
 

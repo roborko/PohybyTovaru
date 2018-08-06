@@ -45,10 +45,11 @@ public class MnozstvaTovarovVMiestnostiachAdapter extends ArrayAdapter<MnozstvaT
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View row = convertView;
-        ImageView image = null;
 
-        TextView tovarnazov = null;
+        View row = convertView;
+     //   ImageView image = null;
+
+     //   TextView tovarnazov = null;
         TextView miestnostnazov = null;
         TextView mnozstvo = null;
 
@@ -57,25 +58,25 @@ public class MnozstvaTovarovVMiestnostiachAdapter extends ArrayAdapter<MnozstvaT
             row = inflater.inflate(layoutResourceId, parent, false);
         }
 
-        image = row.findViewById(R.id.detailView_Image);
+      //  image = row.findViewById(R.id.tovarImage);
         miestnostnazov = row.findViewById(R.id.miestnostnazovTV );
         mnozstvo = row.findViewById(R.id.mnozstvoTV);
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
-        miestnostnazov.setText(mnozstvaTovaru.getMiestnost());
-        //  itemDescription.setText(mnozstvaTovaru.getItemDescription());
-        mnozstvo.setText(String.valueOf(mnozstvaTovaru.getMnozstvo()));
+        miestnostnazov.setText(mnozstvaTovaru.getMiestnostName());
+        mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
 
-        //ulozenie ID-cka do riadku; ale mozeme sem ulozit aj cely objekt inventara (toto moze byy overkill pri vacsom obsahu dat)
         row.setTag(mnozstvaTovaru.getId());
 
-/*        if (mnozstvaTovaru.getImage() != null && mnozstvaTovaru.getImage().length > 1) {
+        /*
+        if (mnozstvaTovaru.getImage() != null && mnozstvaTovaru.getImage().length > 1) {
             ByteArrayInputStream imageStream = new ByteArrayInputStream(mnozstvaTovaru.getImage());
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
             image.setImageBitmap(theImage);
         } else {
-            image.setImageBitmap(null);
-        } */
+            image.setImageResource(R.drawable.ic_do_not_disturb_alt_black_18dp);
+        }
+*/
         return row;
 
     }
@@ -98,7 +99,10 @@ public class MnozstvaTovarovVMiestnostiachAdapter extends ArrayAdapter<MnozstvaT
                     if (original_data != null)
                         filtered_list.addAll(original_data);
 
-                } else {
+                }
+
+                /* naco je to tu?
+                else {
                     // Iterate in the original List and add it to filter list...
                     for (MnozstvaTovaru item : original_data) {
                         if (item.getTovarNazov().toLowerCase().contains(searchText.toLowerCase())) {
@@ -106,7 +110,7 @@ public class MnozstvaTovarovVMiestnostiachAdapter extends ArrayAdapter<MnozstvaT
                             filtered_list.add(item);
                         }
                     }
-                }
+                } */
 
                 // Set on UI Thread
                 ((Activity) context).runOnUiThread(new Runnable() {

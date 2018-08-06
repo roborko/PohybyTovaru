@@ -54,8 +54,6 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
 
      //   Bitmap bitmap= BitmapFactory.decodeResource(MnozstvaTovarovAdapter.this.getResources(), R.drawable.ic_delete_black_24dp);
 
-
-
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
@@ -66,9 +64,10 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
         mnozstvo = row.findViewById(R.id.aktualne_mnozstvo);
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
-        tovarnazov.setText(mnozstvaTovaru.getTovar());
+        tovarnazov.setText(mnozstvaTovaru.getTovarName());  // oprav mnozstvaTovaru.getTovar()
 
-        mnozstvo.setText(String.valueOf(mnozstvaTovaru.getMnozstvo()));
+        //mnozstvo.setText(String.valueOf(mnozstvaTovaru.getMnozstvo()));
+        mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
 
         //datum je string, netreba konvertovat
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -125,7 +124,11 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
                     if (original_data != null)
                         filtered_list.addAll(original_data);
 
-                } else {
+                } /*
+
+                naco to tu je??
+
+                else {
                     // Iterate in the original List and add it to filter list...
                     for (MnozstvaTovaru item : original_data) {
                         if (item.getTovarNazov().toLowerCase().contains(searchText.toLowerCase())) {
@@ -133,7 +136,7 @@ public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
                             filtered_list.add(item);
                         }
                     }
-                }
+                } */
 
                 // Set on UI Thread
                 ((Activity) context).runOnUiThread(new Runnable() {

@@ -107,21 +107,17 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
 
 
         File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
-        File yourFile = new File(filePath + File.separator + "chybajuceMnozstvo.csv");
+        File yourFile = new File(filePath + File.separator + "chybajuceMnozstva.csv");
         yourFile.createNewFile(); // vytvorenie !!!
 
-       // FileOutputStream writer  = new FileOutputStream(yourFile, false);
-
         OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(yourFile, false),
-                "ISO-8859-2");  // "windows-1252" , "UTF-8"
+                "windows-1250");  // "windows-1252" , "UTF-8", "ISO-8859-2"
 
-
-        writer.append("Dňa: "+ format +" \n");
-        writer.append("ľščťžýáíé: "+ format +" \n");
-
+        writer.append("Vytvorené: "+ format +" \n\n");
+        writer.append("Zoznam tovarov s množstvom nižším než zadefinovaným  \n\n");
 
      //   writer.write(("tovar;aktualne mnozstvo;minimalne mnozstvo\n").getBytes());
-        writer.append("tovar;aktualne mnozstvo;minimalne mnozstvo\n");
+        writer.append("Tovar;Aktuálne množstvo;Minimálne množstvo\n");
 
         int kolko = zoznamHM.size();
         MnozstvaTovaru xx;
@@ -132,7 +128,7 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
         for (int iItem = 0; iItem < kolko; iItem++) {
 
             xx = zoznamHM.get(iItem);
-            tovar = xx.getTovar().toString();
+            tovar = xx.getTovarName();
 
             aktMnozstvo = (int) xx.getMnozstvo();
             minimMnozstvo = (int) xx.getLimitne_mnozstvo();
@@ -155,7 +151,7 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
        emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Chybajúce množstvá tovarov ");
-       emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam tovarov s mnozstvom nizsim nez zadefinovanym");
+       emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam tovarov s množstvom nižším než zadefinovaným");
 
        startActivity(Intent.createChooser(emailIntent, "Share"));
 

@@ -5,9 +5,30 @@ import android.os.Parcelable;
 
 public class MnozstvaTovaru implements Parcelable {
     private int Id;
-    private String tovar;
-    private String miestnost;
+    private int tovarId;
+
+    public String getTovarName() {
+        return tovarName;
+    }
+
+    public void setTovarName(String tovarName) {
+        this.tovarName = tovarName;
+    }
+
+    private String tovarName;
+    private int miestnostId;
+
+    public String getMiestnostName() {
+        return miestnostName;
+    }
+
+    public void setMiestnostName(String miestnostName) {
+        this.miestnostName = miestnostName;
+    }
+
+    private String miestnostName;
     private double mnozstvo;
+
     private double limitne_mnozstvo; // sem dotahujeme hodnoty z tovaru
     private byte[] fotografia;
 
@@ -18,18 +39,18 @@ public class MnozstvaTovaru implements Parcelable {
         Id = id;
     }
 
-    public String getTovar() {
-        return tovar;
+    public int getTovar() {
+        return tovarId;
     }
-    public void setTovar(String tovar) {
-        this.tovar = tovar;
+    public void setTovar(int tovar) {
+        this.tovarId = tovar;
     }
 
-    public String getMiestnost() {
-        return miestnost;
+    public int getMiestnost() {
+        return miestnostId;
     }
-    public void setMiestnost(String miestnost) {
-        this.miestnost = miestnost;
+    public void setMiestnost(int miestnost) {
+        this.miestnostId = miestnost;
     }
 
     public double getMnozstvo() {
@@ -64,8 +85,10 @@ public class MnozstvaTovaru implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(Id);
-        dest.writeString(tovar);
-        dest.writeString(miestnost);
+        dest.writeInt(tovarId);
+        dest.writeString(tovarName);
+        dest.writeInt(miestnostId);
+        dest.writeString(miestnostName);
         dest.writeDouble(mnozstvo) ;
         dest.writeDouble(limitne_mnozstvo) ;
         dest.writeByteArray(fotografia);
@@ -89,8 +112,10 @@ public class MnozstvaTovaru implements Parcelable {
 
     public MnozstvaTovaru(Parcel in) {
         this.Id = in.readInt();
-        this.tovar = in.readString();
-        this.miestnost = in.readString();
+        this.tovarId = in.readInt();
+        this.tovarName = in.readString();
+        this.miestnostId = in.readInt();
+        this.miestnostName = in.readString();
         this.mnozstvo = in.readDouble();
         this.limitne_mnozstvo = in.readDouble();
         this.fotografia = in.createByteArray();
@@ -99,15 +124,18 @@ public class MnozstvaTovaru implements Parcelable {
     //Use this for cloning values
     public void Copy(MnozstvaTovaru clone) {
         this.Id = clone.Id;
-        this.tovar = clone.tovar;
-        this.miestnost = clone.miestnost;
+        this.tovarId = clone.tovarId;
+        this.tovarName = clone.tovarName;
+        this.miestnostId = clone.miestnostId;
+        this.miestnostName = clone.miestnostName;
         this.mnozstvo = clone.mnozstvo;
         this.limitne_mnozstvo = clone.limitne_mnozstvo;
         this.fotografia  = clone.fotografia;
     }
 
+
     public String getTovarNazov() {
-        return tovar;
+        return tovarName;
     }
 
     public byte[] getImage() {

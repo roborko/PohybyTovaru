@@ -31,11 +31,14 @@ import org.androidannotations.annotations.ViewById;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 //import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
@@ -77,12 +80,8 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
         //create new adapter
         dataAdapter = new PohybTovarAdapter(this, R.layout.activity_pohyb_tovar_row, this, data_list);
-
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-
-
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(dataAdapter);
@@ -279,7 +278,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                 //tu sa odohrava event, kde sa zmenil search text
 
                 filtrovanyVyraz = s;
-
                 dataAdapter.FilterArray(s);
 
                 Log.i("QUERY CHANGED", "Search Text: " + s);
@@ -351,7 +349,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
            //     DeleteSelectedPohyby(); // zakazane, opravit cez inventuru !!!
                 break;
 
-
         }
 
         this.finish();
@@ -360,29 +357,49 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
     private void ExportSelectedPohyby() throws IOException {
 
-        //String filePath = getBaseContext().getFilesDir().getPath().toString() + "/pohyby.csv";
+        SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        SimpleDateFormat kratsiDatum = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+
+
+        String format = s.format(new Date());
 
         File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
-        File yourFile = new File(filePath + File.separator + "pohyby.csv");
+        File yourFile = new File(filePath + File.separator + "prehladPohybov.csv");
         yourFile.createNewFile(); // vytvorenie !!!
 
-        FileOutputStream writer  = new FileOutputStream(yourFile, false);
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(yourFile, false),
+                "windows-1250");  // "windows-1252" , "UTF-8", "ISO-8859-2"
+
+        writer.append("Vytvorené : "+ format +" \n\n");
+
+        if(filtrovanyVyraz=="")
+          //  myArtikel = " vsetky tovary";
+            writer.append("Prehľad pohybov všetkých tovarov \n\n");
+        else
+           // myArtikel = " tovar " + filtrovanyVyraz;
+            writer.append("Prehľad pohybov tovarov začínajúcich reťazcom: " + filtrovanyVyraz + " \n\n");
 
 
-        writer.write(("tovar;pohyb;pocet;datum;miestnostOD;miestnostDo\n").getBytes());
+        writer.append("Tovar;Pohyb;Počet;Dátum;Z miestnosti;Do miestnosti\n");
 
-        int kolko = data_list.size();
+        //int kolko = data_list.size();
+        int kolko = dataAdapter.filterView.size();
+
+        // dataAdapter.FilterArray(s);
+
         Pohyb xx;
         String tovar = "";
 
         String osoba, datum, miestnostOd, miestostDo,typPohybu, kod;
+        String[] umiestnenie;
         int pocet;
 
         for (int iItem = 0; iItem < kolko; iItem++) {
 
             miestnostOd = "";
             miestostDo = "";
-            xx = data_list.get(iItem);
+           // xx = data_list.get(iItem);
+            xx = dataAdapter.filterView.get(iItem);
             tovar = xx.getTovar().toString();
             typPohybu = xx.getTypPohybu().toString();
 
@@ -393,14 +410,20 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             osoba = "";
             if(xx.getOsoba() != null)
                 osoba = xx.getOsoba().toString();
-            datum = xx.getDatum().toString();
-            if(xx.getMiestnostFrom() != null)
-                miestnostOd = xx.getMiestnostFrom().toString();
-            if(xx.getMiestnostTo() != null)
-                miestostDo = xx.getMiestnostTo().toString();
+            //datum = xx.getDatum().toString();
+            datum = kratsiDatum.format(xx.getDatum());
+
+            if(xx.getMiestnostFrom() != null) {
+                umiestnenie = dm.getKoordinatyMiestnosti(xx.getMiestnostFrom().getId());
+                miestnostOd = umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2];
+            }
+            if(xx.getMiestnostTo() != null) {
+                umiestnenie = dm.getKoordinatyMiestnosti(xx.getMiestnostTo().getId());
+                miestostDo = umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2];
+            }
             pocet = (int) xx.getPocetKusov();
 
-            writer.write((tovar+";"+typPohybu+";"+String.valueOf(pocet)+";"+datum+";"+miestnostOd+";"+miestostDo+"\n").getBytes());
+            writer.append(tovar+";"+typPohybu+";"+String.valueOf(pocet)+";"+datum+";"+miestnostOd+";"+miestostDo+"\n");
 
         }
 
@@ -411,7 +434,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         if(filtrovanyVyraz=="")
             myArtikel = " vsetky tovary";
         else
-            myArtikel = " tovar " + filtrovanyVyraz;
+            myArtikel = " tovar začínajúci reťazcom : " + filtrovanyVyraz;
 
         Uri uri = FileProvider.getUriForFile(this, "pohybytovaru.innovativeproposals.com.FileProvider", yourFile);
 
@@ -422,7 +445,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Export pohybov pre " + myArtikel);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Vyexportovane pohyby");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Prehľad pohybov tovarov");
 
         startActivity(Intent.createChooser(emailIntent, "Share"));
 
@@ -444,9 +467,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
-
-
-
     public void sendEmail(String myFilePath, String myArtikel)
     {
 
@@ -462,28 +482,6 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Export pohybov pre " + myArtikel);
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Vyexportovane pohyby");
-
-
-
-       /* Uri uri = Uri.fromFile(myFile);
-        myFile.setReadable(true, false);
-        emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        emailIntent.putExtra(Intent.EXTRA_STREAM, uri); */
-
-        // startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
-       // startActivityForResult(Intent.createChooser(emailIntent, "Send email..."),12);
-
-
-           //  odoslanie prilohy
-          /*  File root = Environment.getExternalStorageDirectory();
-            String pathToMyAttachedFile = myFilePath; // "temp/attachement.xml";
-
-            File file = new File(root, pathToMyAttachedFile);
-            if (!file.exists() || !file.canRead()) {
-                return;
-            }
-            Uri uri = Uri.fromFile(file);
-            emailIntent.putExtra(Intent.EXTRA_STREAM, uri); */
 
         emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + myFilePath));
 

@@ -60,6 +60,8 @@
 3.8.18
 - doladovacky
 
+6.8.18
+- dorob detail v miestnostiach
 
 
 UROB:

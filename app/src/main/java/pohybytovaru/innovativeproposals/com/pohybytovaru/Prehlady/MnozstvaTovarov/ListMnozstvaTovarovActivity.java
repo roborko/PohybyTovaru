@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovDataModel;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 
 public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
@@ -30,7 +33,7 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
     private String myTovarName;
     TextView tovarnazovTV;
     TextView mnozstvoTV;
-    ImageView image = null;
+    //ImageView image = null;
 
     List<MnozstvaTovaru > zoznamHM = null;
 
@@ -62,19 +65,21 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
             @SuppressLint("RestrictedApi")
             public void onItemClick(AdapterView<?> parent,
                                     View view, int position, long id) {
-                tovarnazovTV = (TextView) view.findViewById(R.id.tovarnazovTV);
-                mnozstvoTV = (TextView) view.findViewById(R.id.mnozstvoTV);
-                int TovarID = (int) view.getTag();
-                MnozstvaTovaru myTovar = findInventarById(TovarID);
+             //   tovarnazovTV = (TextView) view.findViewById(R.id.tovarnazovTV);
+             //   mnozstvoTV = (TextView) view.findViewById(R.id.mnozstvoTV);
+                int tovarID = zoznamHM.get(position).getTovar();
+
+                Tovar myTovar = dm.getTovar(tovarID);
 
                 Intent theIndent = new Intent(getApplication(),
                         //ViewInventarDetail.class);
                         ListMnozstvaTovarovVMiestnostiach.class);
 
-                theIndent.putExtra("myId",TovarID);
-                theIndent.putExtra("myTovarName",myTovar.getTovar());
+                //theIndent.putExtra("myId",TovarID);
+                //theIndent.putExtra("myTovarName",zoznamHM.get(position).getTovarName());
 
-               // View imageView = view.findViewById(R.id.detailView_Image);
+                theIndent.putExtra("myTovar",myTovar);
+
 
                 startActivity(theIndent);
             }
@@ -110,12 +115,14 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         yourFile.createNewFile(); // vytvorenie !!!
 
 
-        FileOutputStream writer  = new FileOutputStream(yourFile, false);
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(yourFile, false),
+                "windows-1250");  // "windows-1252" , "UTF-8", "ISO-8859-2"
 
-        //writer.write((convertText4Windows("Dňa: ")+ format +" \n\n").getBytes());
-        writer.write(("Dňa: "+ format +" \n\n").getBytes());
+        writer.append("Vytvorené: "+ format +" \n\n");
+        writer.append("Prehľad aktuálnych množstiev tovarov\n\n");
 
-        writer.write(("tovar;aktualne mnozstvo\n").getBytes());
+
+        writer.append("Tovar;Aktuálne množstvo\n");
 
         int kolko = zoznamHM.size();
         MnozstvaTovaru xx;
@@ -126,13 +133,13 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         for (int iItem = 0; iItem < kolko; iItem++) {
 
             xx = zoznamHM.get(iItem);
-            tovar = xx.getTovar().toString();
+            tovar = xx.getTovarName();
 
             aktMnozstvo = (int) xx.getMnozstvo(); // setMnozstvo
           //  minimMnozstvo = (int) xx.getLimitne_mnozstvo();
 
            // writer.write((convertText4Windows(tovar) + ";"+String.valueOf(aktMnozstvo)+"\n").getBytes());
-            writer.write((tovar + ";"+String.valueOf(aktMnozstvo)+"\n").getBytes());
+            writer.append(tovar + ";"+String.valueOf(aktMnozstvo)+"\n");
 
         }
 
@@ -148,7 +155,7 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aktualne množstvá tovarov ");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam tovarov a ich množstiev");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam aktuálnych množstiev tovarov");
 
         startActivity(Intent.createChooser(emailIntent, "Share"));
 

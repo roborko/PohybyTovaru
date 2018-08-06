@@ -63,8 +63,8 @@ public class MinimalneMnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru
         limitne_mnozstvo = row.findViewById(R.id.limitne_mnozstvo);
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
-        tovarnazov.setText(mnozstvaTovaru.getTovar());
-        mnozstvo.setText(String.valueOf(mnozstvaTovaru.getMnozstvo()));
+        tovarnazov.setText(mnozstvaTovaru.getTovarName());
+        mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
         limitne_mnozstvo.setText(String.valueOf(mnozstvaTovaru.getLimitne_mnozstvo()));
 
         //ulozenie ID-cka do riadku; ale mozeme sem ulozit aj cely objekt inventara (toto moze byy overkill pri vacsom obsahu dat)
@@ -100,15 +100,16 @@ public class MinimalneMnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru
                     if (original_data != null)
                         filtered_list.addAll(original_data);
 
-                } else {
+                } /*else {
                     // Iterate in the original List and add it to filter list...
                     for (MnozstvaTovaru item : original_data) {
+                        //if (item.getTovarNazov().toLowerCase().contains(searchText.toLowerCase())) {
                         if (item.getTovarNazov().toLowerCase().contains(searchText.toLowerCase())) {
                             // Adding Matched items
                             filtered_list.add(item);
                         }
                     }
-                }
+                } */
 
                 // Set on UI Thread
                 ((Activity) context).runOnUiThread(new Runnable() {

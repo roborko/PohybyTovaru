@@ -188,7 +188,6 @@
                 android:layout_marginLeft="@dimen/margin_stepper_content_offset"
                 android:orientation="vertical">
 
-
                 <Button
                     android:id="@+id/btPohyb_tovar_miestnostFrom"
                     android:layout_width="wrap_content"
@@ -205,17 +204,6 @@
                     android:text="@string/nedefinovanamiestnost"
                     android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/activity_pohyb_tovar_selectedTovar" />
-<!--
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/activity_pohyb_tovar_miestnostFromSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_stepper_height"
-                    app:hintText="@string/VyberMiestnosti"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_miestnostFrom"
-                    style="@android:style/Widget.Material.Spinner.Underlined"/> -->
-
-
 
                 <LinearLayout
                     android:layout_width="match_parent"

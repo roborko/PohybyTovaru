@@ -75,14 +75,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
     @ViewById(R.id.activity_pohyb_tovar_transactionType_spinner)
     Spinner transactionTypeSpinner;
 
-    /*
-    @ViewById(R.id.activity_pohyb_tovar_miestnostFromSpinner)
-    SearchableSpinner miestnostFromSpinner;
-
-    @ViewById(R.id.activity_pohyb_tovar_miestnostToSpinner)
-    SearchableSpinner miestnostToSpinner; */
-
-
     @ViewById(R.id.activity_pohyb_tovar_inputLayout_pocetKusov)
     TextInputLayout inputLayout_pocetKusov;
 
@@ -464,7 +456,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         miestnostAdapterFROM.clear();
         miestnostAdapterFROM.addAll(list_miestnostFROM);
 
-
         Bitmap resultImage = ImageHelpers.convertBytesToBitmap(tovar.getFotografia());
         if (resultImage == null) {
             tovarImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_do_not_disturb_alt_black_18dp));
@@ -479,14 +470,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         miestnostToChanged(true, miestnostTo);
     }
 
-   // @ItemSelect(R.id.activity_pohyb_tovar_miestnostFromSpinner)
-    //@ItemSelect(R.id.lbl_miestnostFrom)
     public void miestnostFromChanged(boolean selected, Miestnost miestnost) {
 
         miestnostFrom = miestnost;
-        //Tovar myTovar = (Tovar) selectedTovarSpinner.getSelectedItem();
-
-        // Tovar kde = tovarAdapter.getItem(selectedTovarSpinner.getSelectedItem());
 
         if (miestnostFrom.getId() == 0 || selectedTovar == null) return;
         // if (miestnostFrom == null || myTovar == null) return;

@@ -155,8 +155,6 @@ public class Pohyb extends BaseObservable implements IEditableRecyclerItem, IFil
 
     }
 
-
-
 //    //adapter used to deserialize byte array of images to imageview
 //    @BindingAdapter({"bind:imageSource"})
 //    public static void loadImage(ImageView view, int imageId){

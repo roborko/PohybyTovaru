@@ -59,7 +59,7 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
         ArrayList<MnozstvaTovaru> results = new ArrayList<>();
         String sSQL;
 
-        sSQL = "SELECT  tovar.Id, tovar.fotografia, tovar.nazov, sum(aktualneMnozstvo.mnozstvo), tovar.MinimalneMnozstvo  " +
+        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, sum(aktualneMnozstvo.mnozstvo), tovar.MinimalneMnozstvo  " +
                 "FROM aktualneMnozstvo " +
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "WHERE tovar.MinimalneMnozstvo > 0 " +
@@ -79,9 +79,10 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 MnozstvaTovaru newItem = new MnozstvaTovaru();
                 newItem.setId(cursor.getInt(0));
                 newItem.setFotografia(cursor.getBlob(1));
-                newItem.setTovar(cursor.getString(2));
-                newItem.setMnozstvo(cursor.getDouble(3));
-                newItem.setLimitne_mnozstvo(cursor.getDouble(4));
+                newItem.setTovar(cursor.getInt(2));
+                newItem.setTovarName(cursor.getString(3));
+                newItem.setMnozstvo(cursor.getDouble(4));
+                newItem.setLimitne_mnozstvo(cursor.getDouble(5));
                 results.add(newItem);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam
@@ -90,6 +91,40 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
         return results;
     }
 
+    /*
+    public String getTovarName (int myTovarId) {
+
+        String result = "";
+        String sSQL;
+
+        sSQL = "SELECT  tovar.nazov " +
+                "FROM tovar " +
+                "WHERE id = " + myTovarId;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
+
+        Cursor cursor = db.rawQuery(sSQL, null);
+
+        //kurzor na prvy zaznam
+        if (cursor.moveToFirst()) {
+            do {
+
+               // MnozstvaTovaru newItem = new MnozstvaTovaru();
+               // newItem.setId(cursor.getInt(0));
+                //newItem.setFotografia(cursor.getBlob(1));
+                //newItem.setTovar(cursor.getInt(2));
+                //newItem.setMnozstvo(cursor.getDouble(3));
+                //newItem.setLimitne_mnozstvo(cursor.getDouble(4));
+                result = cursor.getString(0);
+
+            } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+        }
+        cursor.close();
+        return result;
+
+    }
+*/
 
 }
 
