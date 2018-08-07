@@ -46,8 +46,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 @EActivity(R.layout.activity_list_poschodie_detail)
 
 public class DetailPoschodieActivity extends AppCompatActivity implements ISimpleRowClickListener<Miestnost> {
-   // public final static int POSCHODIE_REQUEST_CODE = 22;
-   // public final static String CODE_INTENT_POSCHODIE = "EXTRA_POSCHODIE";
+
     public final static int MIESTNOST_REQUEST_CODE = 23;
 
     @Extra("EXTRA_POSCHODIE")
@@ -81,29 +80,31 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     int myBudovaId = 0;
     int myPoschodieId = 0;
 
+    @AfterViews
+    void ProcessAfterViews() {
 
-    protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle extras = getIntent().getExtras();
-     //   fab_btn_Miestnost = findViewById(R.id.fab_newMiestnost);
 
         if (extras != null) {
             myBudovaId = getIntent().getIntExtra("budovaID",0);
             myPoschodieId = getIntent().getIntExtra("poschodieID",0);
-        }
-    }
 
-    @AfterViews
-    void ProcessAfterViews() {
+            String menoBudova = dm.dajNazovByID("Budova",myBudovaId);
+           // toolbar.setTitle(menoBudova);
+            getSupportActionBar().setTitle(menoBudova);
+
+        }
+
 
         if(poschodie != null && poschodie.getId() > 0){
 
             txt_Poschodie.setText(poschodie.getNazov());
-            toolbar.setTitle(dm.dajNazovByID("Budova",myBudovaId));
-            setSupportActionBar(toolbar);
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             try {
                 // zoznam inventarov v miestnosti

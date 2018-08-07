@@ -71,7 +71,7 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         Tovar myTovar = null;
-        String myTovarName = "";
+       // String myTovarName = "";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -81,9 +81,11 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         ImageView tovarImage = findViewById(R.id.tovarImage);
-        toolbar.setTitle(myTovarName);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setTitle(myTovar.getNazov());
 
         if (myTovar.getFotografia() != null && myTovar.getFotografia().length > 1) {
             ByteArrayInputStream imageStream = new ByteArrayInputStream(myTovar.getFotografia());

@@ -38,7 +38,6 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickListener;
 
 @EActivity(R.layout.activity_list_budova_detail)
-//public class DetailBudovaActivity extends AppCompatActivity {
 public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRowClickListener<Poschodie> {
 
     public final static int BUDOVA_REQUEST_CODE = 21; // TODO preverit ci existuje
@@ -71,15 +70,13 @@ public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRo
     @ViewById(R.id.fab_newPoschodie)
     FloatingActionButton fab_btn_Poschodie;
 
-
-
     private List<Poschodie> data_list = new ArrayList<>();
     private ListPoschodieAdapter dataAdapterPoschodie;
     ListBudovaDataModel dm = new ListBudovaDataModel(this);
 
-
     @AfterViews
     void ProcessAfterViews() {
+
         if(budova != null && budova.getId() > 0){
 
             txt_Budova.setText(budova.getNazov());
@@ -113,15 +110,17 @@ public class DetailBudovaActivity extends AppCompatActivity implements ISimpleRo
     public void AddNewItem() {
 
         // ukry tlacitko +
-
        // fab_btn_Poschodie.setVisibility(View.INVISIBLE);
 
         // pridam nove poschodie
 
-        Intent intent = new Intent(this, DetailPoschodieActivity_.class);
-        intent.putExtra("budovaID", budova.getId());
-        //startActivity(intent);
-        startActivityForResult(intent, POSCHODIE_REQUEST_CODE); // aby som to dokazal odchytit v OnActivityResult
+        if(budova != null) {
+
+            Intent intent = new Intent(this, DetailPoschodieActivity_.class);
+            intent.putExtra("budovaID", budova.getId());
+
+            startActivityForResult(intent, POSCHODIE_REQUEST_CODE); // aby som to dokazal odchytit v OnActivityResult
+        }
     }
 
     @OnActivityResult(POSCHODIE_REQUEST_CODE)

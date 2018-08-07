@@ -27,11 +27,11 @@
 
         <TextView
             android:id="@+id/tovarnazov"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:singleLine="true"
-            android:layout_weight="3"
+            android:singleLine="false"
+            android:layout_weight="4"
             android:text="Nazov"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -39,8 +39,8 @@
 
         <TextView
             android:id="@+id/aktualne_mnozstvo"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="0dp"
+            android:layout_marginLeft="16dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 

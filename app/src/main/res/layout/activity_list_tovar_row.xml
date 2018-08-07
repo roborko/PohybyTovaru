@@ -59,7 +59,7 @@
                     android:text="@{obj.nazov}"
                     android:textStyle="normal"
                     android:textSize="16sp"
-                    android:singleLine="true"
+                    android:singleLine="false"
                     android:layout_weight="1"
                     android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"/>
                 <TextView
