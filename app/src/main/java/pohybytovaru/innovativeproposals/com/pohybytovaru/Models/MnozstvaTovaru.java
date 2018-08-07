@@ -4,19 +4,37 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class MnozstvaTovaru implements Parcelable {
+
     private int Id;
     private int tovarId;
+
+    private String tovarName;
+    private int miestnostId;
+
+    private String miestnostName;
+
+    private String miestnostFullName;
+    private double mnozstvo;
+
+    private double limitne_mnozstvo; // sem dotahujeme hodnoty z tovaru
+    private byte[] fotografia;
+
+
+    public String getMiestnostFullName() {
+        return miestnostFullName;
+    }
+
+    public void setMiestnostFullName(String miestnostFullName) {
+        this.miestnostFullName = miestnostFullName;
+    }
+
 
     public String getTovarName() {
         return tovarName;
     }
-
     public void setTovarName(String tovarName) {
         this.tovarName = tovarName;
     }
-
-    private String tovarName;
-    private int miestnostId;
 
     public String getMiestnostName() {
         return miestnostName;
@@ -25,12 +43,6 @@ public class MnozstvaTovaru implements Parcelable {
     public void setMiestnostName(String miestnostName) {
         this.miestnostName = miestnostName;
     }
-
-    private String miestnostName;
-    private double mnozstvo;
-
-    private double limitne_mnozstvo; // sem dotahujeme hodnoty z tovaru
-    private byte[] fotografia;
 
     public int getId() {
         return Id;
@@ -75,8 +87,6 @@ public class MnozstvaTovaru implements Parcelable {
         this.fotografia = fotografia;
     }
 
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -92,6 +102,7 @@ public class MnozstvaTovaru implements Parcelable {
         dest.writeDouble(mnozstvo) ;
         dest.writeDouble(limitne_mnozstvo) ;
         dest.writeByteArray(fotografia);
+        dest.writeString(miestnostFullName);
     }
 
     public static final Parcelable.Creator<MnozstvaTovaru> CREATOR = new Parcelable.Creator<MnozstvaTovaru>() {
@@ -119,6 +130,7 @@ public class MnozstvaTovaru implements Parcelable {
         this.mnozstvo = in.readDouble();
         this.limitne_mnozstvo = in.readDouble();
         this.fotografia = in.createByteArray();
+        this.miestnostFullName = in.readString();
     }
 
     //Use this for cloning values
@@ -131,6 +143,7 @@ public class MnozstvaTovaru implements Parcelable {
         this.mnozstvo = clone.mnozstvo;
         this.limitne_mnozstvo = clone.limitne_mnozstvo;
         this.fotografia  = clone.fotografia;
+        this.miestnostFullName = clone.miestnostFullName;
     }
 
 

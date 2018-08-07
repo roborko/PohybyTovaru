@@ -47,36 +47,31 @@ public class MnozstvaTovarovVMiestnostiachAdapter extends ArrayAdapter<MnozstvaT
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View row = convertView;
-     //   ImageView image = null;
 
-     //   TextView tovarnazov = null;
-        TextView miestnostnazov = null;
+
+        TextView miestnostNazov = null;
         TextView mnozstvo = null;
+        //String[] umiestnenie = null;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
         }
 
-      //  image = row.findViewById(R.id.tovarImage);
-        miestnostnazov = row.findViewById(R.id.miestnostnazovTV );
+        miestnostNazov = row.findViewById(R.id.miestnostnazovTV );
         mnozstvo = row.findViewById(R.id.mnozstvoTV);
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
-        miestnostnazov.setText(mnozstvaTovaru.getMiestnostName());
+
+        //umiestnenie = dm.getKoordinatyMiestnosti(xx.getMiestnost());
+        //miestnostFull = umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2];
+
+
+        miestnostNazov.setText(mnozstvaTovaru.getMiestnostFullName()); // getMiestnostName
         mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
 
         row.setTag(mnozstvaTovaru.getId());
 
-        /*
-        if (mnozstvaTovaru.getImage() != null && mnozstvaTovaru.getImage().length > 1) {
-            ByteArrayInputStream imageStream = new ByteArrayInputStream(mnozstvaTovaru.getImage());
-            Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-            image.setImageBitmap(theImage);
-        } else {
-            image.setImageResource(R.drawable.ic_do_not_disturb_alt_black_18dp);
-        }
-*/
         return row;
 
     }

@@ -59,13 +59,22 @@ public class MinimalneMnozstvaTovarovDataModel extends SQLiteOpenHelper {
         ArrayList<MnozstvaTovaru> results = new ArrayList<>();
         String sSQL;
 
-        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, sum(aktualneMnozstvo.mnozstvo), tovar.MinimalneMnozstvo  " +
+/*        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, sum(aktualneMnozstvo.mnozstvo), tovar.MinimalneMnozstvo  " +
                 "FROM aktualneMnozstvo " +
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "WHERE tovar.MinimalneMnozstvo > 0 " +
                 "GROUP BY  tovar.id " +
                 "HAVING tovar.MinimalneMnozstvo > sum(aktualneMnozstvo.mnozstvo) " +
+                "ORDER BY  tovar.id"; */
+
+        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, sum(aktualneMnozstvo.mnozstvo), tovar.MinimalneMnozstvo  " +
+                "FROM tovar " +
+                "left outer join aktualneMnozstvo on aktualneMnozstvo.tovar = tovar.id " +
+                "WHERE tovar.MinimalneMnozstvo > 0 " +
+                "GROUP BY  tovar.id " +
+                "HAVING (tovar.MinimalneMnozstvo > sum(aktualneMnozstvo.mnozstvo) OR  sum(aktualneMnozstvo.mnozstvo) is NULL) " +
                 "ORDER BY  tovar.id";
+
 
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);

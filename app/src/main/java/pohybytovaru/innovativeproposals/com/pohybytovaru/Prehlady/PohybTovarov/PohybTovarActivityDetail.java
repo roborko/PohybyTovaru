@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +50,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Miestnost;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.MyAlertDialogFragmentOK;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.MnozstvaTovarovDataModel;
 
@@ -269,7 +271,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
-                inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
+
+                String xx = miestnostFrom.getNazov(); // sem
+
+               // inputLayout_pocetKusov.setError("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() );
+                showDialogFragment("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() + " kusov");
                 return;
             }
 
@@ -293,7 +299,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
-                inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
+               // inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
+                //inputLayout_pocetKusov.setError("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() );
+                showDialogFragment("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() + " kusov");
                 return;
             }
 
@@ -553,6 +561,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         return null;
     }
 
+    private void showDialogFragment(String Mymessage) {
 
+        FragmentManager fm = getSupportFragmentManager();
+        MyAlertDialogFragmentOK editNameDialogFragment = MyAlertDialogFragmentOK.newInstance(Mymessage);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
 
 }

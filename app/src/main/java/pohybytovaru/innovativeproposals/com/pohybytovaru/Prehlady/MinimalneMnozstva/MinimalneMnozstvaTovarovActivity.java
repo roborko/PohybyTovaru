@@ -114,10 +114,10 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
                 "windows-1250");  // "windows-1252" , "UTF-8", "ISO-8859-2"
 
         writer.append("Vytvorené: "+ format +" \n\n");
-        writer.append("Zoznam tovarov s množstvom nižším než zadefinovaným  \n\n");
+        writer.append("Zoznam tovarov s množstvom nižším než minimálnym \n\n");
 
      //   writer.write(("tovar;aktualne mnozstvo;minimalne mnozstvo\n").getBytes());
-        writer.append("Tovar;Aktuálne množstvo;Minimálne množstvo\n");
+        writer.append("Názov;Aktuálne množstvo;Minimálne množstvo\n");
 
         int kolko = zoznamHM.size();
         MnozstvaTovaru xx;

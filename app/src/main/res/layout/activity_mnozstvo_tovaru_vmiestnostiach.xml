@@ -4,69 +4,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Prehlady.MnozstvaTovarov.ListMnozstvaTovarovVMiestnostiach">
+    android:background="#fcfcfc">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="250dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <ImageView
-            android:id="@+id/tovarImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:contentDescription="obrazok"
-            android:layout_gravity="center_horizontal"
-            android:transitionName="ObrazokView_Image" />
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_horizontal"
-            android:background="?attr/colorPrimary"
-
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_parent_layout">
-
-        <TextView
-            android:id="@+id/txt_MinMnozstvo"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="number"
-            android:hint="@string/hint_TovarMinimalneMnozstvo" />
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll">
 
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:focusable="true"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/tovarImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5"
+                    android:contentDescription="obrazok"
+                    android:scaleType="centerInside"
+                    android:transitionName="ObrazokView_Image" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:animateLayoutChanges="true"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/umiestnenie"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="3"
+                        android:gravity="left"
+                        android:text="@string/umiestnenie"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/pocet"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/mnozstvo"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
     <ListView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/list_mnozstva_tovaru_vmiestnostiach"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_Export"
-        android:src="@drawable/export"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom = "@dimen/fab_margin"
-        android:layout_marginRight = "@dimen/fab_margin"
         android:layout_width="wrap_content"
-        app:fabSize="normal"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:src="@drawable/export"
+        app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>

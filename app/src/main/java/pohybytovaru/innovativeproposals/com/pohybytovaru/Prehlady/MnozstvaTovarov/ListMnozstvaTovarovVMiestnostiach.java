@@ -57,7 +57,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 
 public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
-    private int myTovarId;
+   // private int myTovarId;
     TextView tovarnazovTV;
     TextView mnozstvoTV;
     ImageView myObrazok;
@@ -70,19 +70,13 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        //myTovarId = 0;
         Tovar myTovar = null;
         String myTovarName = "";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-           // myTovarId = extras.getInt("myId");
-           // myTovarName = extras.getString("myTovarName") ;
-
             myTovar = getIntent().getParcelableExtra("myTovar");
         }
-
         setContentView(R.layout.activity_mnozstvo_tovaru_vmiestnostiach);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,21 +85,17 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-
         if (myTovar.getFotografia() != null && myTovar.getFotografia().length > 1) {
             ByteArrayInputStream imageStream = new ByteArrayInputStream(myTovar.getFotografia());
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
             tovarImage.setImageBitmap(theImage);
         } else {
-            tovarImage.setImageResource(R.drawable.ic_do_not_disturb_alt_black_18dp);
+            tovarImage.setImageResource(R.drawable.not_disturb);
         }
-
 
         try {
             // zoznam inventarov v miestnosti
-            zoznamHM = dm.getMnozstvaVMiestnostiach(myTovarId);
+            zoznamHM = dm.getMnozstvaVMiestnostiach(myTovar.getId());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -125,29 +115,6 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
         ListView lw = (ListView) findViewById(R.id.list_mnozstva_tovaru_vmiestnostiach);
 
-
-
-
-       // tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));
-
-
-        /*
-        //kliknutie tu uz nema vyznam
-        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-
-
-            @SuppressLint("RestrictedApi")
-            public void onItemClick(AdapterView<?> parent,
-                                    View view, int position, long id) {
-                tovarnazovTV = (TextView) view.findViewById(R.id.tovarnazovTV);
-                mnozstvoTV = (TextView) view.findViewById(R.id.mnozstvoTV);
-
-                int TovarID = (int) view.getTag(); // ?
-
-            }
-        }); */
         mnozstvaTovaruVMiestnostiachAdapter = new MnozstvaTovarovVMiestnostiachAdapter(this, R.layout.activity_mnozstvo_tovaru_vmiestnostiach_row , zoznamHM);
         lw.setAdapter(mnozstvaTovaruVMiestnostiachAdapter);
 
@@ -160,7 +127,6 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
         SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
         String format = s.format(new Date());
-
 
         File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
         File yourFile = new File(filePath + File.separator + "mnozstvaTovaruVMiestnostiach.csv");
@@ -178,7 +144,7 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
 
       //  writer.write(("tovar;aktualne mnozstvo;minimalne mnozstvo\n").getBytes());
-        writer.append("Tovar;Množstvo;Miestnosť\n");
+        writer.append("Názov;Množstvo;Miestnosť\n");
 
         int kolko = zoznamHM.size();
         MnozstvaTovaru xx;
@@ -187,18 +153,19 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         int aktMnozstvo;
         int minimMnozstvo;
         String miestnostFull;
-        String[] umiestnenie;
+       // String[] umiestnenie;
+
 
         for (int iItem = 0; iItem < kolko; iItem++) {
 
             xx = zoznamHM.get(iItem);
             tovar = xx.getTovarName();
-            umiestnenie = dm.getKoordinatyMiestnosti(xx.getMiestnost());
 
-            miestnostFull = umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2];
+            //umiestnenie = dm.getKoordinatyMiestnosti(xx.getMiestnost());
+            miestnostFull = xx.getMiestnostFullName();  //umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2];
             aktMnozstvo = (int) xx.getMnozstvo();
 
-            writer.append(tovar+";"+String.valueOf(aktMnozstvo)+";"+miestnostFull+"\n");
+            writer.append(tovar+";"+String.valueOf(aktMnozstvo)+";"+miestnostFull+"\n"); // pridane miestnostFullName xxx
 
         }
 

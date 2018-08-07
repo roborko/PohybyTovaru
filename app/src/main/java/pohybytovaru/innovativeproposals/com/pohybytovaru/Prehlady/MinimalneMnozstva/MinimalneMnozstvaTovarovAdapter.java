@@ -60,14 +60,14 @@ public class MinimalneMnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru
         image = row.findViewById(R.id.detailView_Image);
         tovarnazov = row.findViewById(R.id.tovarnazovTV );
         mnozstvo = row.findViewById(R.id.aktualne_mnozstvo);
-        limitne_mnozstvo = row.findViewById(R.id.limitne_mnozstvo);
+      //  limitne_mnozstvo = row.findViewById(R.id.limitne_mnozstvo);
 
         MnozstvaTovaru mnozstvaTovaru = filtered_list.get(position);
         tovarnazov.setText(mnozstvaTovaru.getTovarName());
-        mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
-        limitne_mnozstvo.setText(String.valueOf(mnozstvaTovaru.getLimitne_mnozstvo()));
+        mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()) + " / " + String.valueOf((int)mnozstvaTovaru.getLimitne_mnozstvo()));
+        //limitne_mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getLimitne_mnozstvo()));
 
-        //ulozenie ID-cka do riadku; ale mozeme sem ulozit aj cely objekt inventara (toto moze byy overkill pri vacsom obsahu dat)
+        //ulozenie ID-cka do riadku; ale mozeme sem ulozit aj cely objekt inventara (toto moze byt overkill pri vacsom obsahu dat)
         row.setTag(mnozstvaTovaru.getId());
 
         if (mnozstvaTovaru.getImage() != null && mnozstvaTovaru.getImage().length > 1) {

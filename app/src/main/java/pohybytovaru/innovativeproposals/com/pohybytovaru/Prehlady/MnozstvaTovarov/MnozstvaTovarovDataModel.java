@@ -92,12 +92,15 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
     public List<MnozstvaTovaru> getMnozstvaVMiestnostiach(int myId) throws URISyntaxException {
 
         ArrayList<MnozstvaTovaru> results = new ArrayList<>();
-        String sSQL;
+        String sSQL, umietnenie;
 
-        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, miestnost.id, miestnost.nazov, aktualneMnozstvo.mnozstvo " +
+        sSQL = "SELECT  aktualneMnozstvo.Id, tovar.fotografia, tovar.id, tovar.nazov, miestnost.id, miestnost.nazov, aktualneMnozstvo.mnozstvo, " +
+                "budova.nazov, poschodie.nazov " +
                 "FROM aktualneMnozstvo " +
                 "JOIN miestnost on miestnost.id = aktualneMnozstvo.miestnost " +
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
+                "join poschodie on poschodie.id = miestnost.idposchodie " +
+                "join budova on budova.id = miestnost.idbudova " +
                 "WHERE tovar.id = " + myId +
                 " ORDER BY miestnost.nazov COLLATE NOCASE"; // limit 100
 
@@ -105,6 +108,8 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         SQLiteStatement selectStmt  =   db.compileStatement(sSQL);
 
         Cursor cursor = db.rawQuery(sSQL, null);
+
+        // pridane miestnostFullName
 
         //kurzor na prvy zaznam
         if (cursor.moveToFirst()) {
@@ -118,6 +123,9 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 newItem.setMiestnost(cursor.getInt(4));
                 newItem.setMiestnostName(cursor.getString(5)); // tuto to pripadne rozsir o budova - poschodie - miestnost
                 newItem.setMnozstvo(cursor.getDouble(6));
+
+                umietnenie = cursor.getString(7) + " - " + cursor.getString(8) + " - " + cursor.getString(5);
+                newItem.setMiestnostFullName(umietnenie);
                 results.add(newItem);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam

@@ -364,7 +364,13 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         String format = s.format(new Date());
 
         File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
-        File yourFile = new File(filePath + File.separator + "prehladPohybov.csv");
+        File yourFile ;
+
+        if(filtrovanyVyraz=="")
+            yourFile = new File(filePath + File.separator + "prehladPohybov_vsetky.csv");
+        else
+            yourFile = new File(filePath + File.separator + "prehladPohybov_" + filtrovanyVyraz +".csv");
+
         yourFile.createNewFile(); // vytvorenie !!!
 
         OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(yourFile, false),
@@ -380,7 +386,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             writer.append("Prehľad pohybov tovarov začínajúcich reťazcom: " + filtrovanyVyraz + " \n\n");
 
 
-        writer.append("Tovar;Pohyb;Počet;Dátum;Z miestnosti;Do miestnosti\n");
+        writer.append("Názov;Pohyb;Počet;Dátum;Z miestnosti;Do miestnosti\n");
 
         //int kolko = data_list.size();
         int kolko = dataAdapter.filterView.size();

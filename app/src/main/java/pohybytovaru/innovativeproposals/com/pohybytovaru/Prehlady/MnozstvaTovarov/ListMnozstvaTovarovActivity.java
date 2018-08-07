@@ -122,7 +122,7 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         writer.append("Prehľad aktuálnych množstiev tovarov\n\n");
 
 
-        writer.append("Tovar;Aktuálne množstvo\n");
+        writer.append("Názov;Aktuálne množstvo\n");
 
         int kolko = zoznamHM.size();
         MnozstvaTovaru xx;
@@ -154,8 +154,8 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aktualne množstvá tovarov ");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam aktuálnych množstiev tovarov");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Prehľad aktuálnych množstiev tovarov ");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Prehľad aktuálnych množstiev tovarov");
 
         startActivity(Intent.createChooser(emailIntent, "Share"));
 
