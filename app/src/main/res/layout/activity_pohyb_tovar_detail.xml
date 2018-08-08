@@ -121,17 +121,17 @@
                 android:orientation="horizontal">
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/productImage"
-                    android:layout_width="@dimen/dimen_circular_image_size"
-                    android:layout_height="@dimen/dimen_circular_image_size"
-                    android:layout_alignParentLeft="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="@dimen/padding_parent_layout"
+                    android:layout_marginRight="@dimen/padding_parent_layout"
+                    android:layout_gravity="center"
                     android:layout_centerInParent="true"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="@dimen/dimen_row_icon_horizontal_margin"
-                    android:layout_marginRight="@dimen/dimen_row_icon_horizontal_margin"
-                    app:civ_border_color="@color/colorPrimaryDark"
-                    app:civ_border_width="0dp" />
+                    android:layout_alignParentLeft="true">
+
+                </ImageView>
 
                 <LinearLayout
                     android:layout_width="0dp"
