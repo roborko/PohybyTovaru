@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -48,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Constants;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
@@ -149,7 +151,11 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
        emailIntent.setType("text/plain");
        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
        emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-       emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName() + Constants.PREF_FILE_NAME, MODE_PRIVATE);
+        String address = sharedPreferences.getString(Constants.MAIL_ADDRESS, "zadajte mail do nastaveni"); // druhy parameter je defaultna hodnota
+
+       emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {address});
        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Chybajúce množstvá tovarov ");
        emailIntent.putExtra(Intent.EXTRA_TEXT, "Zoznam tovarov s množstvom nižším než zadefinovaným");
 

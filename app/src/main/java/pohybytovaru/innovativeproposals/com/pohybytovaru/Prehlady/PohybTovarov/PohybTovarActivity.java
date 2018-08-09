@@ -2,6 +2,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -41,6 +42,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Constants;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
@@ -449,7 +451,12 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName() + Constants.PREF_FILE_NAME, MODE_PRIVATE);
+        String address = sharedPreferences.getString(Constants.MAIL_ADDRESS, "zadajte mail do nastaveni"); // druhy parameter je defaultna hodnota
+
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {address});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Export pohybov pre " + myArtikel);
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Prehľad pohybov tovarov");
 

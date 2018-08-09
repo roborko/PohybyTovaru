@@ -51,16 +51,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN); // stale necha otvorene navigation bar
-
 
         //populate default values
          DeafultValuesPopulator.PopulateDefaultValues(this);  // toto presun do vytvorenia databazy
@@ -125,10 +122,14 @@ potialto
                 startActivity(intent);
                 break;
 
-            case R.id.nav_pokus_three:
+          /*  case R.id.nav_pokus_three:
                 intent = new Intent(this, ThreeLevelExpandableListView.class);
                 startActivity(intent);
+                break; */
 
+            case R.id.nav_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
         }
 

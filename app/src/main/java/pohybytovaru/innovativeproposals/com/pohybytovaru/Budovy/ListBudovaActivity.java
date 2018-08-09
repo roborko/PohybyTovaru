@@ -192,10 +192,7 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         //retrieve list of all selected items
         List<Integer> itemsToRemove = dataAdapter.getSelectedItemsId();
 
-
     }
-
-
 
     //MENU OPTIONS MANIPULATIONS - get access to menu object
     private Menu savedMenu;

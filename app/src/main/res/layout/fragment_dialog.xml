@@ -3,9 +3,7 @@
     android:id="@+id/edit_name"
     android:layout_width="220dp" android:layout_height="330dp"
     android:layout_gravity="center" android:orientation="vertical"
-
     android:background="@drawable/shape"
-
     >
 
     <TextView

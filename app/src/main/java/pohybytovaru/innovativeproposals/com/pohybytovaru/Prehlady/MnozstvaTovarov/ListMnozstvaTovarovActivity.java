@@ -2,6 +2,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovar
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
@@ -23,6 +24,8 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Constants;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovDataModel;
@@ -99,7 +102,6 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
                 }
             }
         });
-
     }
 
     private void ExportUdajov() throws IOException {
@@ -140,7 +142,6 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
 
            // writer.write((convertText4Windows(tovar) + ";"+String.valueOf(aktMnozstvo)+"\n").getBytes());
             writer.append(tovar + ";"+String.valueOf(aktMnozstvo)+"\n");
-
         }
 
         writer.close();
@@ -153,14 +154,17 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName() + Constants.PREF_FILE_NAME, MODE_PRIVATE);
+        String address = sharedPreferences.getString(Constants.MAIL_ADDRESS, "zadajte mail do nastaveni"); // druhy parameter je defaultna hodnota
+
+        //emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {address});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Prehľad aktuálnych množstiev tovarov ");
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Prehľad aktuálnych množstiev tovarov");
 
         startActivity(Intent.createChooser(emailIntent, "Share"));
-
     }
-
 
     private MnozstvaTovaru findInventarById(Integer itemId) {
         for (MnozstvaTovaru item : zoznamHM) {
@@ -193,28 +197,24 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
         //startScan(); // aktivuj hw tlacidlo skeneru
     }
 
-
     public static String convertText4Windows (String input){
 
         String output = "";
         try {
-        /* From ISO-8859-1 to UTF-8 */
+            /* From ISO-8859-1 to UTF-8 */
             //output = new String(input.getBytes("Windows-1252"), "UTF-8");  // "UTF-8"
-        /* From UTF-8 to ISO-8859-1 */
-         //   output = new String(input.getBytes("UTF-8"), "Windows-1252");
-
-           // output = new String(input.getBytes("UTF-8"), Charset.forName("Windows-1252"));
-           // output = new String(input.getBytes("Windows-1252"), Charset.forName("UTF-8"));
-
-//            output = new String(input.getBytes(), "ISO-8859-1");
-           // output = new String(input.getBytes(), "Windows-1250");
-          //  output = new String(input.getBytes(), "ISO-8859-2"); // Latin-2
-          //  output = new String(input.getBytes(), Charset.forName("ISO-8859-2")); // Latin-2
+            /* From UTF-8 to ISO-8859-1 */
+            //   output = new String(input.getBytes("UTF-8"), "Windows-1252");
+            // output = new String(input.getBytes("UTF-8"), Charset.forName("Windows-1252"));
+            // output = new String(input.getBytes("Windows-1252"), Charset.forName("UTF-8"));
+            //            output = new String(input.getBytes(), "ISO-8859-1");
+            // output = new String(input.getBytes(), "Windows-1250");
+            //  output = new String(input.getBytes(), "ISO-8859-2"); // Latin-2
+            //  output = new String(input.getBytes(), Charset.forName("ISO-8859-2")); // Latin-2
 
         output = new String(input.getBytes("ISO-8859-2"), Charset.forName("UTF-8"));
 
-         //   output = new String(input.getBytes("x-iscii-be"));
-
+           //   output = new String(input.getBytes("x-iscii-be"));
            // output = new String (input.getBytes("UTF-8"),"UTF-8");
 
         } catch (UnsupportedEncodingException e) {

@@ -3,6 +3,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovar
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Constants;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
@@ -57,7 +59,6 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 
 public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
-   // private int myTovarId;
     TextView tovarnazovTV;
     TextView mnozstvoTV;
     ImageView myObrazok;
@@ -71,8 +72,6 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         Tovar myTovar = null;
-       // String myTovarName = "";
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             myTovar = getIntent().getParcelableExtra("myTovar");
@@ -180,7 +179,11 @@ public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"lubos.jokl@gmail.com"});
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName() + Constants.PREF_FILE_NAME, MODE_PRIVATE);
+        String address = sharedPreferences.getString(Constants.MAIL_ADDRESS, "zadajte mail do nastaveni"); // druhy parameter je defaultna hodnota
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {address});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Množstvá v miestnostiach pre tovar " + tovar);
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Množstvá v miestnostiach pre tovar " + tovar);
 
