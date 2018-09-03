@@ -60,18 +60,15 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     public final static int POHYB_REQUEST_CODE = 19;
     private String filtrovanyVyraz = "";
 
-
     @ViewById
     Toolbar toolbar;
 
     @ViewById
     RecyclerView recyclerView;
 
-
     private List<Pohyb> data_list = new ArrayList<>();
     private PohybTovarAdapter dataAdapter;
     MnozstvaTovarovDataModel dm = new MnozstvaTovarovDataModel(this);
-
 
     @AfterViews
     void bindAdapter() {
@@ -110,6 +107,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     // tu refreshni ked prida novy pohyb -  neprejde cez "EXTRA_MIESTNOST xx GetData();//fetch data
     void onResult(int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
+
             //deserialize object
             Pohyb result = data.getParcelableExtra("EXTRA_MIESTNOST");
 
@@ -145,6 +143,9 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     public void exportZoznam() {
 
         try {
+
+            if(!kontrolaUdajov()) return;
+
             ExportSelectedPohyby();
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,11 +154,30 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         }
     }
 
+    public boolean kontrolaUdajov() {
+
+        boolean jeOK = false;
+        if(!dm.jeZaznamVTabulke("miestnost")) {
+            showDialogFragment("Definujte aspoň jednu miestnosť");
+            return jeOK;
+        }
+
+        if(!dm.jeZaznamVTabulke("tovar")) {
+            showDialogFragment("Definujte aspoň jednu miestnosť");
+            return jeOK;
+        }
+        return true;
+    }
+
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
 
         // kontrola ci existuje tovar a miestnost
         // boolean ako = dm.jeZaznamVTabulke("miestnost");
+
+        if(!kontrolaUdajov()) return;
+
+        /*
         if(!dm.jeZaznamVTabulke("miestnost")) {
             showDialogFragment("Definujte aspoň jednu miestnosť");
             return;
@@ -167,7 +187,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             showDialogFragment("Definujte aspoň jednu miestnosť");
             return;
         }
-
+*/
         Intent intent = new Intent(this, PohybTovarActivityDetail_.class);
         startActivityForResult(intent, POHYB_REQUEST_CODE);
     }

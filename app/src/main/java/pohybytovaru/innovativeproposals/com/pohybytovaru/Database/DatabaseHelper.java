@@ -19,6 +19,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Poschodie;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.TypTransakcie;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Vozik;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 
 /**
@@ -29,11 +30,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     public static final String DATABASE_NAME = "pohybtovaru.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    public static final int DATABASE_VERSION = 13;
+    public static final int DATABASE_VERSION = 14;
     // ver 4 - pridany pohyb inventura
     // ver 6 - pridane skartovanie do pohybov
     // ver 7 - test - pozor, prepisana funkcia onUpgrade - nedropuje tabulky, len maze pohyby
     // ver 9 - doplnene tabulky budova  a poschodie
+    // ver 14 - pridany vozik
 
     private Dao<Budova, Integer> mBudovaDAO = null;
     private Dao<Poschodie, Integer> mPoschodieDAO = null;
@@ -43,6 +45,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<Tovar, Integer> mTovarDAO = null;
     private Dao<TypTransakcie, Integer> mTypTransakcieDAO = null;
     private Dao<AktualneMnozstvo, Integer> mAktualneMnozstvoDAO = null;
+    private Dao<Vozik, Integer> mVozikDAO = null;
 
     private static DatabaseHelper sDatabaseHelper;
 
@@ -66,7 +69,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Pohyb.class);
             TableUtils.createTable(connectionSource, TypTransakcie.class);
             TableUtils.createTable(connectionSource, AktualneMnozstvo.class);
-
+            TableUtils.createTable(connectionSource, Vozik.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -88,6 +91,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Pohyb.class, true);
             TableUtils.dropTable(connectionSource, TypTransakcie.class, true);
             TableUtils.dropTable(connectionSource, AktualneMnozstvo.class, true);
+            TableUtils.dropTable(connectionSource, Vozik.class, true);
 
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
@@ -195,6 +199,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.e("AktualneMnozstvoDAO", "Error occured while fetching DAO: " + ex.getMessage());
         }
         return mAktualneMnozstvoDAO;
+    }
+
+    public Dao<Vozik, Integer> VozikDAO() {
+        try {
+            if (mOsobaDAO == null)
+                mOsobaDAO = getDao(Osoba.class);
+        } catch (SQLException ex) {
+            Log.e("VOZIK_DAO", "Error occured while fetching DAO: " + ex.getMessage());
+        }
+        return mVozikDAO;
     }
 
     @Override

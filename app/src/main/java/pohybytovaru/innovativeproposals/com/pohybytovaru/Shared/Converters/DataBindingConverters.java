@@ -18,13 +18,15 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
 public class DataBindingConverters {
 
     //adapter used to deserialize drawable ID to actual drawable
-    @BindingAdapter({"bind:drawableSource"})
+    // xx @BindingAdapter({"bind:drawableSource"})
+    @BindingAdapter({"drawableSource"})
     public static void loadImageDrawable(ImageView view, int imageId){
         view.setImageResource(imageId);
     }
 
     //adapter used to deserialize byte array of images to imageview
-    @BindingAdapter({"bind:imageSource", "bind:error"})
+    //xx @BindingAdapter({"bind:imageSource", "bind:error"})
+    @BindingAdapter({"imageSource", "error"})
     public static void loadImage(ImageView view, byte[] imageBytes, Drawable error){
         if(imageBytes == null || imageBytes.length == 0){
             //Drawable noImageFound =

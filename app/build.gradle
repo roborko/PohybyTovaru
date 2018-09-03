@@ -1,11 +1,15 @@
 apply plugin: 'com.android.application'
 
+
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27 // bolo 26
     defaultConfig {
+
         applicationId "pohybytovaru.innovativeproposals.com.pohybytovaru"
-        minSdkVersion 22
-        targetSdkVersion 26
+        minSdkVersion 22 // bolo 22
+       // buildToolsVersion 22
+        targetSdkVersion 27 // bolo 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,9 +21,9 @@ android {
             keyAlias("LJApps")
           //  storePassword System.getenv("DEMO_STORE_PASSWORD")
 
-            storePassword("DEMO_STORE_PASSWORD");
+            storePassword("DEMO_STORE_PASSWORD")
            // keyPassword System.getenv("DEMO_STORE_PASSWORD")
-            keyPassword("DEMO_STORE_PASSWORD");
+            keyPassword("DEMO_STORE_PASSWORD")
         }
     }
 
@@ -38,27 +42,44 @@ android {
 def AAVersion = '4.4.0'
 dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
-    compile "org.androidannotations:androidannotations-api:$AAVersion"
+  //  compile "org.androidannotations:androidannotations-api:$AAVersion"
+    implementation  "org.androidannotations:androidannotations-api:$AAVersion"
 }
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:26.1.0'
 
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    // implementation 'com.android.support:support-v4:26.1.0' nepomaha
+    //implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:27.1.1'
+
+    //ximplementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+   //bolo implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
 
-    compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+    //compile 'com.j256.ormlite:ormlite-android:4.48'
+    implementation 'com.j256.ormlite:ormlite-android:4.48'
+    //compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //compile 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+    implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+
+    implementation 'com.android.support.constraint:constraint-layout:+'
 
 
+}
+
+/*
+dependencies {
 
 }
 dependencies {
@@ -79,6 +100,4 @@ dependencies {
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
-dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:+'
-}
+*/

@@ -3,10 +3,6 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-/**
- * Created by Robert on 14.01.2018.
- */
-
 @DatabaseTable(tableName = "Osoba")
 public class Osoba {
     @DatabaseField(columnName = "Id", generatedId = true)
@@ -15,6 +11,10 @@ public class Osoba {
     private String FullName;
     @DatabaseField
     private String Password;
+
+    @DatabaseField
+    private int idMiestnosti;
+
 
     public int getId() {
         return Id;
@@ -39,4 +39,14 @@ public class Osoba {
     public void setPassword(String password) {
         Password = password;
     }
+
+    public int getIdMiestnosti() {
+        return idMiestnosti;
+    }
+
+    public void setIdMiestnosti(int idMiestnosti) {
+        this.idMiestnosti = idMiestnosti;
+    }
+
+
 }
