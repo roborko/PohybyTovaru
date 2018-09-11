@@ -194,10 +194,8 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
     @Override
     public void onItemClick(Pohyb item) {
-//        Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
-//        intent.putExtra("EXTRA_MIESTNOST", item);
-//        intent.putParcelableArrayListExtra("EXTRA_LIST_MIESTNOST", new ArrayList<Parcelable>(data_list));
-//        startActivityForResult(intent, POHYB_REQUEST_CODE);
+
+        // tu nic nepis
     }
 
     public void onItemClick(View view, Pohyb item) {

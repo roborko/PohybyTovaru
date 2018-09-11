@@ -93,12 +93,7 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
         resultMiestnost.setNazov(itemName);
         resultMiestnost.setJeSklad(jeSklad.isChecked());
 
-
-        long ako =  dm.ulozMiestnost(resultMiestnost);
-
-        //set id of miestnost
-      /*  if(miestnost != null &&  miestnost.getId() > 0)
-            resultMiestnost.setId(miestnost.getId());*/
+        // ? long ako =  dm.ulozMiestnost(resultMiestnost);
 
         Intent intent = new Intent();
         intent.putExtra("EXTRA_MIESTNOST", resultMiestnost);

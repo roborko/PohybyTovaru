@@ -33,6 +33,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovaro
 //import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Voziky.VozikListActivity_;
 
 
 @EActivity
@@ -121,6 +122,11 @@ potialto
                 intent = new Intent(this, MinimalneMnozstvaTovarovActivity.class);
                 startActivity(intent);
                 break;
+
+         /*   case R.id.nav_voziky:
+                intent = new Intent(this, VozikListActivity_.class);
+                startActivity(intent);
+                break; */
 
           /*  case R.id.nav_pokus_three:
                 intent = new Intent(this, ThreeLevelExpandableListView.class);

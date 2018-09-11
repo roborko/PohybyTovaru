@@ -22,9 +22,6 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IEditableRecyclerItem;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.IFilterableItem;
 
-/**
- * Created by Robert on 14.01.2018.
- */
 
 @DatabaseTable(tableName = "Tovar")
 public class Tovar extends BaseObservable implements Parcelable, IEditableRecyclerItem, IFilterableItem {

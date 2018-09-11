@@ -43,6 +43,7 @@ import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ThreeLevelExpandableListView;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DatabaseHelper;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Globals;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.ImageHelpers;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Helpers.OrmLiteAppCompatActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.AktualneMnozstvo;
@@ -163,6 +164,61 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupAdapters();
 
+        //String miestoFrom = Globals.getInstance().getMiestoFrom();
+
+
+        /* pamatat si tovar je zbytocne
+        if(Globals.getInstance().getMyTovarId() > 0) {
+
+            selectedTovar = dm.getTovar(Globals.getInstance().getMyTovarId());
+            int aa = selectedTovarSpinner.getAdapter().getCount();
+            Tovar ss ;
+            for(int xx = 0;xx<aa;xx++) {
+
+                ss = (Tovar) selectedTovarSpinner.getAdapter().getItem(xx);
+                if(ss.getId() == selectedTovar.getId())
+
+                    selectedTovarSpinner.setSelection(xx);
+            }
+        } */
+
+        if(Globals.getInstance().getMyTransakciaId() > 0) {
+
+         //   transactionType = dm.getTovar(Globals.getInstance().getMyTovarId());
+            int aa = transactionTypeSpinner.getAdapter().getCount();
+            TypTransakcie ss ;
+            for(int xx = 0;xx<aa;xx++) {
+
+                ss = (TypTransakcie) transactionTypeSpinner.getAdapter().getItem(xx);
+                if(ss.getId() == Globals.getInstance().getMyTransakciaId())
+
+                    transactionTypeSpinner.setSelection(xx);
+            }
+        }
+
+
+        if(Globals.getInstance().getMiestoFromId() > 0) { // sem
+
+            miestnostFrom = dm.getMiestnostbyId(Globals.getInstance().getMiestoFromId());
+
+            String[] umiestnenie = dm.getKoordinatyMiestnosti(Globals.getInstance().getMiestoFromId());
+
+            lbMiestnostFrom.setText(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
+          //  miestnostFromChanged(true, miestnostFrom);
+        }
+
+        if(Globals.getInstance().getMiestoToId() > 0) {
+
+            miestnostTo = dm.getMiestnostbyId(Globals.getInstance().getMiestoToId());
+
+            String[] umiestnenie = dm.getKoordinatyMiestnosti(Globals.getInstance().getMiestoToId());
+            lbMiestnostTo.setText(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
+
+            //miestnostToChanged(true, miestnostTo);
+        }
+
+
+
     }
 
     public void onButtonMiestnostFromClick(View target) {
@@ -232,8 +288,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         miestnostAdapterFROM = new ArrayAdapter<Miestnost>(this, android.R.layout.simple_dropdown_item_1line, list_miestnostFROM);
         miestnostAdapterTO = new ArrayAdapter<Miestnost>(this, android.R.layout.simple_dropdown_item_1line, list_miestnostTO);
-       // miestnostFromSpinner.setAdapter(miestnostAdapterFROM);  PRVA ZAMENA !! a asi netreba ani adapter
-       // miestnostToSpinner.setAdapter(miestnostAdapterTO); DRUHA ZAMENA !! a asi netreba ani adapter
     }
 
     private boolean validateUserEntries() {
@@ -259,7 +313,14 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
     @OptionsItem(R.id.menu_item_save)
     void saveButtonClicked() {
-        //validations
+
+        //String miestoFrom = "vozik";
+        //Globals.getInstance().setMiestoFrom(miestoFrom);
+        Globals.getInstance().setMyTovarId(selectedTovar.getId()); // sem
+        Globals.getInstance().setMyTransakciaId(transactionType.getId());
+        Globals.getInstance().setMiestoFromId(miestnostFrom.getId());
+        Globals.getInstance().setMyMiestoToId(miestnostTo.getId());
+
         if (!validateUserEntries()) return;
 
         if (passedInPohyb == null)
@@ -271,8 +332,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
-
-                String xx = miestnostFrom.getNazov(); // sem
 
                // inputLayout_pocetKusov.setError("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() );
                 showDialogFragment("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() + " kusov");
@@ -386,7 +445,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
             this.finish();
 
-            // TODO sem daj kontrolu na pminimalne mnozstvo alebo nula (celkove)
+            // TODO daj kontrolu na minimalne mnozstvo alebo nula (celkove)
 
 
         } catch (SQLException e) {
@@ -411,8 +470,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //remove item from designated room
             layout_miestnostTo.setVisibility(View.GONE);
             layout_miestnostFrom.setVisibility(View.VISIBLE);
-            btMiestnostFrom.setText(R.string.v_miestnosti);
+            btMiestnostFrom.setText(R.string.v_miestnosti); // v miestnosti
             header4Budovy = "Miestnosť pre skartáciu";
+            // vMiestnosti
         }
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add)))  {
@@ -428,8 +488,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //set quantity of item to designated room
             layout_miestnostTo.setVisibility(View.VISIBLE); // pridal som
             layout_miestnostFrom.setVisibility(View.GONE);
-            btMiestnostTo.setText(R.string.v_miestnosti);
+            btMiestnostTo.setText(R.string.v_miestnosti); //  v miestnosti
             header4Budovy = "Miestnosť pre inventúru";
+            //vMiestnosti
         }
 
         if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Move))) {
@@ -483,18 +544,21 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         miestnostFrom = miestnost;
 
         if (miestnostFrom.getId() == 0 || selectedTovar == null) return;
-        // if (miestnostFrom == null || myTovar == null) return;
 
-        // getAktualneMnozstvoToavruZMiestnosti
         miestnostFromMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
 
         if (miestnostFromMnozstvo == null) {
             miestnostFrom_povodnyPocetKusovTovaru.setText("0");
         } else {
-            miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostFromMnozstvo.getMnozstvo()));
+            // mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
+
+            miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf((int)miestnostFromMnozstvo.getMnozstvo()));
+
         }
 
         // TODO v zozname miestnostTo vyhod zo zoznamu miestnostFrom
+
+        // TODO skor to prerob na kontrolu ID - nesmu byt rovnake
         list_miestnostTO = dm.getMiestnostSInventarom(0);
         // vyhod miestnostFROM
 
@@ -535,7 +599,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         if (miestnostToMnozstvo == null) {
             miestnostTo_povodnyPocetKusovTovaru.setText("0");
         } else {
-            miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf(miestnostToMnozstvo.getMnozstvo()));
+            miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf((int)miestnostToMnozstvo.getMnozstvo()));
         }
 
         // tu vzdy focusuj

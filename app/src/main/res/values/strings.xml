@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Pohyby tovaru</string>
-    <string name="activity_ListMiestnosti">Zoznam Miestnosti</string>
-    <string name="activity_ListBudov">Zoznam budov</string>
+    <string name="activity_ListMiestnosti">Zoznam miestnosti</string>
+    <string name="activity_ListBudov">Zoznam budov a vozíkov</string>
     <string name="activity_DetailMiestnosti">Detail Miestnosti</string>
     <string name="activity_DetailPoschodie">Detail Poschodia</string>
     <string name="activity_DetailBudova">Detail Budovy</string>
@@ -12,7 +12,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_miestnosti">Budovy a miestnosti</string>
+    <string name="navigation_drawer_miestnosti">Miestnosti a vozíky</string>
     <string name="hint_nazovMiestnosti">Názov miestnosti</string>
     <string name="hint_nazovBudovy">Názov budovy</string>
     <string name="hint_nazovPoschodie">Názov poschodia</string>
@@ -51,7 +51,7 @@
 
     <string name="date_format">%1$td.%1$tm.%1$tY %1$tHH:%1$tmm</string>
     <string name="hint_tovarLookup">Vyhľadať tovar</string>
-    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Pôvodný počet kusov v miestnosti:</string>
+    <string name="activity_pohyb_tovar_detail_povodnyPocetKusov">Aktuálny počet kusov:</string>
     <string name="MusiteZadatHodnotuViacNezNula">Musíte zadať hodnotu väčšiu ako 0</string>
     <string name="NajprvMusiteVybratMiestnostDo">Musíte najprv vybrať miestnosť \'Do\'.</string>
     <string name="VyberMiestnosti">Výber miestnosti</string>
@@ -63,8 +63,9 @@
     <string name="mnozstvo_aktual_limit">akt.množstvo/limit</string>
     <string name="zoznam_poschodi">Zoznam poschodí</string>
     <string name="zoznam_miestnosti">Zoznam miestností</string>
-    <string name="z_miestnosti">Z miestnosti</string>
-    <string name="do_miestnosti">Do miestnosti</string>
+    <string name="z_miestnosti">Odkiaľ</string>
+    <string name="do_miestnosti">Kam</string>
+    <string name="vMiestnosti">Kde</string>
     <string name="nedefinovanamiestnost">Nedefinovaná miestnosť</string>
     <string name="xxx">do_miestnosti</string>
     <string name="v_miestnosti">V miestnosti</string>
@@ -73,6 +74,12 @@
     <string name="mnozstvo">Množstvo</string>
     <string name="umiestnenie">Umiestnenie</string>
     <string name="settings">Nastavenie</string>
+
+    <string name="hint_nazovVozika">Názov vozíka</string>
+    <string name="activity_ZoznamVozikov">Zoznam vozikov</string>
+    <string name="navigation_drawer_voziky">Vozíky</string>
+    <string name="activity_DetailVozik">Detail vozíka</string>
+    <string name="lbl_error_hint_vozik_nazov">Názov vozíka musí byť vyplnený.</string>
 
 
 </resources>

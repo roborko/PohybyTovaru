@@ -30,12 +30,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     public static final String DATABASE_NAME = "pohybtovaru.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    public static final int DATABASE_VERSION = 14;
+    public static final int DATABASE_VERSION = 15;
     // ver 4 - pridany pohyb inventura
     // ver 6 - pridane skartovanie do pohybov
     // ver 7 - test - pozor, prepisana funkcia onUpgrade - nedropuje tabulky, len maze pohyby
     // ver 9 - doplnene tabulky budova  a poschodie
-    // ver 14 - pridany vozik
+    // ver 15 - pridany vozik
 
     private Dao<Budova, Integer> mBudovaDAO = null;
     private Dao<Poschodie, Integer> mPoschodieDAO = null;
@@ -79,11 +79,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
-        // toto odremuj
+
+
+        // odremuj co treba
         try {
+
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
 
-            TableUtils.dropTable(connectionSource, Tovar.class, true);
+    //        TableUtils.dropTable(connectionSource, Vozik.class, true);
+            TableUtils.createTable(connectionSource, Vozik.class);
+
+
+       /*     TableUtils.dropTable(connectionSource, Tovar.class, true);
             TableUtils.dropTable(connectionSource, Osoba.class, true);
             TableUtils.dropTable(connectionSource, Budova.class, true);
             TableUtils.dropTable(connectionSource, Poschodie.class, true);
@@ -94,7 +101,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Vozik.class, true);
 
             // after we drop the old databases, we create the new ones
-            onCreate(database, connectionSource);
+            onCreate(database, connectionSource); */
 
             // napln typy transakcii
             // DeafultValuesPopulator.PopulateDefaultValues(this.getApplicationContext());
@@ -203,8 +210,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public Dao<Vozik, Integer> VozikDAO() {
         try {
-            if (mOsobaDAO == null)
-                mOsobaDAO = getDao(Osoba.class);
+            if (mVozikDAO == null)
+                mVozikDAO = getDao(Vozik.class);
         } catch (SQLException ex) {
             Log.e("VOZIK_DAO", "Error occured while fetching DAO: " + ex.getMessage());
         }

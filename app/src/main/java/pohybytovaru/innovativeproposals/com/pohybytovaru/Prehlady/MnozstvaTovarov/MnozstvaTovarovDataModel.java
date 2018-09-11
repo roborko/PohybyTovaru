@@ -174,6 +174,41 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         return results;
     }
 
+    public Miestnost getMiestnostbyId(int miestnostID )  {
+
+        Miestnost myMiestnost = new Miestnost();
+        String sSQL;
+
+        if(miestnostID>0) {
+
+            sSQL = "SELECT Id, IdBudova, idPoschodie, KodMiestnosti, Nazov, JeSklad " +
+                    "FROM Miestnost " +
+                    "WHERE Id = " + miestnostID;
+
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            SQLiteStatement selectStmt = db.compileStatement(sSQL);
+
+            Cursor cursor = db.rawQuery(sSQL, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+
+                    myMiestnost.setId(cursor.getInt(0));
+                    myMiestnost.setIdBudova(cursor.getInt(1));
+                    myMiestnost.setIdPoschodie(cursor.getInt(2));
+                    myMiestnost.setKodMiestnosti(cursor.getString(3));
+                    myMiestnost.setNazov(cursor.getString(4));
+
+
+                } while (cursor.moveToNext()); // kurzor na dalsi zaznam
+            }
+            cursor.close();
+        }
+        return myMiestnost;
+    }
+
+
     public AktualneMnozstvo getAktualneMnozstvoTovaruZMiestnosti(int tovarId, int miestnostId )  {
 
         String sSQL;

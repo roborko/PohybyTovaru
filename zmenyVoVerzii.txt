@@ -69,10 +69,15 @@
 9.8.18
 - pridanie settings - nastavenie mailu na ktory budu posielane reporty
 
+11.9.18
+- moznost ukladat tovary na vozik
+
 
 UROB:
-mailom mnozstva uplne a po miestnostiach
-pridaj do miestnosti KodMiestnosti
+- z detailu pohybu sa da odist cez Esc bez upozornenia - oprav
+- v prehlade pohybov odstran desatinnu ciarku pri mnozstve
+- urob hlasenie chybajuceho mnozstva pre sklad, respektive to zaves na settings
+- dopln mnozstva tovarov podla miestnosti, umozni filtrovat
 
 vytvor pdf:
     https://developer.android.com/reference/android/print/pdf/PrintedPdfDocument

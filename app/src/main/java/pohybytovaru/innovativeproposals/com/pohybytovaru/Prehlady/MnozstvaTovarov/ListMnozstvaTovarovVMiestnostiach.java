@@ -59,9 +59,9 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Shared.ISimpleRowClickL
 
 public class ListMnozstvaTovarovVMiestnostiach extends AppCompatActivity  {
 
-    TextView tovarnazovTV;
-    TextView mnozstvoTV;
-    ImageView myObrazok;
+ //   TextView tovarnazovTV;
+ //   TextView mnozstvoTV;
+ //   ImageView myObrazok;
 
     List<MnozstvaTovaru > zoznamHM = null;
 

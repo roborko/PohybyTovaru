@@ -79,7 +79,6 @@
         <activity android:name=".Budovy.ListBudovaActivity_"
             android:label="@string/activity_ListBudov"
             android:parentActivityName=".MainActivity_">
-
         </activity>
 
         <activity android:name=".Budovy.DetailBudovaActivity_"
@@ -94,6 +93,16 @@
 
         <activity android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity_"
+            />
+
+
+        <activity
+            android:name=".Voziky.VozikListActivity_"
+            android:label="@string/activity_ZoznamVozikov"
+            android:parentActivityName=".MainActivity_" />
+
+        <activity android:name=".Voziky.VozikDetailActivity_"
+            android:label="@string/activity_DetailVozik"
             />
 
         <activity
