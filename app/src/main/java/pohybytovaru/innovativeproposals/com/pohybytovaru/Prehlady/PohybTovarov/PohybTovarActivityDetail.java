@@ -1,12 +1,15 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -58,7 +61,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovaro
 
 @EActivity(R.layout.activity_pohyb_tovar_detail)
 @OptionsMenu(R.menu.menu_save)
-public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseHelper>  { // implements View.OnClickListener
+public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseHelper> { // implements View.OnClickListener
 
     @OptionsMenuItem(R.id.menu_item_save)
     MenuItem menuSave;
@@ -182,32 +185,32 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             }
         } */
 
-        if(Globals.getInstance().getMyTransakciaId() > 0) {
+        if (Globals.getInstance().getMyTransakciaId() > 0) {
 
-         //   transactionType = dm.getTovar(Globals.getInstance().getMyTovarId());
+            //   transactionType = dm.getTovar(Globals.getInstance().getMyTovarId());
             int aa = transactionTypeSpinner.getAdapter().getCount();
-            TypTransakcie ss ;
-            for(int xx = 0;xx<aa;xx++) {
+            TypTransakcie ss;
+            for (int xx = 0; xx < aa; xx++) {
 
                 ss = (TypTransakcie) transactionTypeSpinner.getAdapter().getItem(xx);
-                if(ss.getId() == Globals.getInstance().getMyTransakciaId())
+                if (ss.getId() == Globals.getInstance().getMyTransakciaId())
 
                     transactionTypeSpinner.setSelection(xx);
             }
         }
 
 
-        if(Globals.getInstance().getMiestoFromId() > 0) { // sem
+        if (Globals.getInstance().getMiestoFromId() > 0) { // sem
 
             miestnostFrom = dm.getMiestnostbyId(Globals.getInstance().getMiestoFromId());
 
             String[] umiestnenie = dm.getKoordinatyMiestnosti(Globals.getInstance().getMiestoFromId());
 
             lbMiestnostFrom.setText(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
-          //  miestnostFromChanged(true, miestnostFrom);
+            //  miestnostFromChanged(true, miestnostFrom);
         }
 
-        if(Globals.getInstance().getMiestoToId() > 0) {
+        if (Globals.getInstance().getMiestoToId() > 0) {
 
             miestnostTo = dm.getMiestnostbyId(Globals.getInstance().getMiestoToId());
 
@@ -216,7 +219,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
             //miestnostToChanged(true, miestnostTo);
         }
-
 
 
     }
@@ -247,9 +249,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 // zisti id miestnostiFrom
                 String[] myUmiestnenieId = dm.getIdMiestnosti(umiestnenie[0], umiestnenie[1], umiestnenie[2]);
 
-                miestnostFrom.setIdBudova(Integer.parseInt( myUmiestnenieId[0]));
-                miestnostFrom.setIdPoschodie(Integer.parseInt( myUmiestnenieId[1]));
-                miestnostFrom.setId(Integer.parseInt( myUmiestnenieId[2]));
+                miestnostFrom.setIdBudova(Integer.parseInt(myUmiestnenieId[0]));
+                miestnostFrom.setIdPoschodie(Integer.parseInt(myUmiestnenieId[1]));
+                miestnostFrom.setId(Integer.parseInt(myUmiestnenieId[2]));
                 miestnostFrom.setNazov(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
                 miestnostFromChanged(true, miestnostFrom);
             }
@@ -265,9 +267,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                 // zisti id miestnostiFrom
                 String[] myUmiestnenieId = dm.getIdMiestnosti(umiestnenie[0], umiestnenie[1], umiestnenie[2]);
 
-                miestnostTo.setIdBudova(Integer.parseInt( myUmiestnenieId[0])); // tu to padlo ked som mal rozkliknute obe budovyu aj s poschodiami a klikol som na nejaku miestnost v druhej budove
-                miestnostTo.setIdPoschodie(Integer.parseInt( myUmiestnenieId[1]));
-                miestnostTo.setId(Integer.parseInt( myUmiestnenieId[2]));
+                miestnostTo.setIdBudova(Integer.parseInt(myUmiestnenieId[0])); // tu to padlo ked som mal rozkliknute obe budovyu aj s poschodiami a klikol som na nejaku miestnost v druhej budove
+                miestnostTo.setIdPoschodie(Integer.parseInt(myUmiestnenieId[1]));
+                miestnostTo.setId(Integer.parseInt(myUmiestnenieId[2]));
                 miestnostTo.setNazov(umiestnenie[0] + "-" + umiestnenie[1] + "-" + umiestnenie[2]);
 
                 miestnostToChanged(true, miestnostTo);
@@ -329,11 +331,11 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete))) {
             //try to retrieve aktualne mnozstvo v miestnosti TransactionType_Delete
 
-            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
+            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(), miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
 
-               // inputLayout_pocetKusov.setError("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() );
+                // inputLayout_pocetKusov.setError("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() );
                 showDialogFragment("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() + " kusov");
                 return;
             }
@@ -355,10 +357,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             }
 
             //try to retrieve aktualne mnozstvo v miestnosti
-            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
+            AktualneMnozstvo aktualneMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(), miestnostFrom.getId());
 
             if (aktualneMnozstvo == null || !canDeleteNumberOfItemsFromRoom(aktualneMnozstvo.getMnozstvo(), Double.valueOf(pocetKusov.getText().toString()))) {
-               // inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
+                // inputLayout_pocetKusov.setError("V miestnosti sa nachadza menej kusov !");
                 //inputLayout_pocetKusov.setError("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() );
                 showDialogFragment("V miestnosti " + miestnostFrom.getNazov() + " sa nenachádza " + pocetKusov.getText().toString() + " kusov");
                 return;
@@ -414,7 +416,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
                 if (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {
                     //nahrad
-                    miestnostToMnozstvo.setMnozstvo( passedInPohyb.getPocetKusov());
+                    miestnostToMnozstvo.setMnozstvo(passedInPohyb.getPocetKusov());
                 }
 
                 //update
@@ -434,10 +436,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
                     //aktualneMnozstvoDAO.update(miestnostFromMnozstvo);
                     dm.setMnozstvoTovaruVMiestnosti(selectedTovar.getId(), miestnostFrom.getId(), miestnostFromMnozstvo.getMnozstvo());
 
-                    if(miestnostToMnozstvo != null) // pri skartacii je to null
+                    if (miestnostToMnozstvo != null) // pri skartacii je to null
                     {
                         miestnostToMnozstvo.setMnozstvo(miestnostToMnozstvo.getMnozstvo() + passedInPohyb.getPocetKusov());
-                       // aktualneMnozstvoDAO.update(miestnostToMnozstvo);
+                        // aktualneMnozstvoDAO.update(miestnostToMnozstvo);
                         dm.setMnozstvoTovaruVMiestnosti(selectedTovar.getId(), miestnostTo.getId(), miestnostToMnozstvo.getMnozstvo());
                     }
                 }
@@ -475,7 +477,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             // vMiestnosti
         }
 
-        if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add)))  {
+        if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) {
             //add item to designated room
             layout_miestnostTo.setVisibility(View.VISIBLE); // pridal som
             layout_miestnostFrom.setVisibility(View.GONE);
@@ -484,7 +486,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         }
 
-        if ( typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {
+        if (typTransakcie.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) {
             //set quantity of item to designated room
             layout_miestnostTo.setVisibility(View.VISIBLE); // pridal som
             layout_miestnostFrom.setVisibility(View.GONE);
@@ -513,7 +515,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         String myTransakcia = transactionTypeSpinner.getSelectedItem().toString();
 
-        if (myTransakcia.equals(getString(R.string.TransactionType_Move)) || myTransakcia.equals(getString(R.string.TransactionType_Inventory ))
+        if (myTransakcia.equals(getString(R.string.TransactionType_Move)) || myTransakcia.equals(getString(R.string.TransactionType_Inventory))
                 || myTransakcia.equals(getString(R.string.TransactionType_Remove))) {
 
             list_miestnostFROM = dm.getMiestnostSInventarom(selectedTovar.getId());
@@ -545,14 +547,14 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         if (miestnostFrom.getId() == 0 || selectedTovar == null) return;
 
-        miestnostFromMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostFrom.getId());
+        miestnostFromMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(), miestnostFrom.getId());
 
         if (miestnostFromMnozstvo == null) {
             miestnostFrom_povodnyPocetKusovTovaru.setText("0");
         } else {
             // mnozstvo.setText(String.valueOf((int)mnozstvaTovaru.getMnozstvo()));
 
-            miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf((int)miestnostFromMnozstvo.getMnozstvo()));
+            miestnostFrom_povodnyPocetKusovTovaru.setText(String.valueOf((int) miestnostFromMnozstvo.getMnozstvo()));
 
         }
 
@@ -575,31 +577,31 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         // pokial prijem, intentura alebo skartovanie tak focusuj
         if ((transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) ||
                 (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) ||
-                        (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))) {
+                (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Delete)))) {
 
             pocetKusov.requestFocus();
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 //Hide:
-         //   imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            //   imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 //Show
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         }
     }
 
-  //  @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
- // @ItemSelect(R.id.lbl_MiestnostTo)
+    //  @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
+    // @ItemSelect(R.id.lbl_MiestnostTo)
     public void miestnostToChanged(boolean selected, Miestnost miestnost) {
         miestnostTo = miestnost;
 
         if (miestnostTo.getId() == 0 || selectedTovar == null) return;
 
-        miestnostToMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(),miestnostTo.getId());
+        miestnostToMnozstvo = dm.getAktualneMnozstvoTovaruZMiestnosti(selectedTovar.getId(), miestnostTo.getId());
 
         if (miestnostToMnozstvo == null) {
             miestnostTo_povodnyPocetKusovTovaru.setText("0");
         } else {
-            miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf((int)miestnostToMnozstvo.getMnozstvo()));
+            miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf((int) miestnostToMnozstvo.getMnozstvo()));
         }
 
         // tu vzdy focusuj
@@ -607,7 +609,7 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 //Hide:
-      //  imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        //  imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 //Show
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 
@@ -631,5 +633,73 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         MyAlertDialogFragmentOK editNameDialogFragment = MyAlertDialogFragmentOK.newInstance(Mymessage);
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("Aj tak ukončiť ?")
+                .setCancelable(false)
+                .setTitle("Údaje nebudú uložené")
+                .setPositiveButton("Áno", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Nie", null)
+                .show();
+    }
+
+    // odchytenie hw klavesy na odchod z Detailu
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) && event.getRepeatCount() == 0) {
+
+            AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+            alertbox.setTitle("Údaje nebudú uložené");
+            alertbox.setMessage("Aj tak ukončiť ? ");
+
+            alertbox.setPositiveButton("Áno",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            doExit();
+                        }
+                    });
+
+            alertbox.setNeutralButton("Nie",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                        }
+                    });
+
+            alertbox.show();
+
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
+    }
+
+    private void doExit() {
+        this.finish();
+    }
+
+
 
 }

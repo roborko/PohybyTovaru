@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -66,6 +67,10 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(dataAdapter);
+
+        //TextView text1 = (TextView) findViewById(R.id.mnozstvo);
+        // text1.setText(dataAdapter);
+
     }
 
     private void GetData() {
@@ -146,7 +151,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
             //add item to adapter
             dataAdapter.AddItem(item);
         } catch (SQLException ex) {
-            Log.e("LIST_MIESTNOSTI", "Cannot create new miestnost. " + ex.getMessage());
+            Log.e("LIST_MIESTNOSTI", "Cannot create new tovar. " + ex.getMessage());
         }
     }
 
@@ -159,7 +164,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
             this.dataAdapter.UpdateItem(item);
 
         } catch (SQLException ex) {
-            Log.e("LIST_MIESTNOSTI", "Cannot update miestnost. " + ex.getMessage());
+            Log.e("LIST_MIESTNOSTI", "Cannot update tovar. " + ex.getMessage());
         }
     }
 
@@ -265,6 +270,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
                 return false;
 
             case R.id.delete:
+                // todo daj kontrolu ci sa niekde pouziva
                 DeleteSelectedMiestnosti();
                 break;
         }

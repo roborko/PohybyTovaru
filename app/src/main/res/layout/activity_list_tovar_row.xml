@@ -65,17 +65,18 @@
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"/>
+
                 <TextView
-                    android:layout_toRightOf="@id/tovar_row_title"
+                    android:id="@+id/mnozstvo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{obj.minimalneMnozstvo + " ks"}'
-                    android:singleLine="true"
-
-                    android:textSize="16sp"
+                    android:layout_toRightOf="@id/tovar_row_title"
                     android:layout_weight="0"
+
+                    android:singleLine="true"
+                    android:text='@{obj.minimalneMnozstvo + " ks"}'
                     android:textColor="@{obj.selected ? @color/colorWhite : @color/colorBlack}"
-                    />
+                    android:textSize="16sp" />
 
             </LinearLayout>
             <TextView

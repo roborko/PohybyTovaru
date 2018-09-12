@@ -68,8 +68,7 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
             @SuppressLint("RestrictedApi")
             public void onItemClick(AdapterView<?> parent,
                                     View view, int position, long id) {
-             //   tovarnazovTV = (TextView) view.findViewById(R.id.tovarnazovTV);
-             //   mnozstvoTV = (TextView) view.findViewById(R.id.mnozstvoTV);
+
                 int tovarID = zoznamHM.get(position).getTovar();
 
                 Tovar myTovar = dm.getTovar(tovarID);
@@ -77,9 +76,6 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
                 Intent theIndent = new Intent(getApplication(),
                         //ViewInventarDetail.class);
                         ListMnozstvaTovarovVMiestnostiach.class);
-
-                //theIndent.putExtra("myId",TovarID);
-                //theIndent.putExtra("myTovarName",zoznamHM.get(position).getTovarName());
 
                 theIndent.putExtra("myTovar",myTovar);
 

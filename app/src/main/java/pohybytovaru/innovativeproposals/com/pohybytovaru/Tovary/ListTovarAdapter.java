@@ -2,6 +2,7 @@ package pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -38,4 +39,7 @@ public class ListTovarAdapter extends DataBoundAdapter<ActivityListTovarRowBindi
             return 0;
         }
     }
+
+
+
 }

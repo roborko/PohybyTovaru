@@ -172,22 +172,8 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
     @Click(R.id.fab_newMiestnost)
     public void AddNewItem() {
 
-        // kontrola ci existuje tovar a miestnost
-        // boolean ako = dm.jeZaznamVTabulke("miestnost");
-
         if(!kontrolaUdajov()) return;
 
-        /*
-        if(!dm.jeZaznamVTabulke("miestnost")) {
-            showDialogFragment("Definujte aspoň jednu miestnosť");
-            return;
-        }
-
-        if(!dm.jeZaznamVTabulke("tovar")) {
-            showDialogFragment("Definujte aspoň jednu miestnosť");
-            return;
-        }
-*/
         Intent intent = new Intent(this, PohybTovarActivityDetail_.class);
         startActivityForResult(intent, POHYB_REQUEST_CODE);
     }

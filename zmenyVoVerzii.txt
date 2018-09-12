@@ -72,10 +72,13 @@
 11.9.18
 - moznost ukladat tovary na vozik
 
+12.9.18
+- z detailu pohybu sa da odist cez Esc bez upozornenia
+
 
 UROB:
-- z detailu pohybu sa da odist cez Esc bez upozornenia - oprav
-- v prehlade pohybov odstran desatinnu ciarku pri mnozstve
+
+- v prehlade pohybov odstran desatinnu ciarku pri mnozstve - neskor
 - urob hlasenie chybajuceho mnozstva pre sklad, respektive to zaves na settings
 - dopln mnozstva tovarov podla miestnosti, umozni filtrovat
 
