@@ -101,7 +101,7 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
                 "JOIN tovar on tovar.id = aktualneMnozstvo.tovar " +
                 "join poschodie on poschodie.id = miestnost.idposchodie " +
                 "join budova on budova.id = miestnost.idbudova " +
-                "WHERE tovar.id = " + myId +
+                "WHERE tovar.id = " + myId + " and aktualneMnozstvo.mnozstvo > 0 " +
                 " ORDER BY miestnost.nazov COLLATE NOCASE"; // limit 100
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -387,6 +387,13 @@ public class MnozstvaTovarovDataModel extends SQLiteOpenHelper {
         }
         cursor.close();
         return myTovar;
+    }
+
+    public void deleteRowFromTable(String tableName, int myID) {
+
+        String sSQL = "delete FROM '" + tableName   + "' WHERE id = " + myID;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(sSQL);
     }
 
 

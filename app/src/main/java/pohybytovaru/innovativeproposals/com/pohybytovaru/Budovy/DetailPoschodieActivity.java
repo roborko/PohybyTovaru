@@ -101,7 +101,6 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
 
         }
 
-
         if(poschodie != null && poschodie.getId() > 0){
 
             txt_Poschodie.setText(poschodie.getNazov());
@@ -146,7 +145,7 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
     @OnActivityResult(MIESTNOST_REQUEST_CODE)
     void onResult(int resultCode, Intent data) {
 
-        // toto refreshuje list
+        // toto refreshuje list miestnosti na poschodi
 
         if (resultCode == Activity.RESULT_OK && data.hasExtra("EXTRA_MIESTNOST")) {
             //deserialize object
@@ -181,20 +180,6 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
         btn_Save.setVisibility(View.VISIBLE);
 
     }
-
-
-/*
-    @TextChange(R.id.txt_BudovaName)
-    void onBudovaTextChange(){
-
-        textInputLayout.setError(null);
-        // todo sem daj ukazanie buttonu save
-
-        boolean visible = (btn_Save.getVisibility() == View.VISIBLE);
-        btn_Save.setVisibility(View.VISIBLE);
-
-    }
-    */
 
     @Click(R.id.btn_Save)
     void SaveChanges() {
@@ -265,10 +250,15 @@ public class DetailPoschodieActivity extends AppCompatActivity implements ISimpl
         // stlacil som miestnost na poschodi  - je to zmenene?
         Intent intent = new Intent(this, DetailMiestnostiActivity_.class);
         //intent.putExtra("budovaID", budova.getId());
+
+        //intent.putExtra("budovaID", myBudovaId);
+        //intent.putExtra("poschodieID", myPoschodieId);
+
         intent.putExtra("EXTRA_MIESTNOST", item);
        // startActivityForResult(intent, MIESTNOST_REQUEST_CODE);
         //startActivity(intent);
         startActivityForResult(intent, MIESTNOST_REQUEST_CODE); // aby som to dokazal odchytit v OnActivityResult
+
 
     }
 

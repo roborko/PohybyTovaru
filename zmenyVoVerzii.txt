@@ -75,12 +75,17 @@
 12.9.18
 - z detailu pohybu sa da odist cez Esc bez upozornenia
 
+13.9.18
+- v prehlade pohybov odstranena desatinna ciarku pri mnozstve
+
+14.9.18
+- verzia pre dokumentaciu, odstranenie drobnych chyb
+
 
 UROB:
-
-- v prehlade pohybov odstran desatinnu ciarku pri mnozstve - neskor
 - urob hlasenie chybajuceho mnozstva pre sklad, respektive to zaves na settings
 - dopln mnozstva tovarov podla miestnosti, umozni filtrovat
+- import tovarov cez csv
 
 vytvor pdf:
     https://developer.android.com/reference/android/print/pdf/PrintedPdfDocument
@@ -113,7 +118,8 @@ https://stackoverflow.com/questions/16437673/onitemclicklistener-and-onclicklist
 
 
 ***********************************************************
-Test pohybov
+Test pohybov zakladny
+
 1. kuchyna prijem 5 ks              (kuchyna 5ks, obyvacka 0 ks, spolu 5 ks)      ok
 2. z kuchyne do obyvacka presun 2 ks    (kuchyna 3ks, obyvacka 2 ks, spolu 5 ks)  ok
 3. v kuchyni skartuj 1 ks           (kuchyna 2ks, obyvacka 2 ks, spolu 4 ks)      ok
@@ -125,7 +131,61 @@ Test pohybov
 
 daj na nulu cez inventuru a skartovanie? Hlaska ze sa dosiahla nula alebo kriticke mnozstvo na uvodnu obrazovku
 
+***********************************************************
+Test pohybov s vozikom
 
+1. Definuj minimalne mnozstva pre tovary: Lepidlo na papier 10ks, spinaci strojcek 2 ks, zosit A5 5 ks
+2. Do miestnosti definuj vozik, sklad 1 a sklad 2
+3. inventura sklad 1:  Lepidlo na papier 5 ks
+                       spinaci strojcek 1 ks
+
+                       Mnozstva tovarov : Lepidlo na papier 5 ks, spinaci strojcek 1 ks
+                       Chybajuci tovar : Lepidlo na papier 5/10, spinaci strojcek 1/2
+
+4. inventura sklad 2:  Lepidlo na papier 6 ks
+                       zosit A5 2 ks
+
+                       Mnozstva tovarov : Lepidlo na papier 11 ks, spinaci strojcek 1 ks, Zosit A5 2 ks
+                       Chybajuci tovar : spinaci strojcek 1/2, Zosit A5 2/5
+
+5. prijem na sklad1: spinaci strojcek 3 ks, Zosit A5 4 ks
+
+                       Mnozstva tovarov : Lepidlo na papier 11 ks, spinaci strojcek 4 ks, Zosit A5 6 ks
+                       Chybajuci tovar : 0
+
+                       Lepidlo na papier 11 ks : sklad 1 5 ks, sklad 2 6 ks
+                       spinaci strojcek 4 ks : sklad 1 4 ks
+                       Zosit A5 6 ks: sklad 1 4 ks, sklad 2 2 ks
+
+
+6. zo sklad 1 na vozik:  Lepidlo na papier 3 ks, Zosit A5 2 ks
+
+                       Mnozstva tovarov : Lepidlo na papier 11 ks, spinaci strojcek 4 ks, Zosit A5 6 ks
+                       Chybajuci tovar : Lepidlo na papier 8 / 10, Zosit A5 4/5
+
+                       Lepidlo na papier 11 ks : sklad 1 2 ks, sklad 2 6 ks, vozik 1 3 ks
+                       spinaci strojcek 4 ks : sklad 1 4 ks
+                       Zosit A5 6 ks: sklad 1 2 ks, sklad 2 2 ks, vozik 1 2 ks
+
+
+7. z vozik 1 do 210: Lepidlo na papier 2 ks, Zosit A5 1 ks
+
+                       Mnozstva tovarov : Lepidlo na papier 11 ks, spinaci strojcek 4 ks, Zosit A5 6 ks
+                       Chybajuci tovar : Lepidlo na papier 8 / 10, Zosit A5 4/5
+
+                       Lepidlo na papier 11 ks : sklad 1 2 ks, sklad 2 6 ks, vozik 1 1 ks, 210 2 ks
+                       spinaci strojcek 4 ks : sklad 1 4 ks
+                       Zosit A5 6 ks: sklad 1 2 ks, sklad 2 2 ks, vozik 1 1 ks, 210 1 ks
+
+
+8. z vozik 1 do 211: Lepidlo na papier 1 ks, Zosit A5 1 ks
+
+                       Mnozstva tovarov : Lepidlo na papier 11 ks, spinaci strojcek 4 ks, Zosit A5 6 ks
+                       Chybajuci tovar : Lepidlo na papier 8 / 10, Zosit A5 4/5
+
+                       Lepidlo na papier 11 ks : sklad 1 2 ks, sklad 2 6 ks, 210 2 ks, 211 1 ks
+                       spinaci strojcek 4 ks : sklad 1 4 ks
+                       Zosit A5 6 ks: sklad 1 2 ks, sklad 2 2 ks, 210 1 ks, 211 1 ks
 
 
 

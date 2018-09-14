@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.j256.ormlite.dao.Dao;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,12 +24,14 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Constants;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Pohyb;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.Tovar;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovDataModel;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
@@ -99,6 +104,26 @@ public class ListMnozstvaTovarovActivity  extends AppCompatActivity  {
             }
         });
     }
+
+    /*
+    //uzivatel stlacil dlho nejaku polozku
+    public boolean onItemLongClick(View view, Pohyb item) {
+
+        int position = (int) view.getTag();
+
+
+        /*dataAdapter.toggleItemSelection(position);
+        selectedListItems = dataAdapter.getSelectedItemsCount();
+        if (selectedListItems > 0) {
+            getSupportActionBar().setTitle(String.valueOf(dataAdapter.getSelectedItemsCount()) + " " + getResources().getString(R.string.action_hint_selecteditems));
+        } else {
+            getSupportActionBar().setTitle(R.string.activity_ListMiestnosti);
+        }
+
+        this.onPrepareOptionsMenu(savedMenu);
+        return true;
+    }
+*/
 
     private void ExportUdajov() throws IOException {
 

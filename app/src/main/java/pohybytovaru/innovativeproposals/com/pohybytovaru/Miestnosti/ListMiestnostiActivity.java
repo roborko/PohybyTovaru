@@ -91,7 +91,7 @@ public class ListMiestnostiActivity extends OrmLiteAppCompatActivity<DatabaseHel
             //deserialize object
             Miestnost result = data.getParcelableExtra("EXTRA_MIESTNOST");
 
-            //TODO Add new miestnost / Update already existing object
+            // add new miestnost / Update already existing object
             if (result.getId() == 0)
                 AddNewItem(result);
             else

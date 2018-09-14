@@ -71,7 +71,7 @@ public class DeafultValuesPopulator {
                 transakcieDao.create(add);
                 transakcieDao.create(move);
 //                transakcieDao.create(remove);
-                transakcieDao.create(delete);  // TODO preco nie je delete ?
+                transakcieDao.create(delete);
                 transakcieDao.create(inventory);
             }
         } catch (SQLException ex) {

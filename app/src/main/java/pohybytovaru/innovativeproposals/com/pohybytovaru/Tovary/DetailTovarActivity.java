@@ -52,7 +52,7 @@ public class DetailTovarActivity extends AppCompatActivity {
 
         if(tovar != null){
             txt_TovarName.setText(tovar.getNazov());
-            txt_MinMnozstvo.setText(String.valueOf(tovar.getMinimalneMnozstvo()));
+            txt_MinMnozstvo.setText(String.valueOf(tovar.getMinimalneMnozstvo()).split("\\.")[0]);
             txt_Poznamka.setText(tovar.getPoznamka());
             txt_KodTovaru.setText(tovar.getKodTovaru());
             tovarImage.setImageBitmap(ImageHelpers.convertBytesToBitmap(tovar.getFotografia()));

@@ -27,6 +27,10 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.R;
 
 
 public class MnozstvaTovarovAdapter extends ArrayAdapter<MnozstvaTovaru> {
+//public class MnozstvaTovarovAdapter extends DataBoundAdapter<MnozstvaTovaru> {
+
+    // public class PohybTovarAdapter extends DataBoundAdapter<ActivityPohybTovarRowBinding, Pohyb> {
+
 
     Context context;
     int layoutResourceId;

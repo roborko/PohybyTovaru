@@ -23,6 +23,6 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pohyby ver. 1.1 / 11.09.2018" />
+        android:text="Pohyby ver. 1.1 / 14.09.2018" />
 
 </LinearLayout>

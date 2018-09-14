@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Pohyby tovaru</string>
     <string name="activity_ListMiestnosti">Zoznam miestnosti</string>
-    <string name="activity_ListBudov">Zoznam budov a vozíkov</string>
-    <string name="activity_DetailMiestnosti">Detail Miestnosti</string>
+    <string name="activity_ListBudov">Budovy a prepravky</string>
+    <string name="activity_DetailMiestnosti">Miestnosť/prepravka</string>
     <string name="activity_DetailPoschodie">Detail Poschodia</string>
-    <string name="activity_DetailBudova">Detail Budovy</string>
+    <string name="activity_DetailBudova">Budova/Prepravka</string>
 
     <string name="action_delete">Vymazať</string>
     <string name="action_search">Hľadaj</string>
@@ -12,13 +12,13 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_miestnosti">Miestnosti a vozíky</string>
-    <string name="hint_nazovMiestnosti">Názov miestnosti</string>
-    <string name="hint_nazovBudovy">Názov budovy</string>
-    <string name="hint_nazovPoschodie">Názov poschodia</string>
+    <string name="navigation_drawer_miestnosti">Budovy a prepravky</string>
+    <string name="hint_nazovMiestnosti">Názov miestnosti/prepravky</string>
+    <string name="hint_nazovBudovy">Názov budovy/prepravky</string>
+    <string name="hint_nazovPoschodie">Názov poschodia / kategórie prepraviek</string>
     <string name="lbl_dialog_cancel">Zrušiť</string>
     <string name="lbl_dialog_save">Uložiť</string>
-    <string name="bool_miestnost_distinguisher">Je miestnosť sklad</string>
+    <string name="bool_miestnost_distinguisher">Je to sklad ? </string>
     <string name="lbl_duplicate_miestnost">Miestnosť s rovnakými hodnotami už existuje.</string>
     <string name="lbl_duplicate_poschodie">Poschodie s rovnakým menom už existuje.</string>
     <string name="lbl_duplicate_budova">Budova s rovnakým menom už existuje.</string>
@@ -58,11 +58,11 @@
     <string name="AktualnePoctyTovarov">Množstvá tovarov</string>
     <string name="krok1VyberTypuTransakcie">Krok 1 - Vyber typu transakcie</string>
     <string name="krok2VyberInventara">Krok 2 - Výber tovaru</string>
-    <string name="PrekroceneLimity">Chýbajúce množstvá</string>
+    <string name="PrekroceneLimity">Chýbajúci tovar</string>
     <string name="Prehlad">Prehľady</string>
     <string name="mnozstvo_aktual_limit">akt.množstvo/limit</string>
-    <string name="zoznam_poschodi">Zoznam poschodí</string>
-    <string name="zoznam_miestnosti">Zoznam miestností</string>
+    <string name="zoznam_poschodi">Poschodia/kategórie prepraviek </string>
+    <string name="zoznam_miestnosti">Zoznam miestností / prepraviek</string>
     <string name="z_miestnosti">Odkiaľ</string>
     <string name="do_miestnosti">Kam</string>
     <string name="vMiestnosti">Kde</string>

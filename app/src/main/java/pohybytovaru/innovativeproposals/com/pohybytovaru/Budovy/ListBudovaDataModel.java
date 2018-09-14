@@ -131,7 +131,7 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
         ArrayList<Miestnost> results = new ArrayList<>();
         String sSQL;
 
-        sSQL = "SELECT id, IDBUDOVA, IDPOSCHODIE, NAZOV  " +
+        sSQL = "SELECT id, IDBUDOVA, IDPOSCHODIE, NAZOV, JeSklad  " +
                 "FROM Miestnost " +
                 "WHERE IDPOSCHODIE = " + poschodieID +
                 " ORDER BY NAZOV COLLATE NOCASE"; // zohladnuje radenie podla slovenciny
@@ -153,8 +153,9 @@ public class ListBudovaDataModel extends SQLiteOpenHelper {
                 newItem.setIdBudova(cursor.getInt(1));
                 newItem.setIdPoschodie(cursor.getInt(2));
                 newItem.setNazov(cursor.getString(3));
-                // newItem.setMnozstvo(cursor.getDouble(3));
-                // newItem.setLimitne_mnozstvo(cursor.getDouble(4));
+                if(cursor.getInt(4) == 1)
+                    newItem.setJeSklad(true);
+
                 results.add(newItem);
 
             } while (cursor.moveToNext()); // kurzor na dalsi zaznam

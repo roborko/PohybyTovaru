@@ -1,11 +1,14 @@
 package pohybytovaru.innovativeproposals.com.pohybytovaru;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -118,6 +121,43 @@ public class SettingsActivity extends AppCompatActivity  {
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 */
+
+    // odchytenie hw klavesy na odchod z Activity
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) && event.getRepeatCount() == 0) {
+
+            AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+            alertbox.setTitle("Údaje nebudú uložené");
+            alertbox.setMessage("Aj tak ukončiť ? ");
+
+            alertbox.setPositiveButton("Áno",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            doExit();
+                        }
+                    });
+
+            alertbox.setNeutralButton("Nie",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                        }
+                    });
+
+            alertbox.show();
+
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
+    }
+
+    private void doExit() {
+        this.finish();
+    }
+
+
 
     @Override
     protected void onDestroy() {

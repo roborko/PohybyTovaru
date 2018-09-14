@@ -111,7 +111,7 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
             //deserialize object
             Pohyb result = data.getParcelableExtra("EXTRA_MIESTNOST");
 
-            //TODO Add new miestnost / Update already existing object
+            // Add new miestnost / Update already existing object
             if (result.getId() == 0)
                 AddNewItem(result);
             else
@@ -338,21 +338,11 @@ public class PohybTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
                     return true;
                 }
                 //regular back button, user wants to navigate back
-                return false; // TODO nemoze mat 2 rozne stave
-
-           /* case R.id.export:
-                try {
-                    ExportSelectedPohyby();
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                    showDialogFragment(e.toString());
-
-                }
-                break; */
+                return false; //  nemoze mat 2 rozne stavy
 
             case R.id.delete:
-           //     DeleteSelectedPohyby(); // zakazane, opravit cez inventuru !!!
+                // TODO zaremuj pre release
+             //   DeleteSelectedPohyby(); // povolne len cez debugovanie zakazane, opravit cez inventuru !!!
                 break;
 
         }

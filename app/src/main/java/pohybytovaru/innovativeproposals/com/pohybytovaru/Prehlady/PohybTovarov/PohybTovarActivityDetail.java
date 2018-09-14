@@ -574,6 +574,10 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         miestnostAdapterTO.clear();
         miestnostAdapterTO.addAll(list_miestnostTO);
 
+        /*
+
+xx
+
         // pokial prijem, intentura alebo skartovanie tak focusuj
         if ((transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) ||
                 (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) ||
@@ -586,7 +590,9 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             //   imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 //Show
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-        }
+
+
+        } */
     }
 
     //  @ItemSelect(R.id.activity_pohyb_tovar_miestnostToSpinner)
@@ -604,14 +610,16 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
             miestnostTo_povodnyPocetKusovTovaru.setText(String.valueOf((int) miestnostToMnozstvo.getMnozstvo()));
         }
 
-        // tu vzdy focusuj
+        // tu vzdy focusuj - zavadzia
+
+        /*
         pocetKusov.requestFocus();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 //Hide:
         //  imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 //Show
-        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0); */
 
     }
 

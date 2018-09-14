@@ -53,7 +53,7 @@ join budova on budova.id = miestnost.idbudova
 
     public phoneExpandableListAdapter(ThreeLevelExpandableListView threelevelexpandablelistview,
                                       ExpandableListView expandableListView, String[][][][] mietnostiList, Context myContext, Activity activity) {
-        // TODO Auto-generated constructor stub
+
         this.threelevelexpandablelistview = threelevelexpandablelistview;
         this.expandableListView = expandableListView;
         this.mietnostiList = mietnostiList;
@@ -65,25 +65,21 @@ join budova on budova.id = miestnost.idbudova
 
     @Override
     public int getGroupCount() {
-        // TODO Auto-generated method stub
 
        // int aa = mietnostiList.length; // 2 = pocet riadkov pod urovnou na ktoru sa kliklo
-
         return mietnostiList.length;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        // TODO Auto-generated method stub
+
         return 1;
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        // TODO Auto-generated method stub
 
         //Object xx = mietnostiList[groupPosition][0][0][0];  // obsah riadku 1. urovne, cize nazov
-
         return mietnostiList[groupPosition][0][0][0];
     }
 
@@ -115,7 +111,7 @@ join budova on budova.id = miestnost.idbudova
 
     @Override
     public boolean hasStableIds() {
-        // TODO Auto-generated method stub
+
         return true;
     }
 
@@ -241,7 +237,7 @@ join budova on budova.id = miestnost.idbudova
                 if(mietnostiList[groupPosition][i][n][1] != null ) {
 
                     child.put(POSCHODIE, mietnostiList[groupPosition][i][n][0]);
-                    child.put(MIESTNOST, mietnostiList[groupPosition][i][n][1]);  // todo tu by som pridal dalsiu layout
+                    child.put(MIESTNOST, mietnostiList[groupPosition][i][n][1]);  //  tu by som mohol pridat dalsiu layout
                     secList.add(child);
                 }
             }
@@ -296,7 +292,7 @@ join budova on budova.id = miestnost.idbudova
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        // TODO Auto-generated method stub
+
         return true;
     }
     public void onGroupCollapsed (int groupPosition) {}

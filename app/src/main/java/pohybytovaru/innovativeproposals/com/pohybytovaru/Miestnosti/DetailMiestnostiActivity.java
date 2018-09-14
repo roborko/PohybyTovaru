@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.Switch;
 import org.androidannotations.annotations.AfterViews;
@@ -55,13 +56,32 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
             myPoschodieId = getIntent().getIntExtra("poschodieID",0);
         }
 
+        //this.
+
     }
 
     @AfterViews
     void ProcessAfterViews() {
+
+        /*
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); */
+       // getSupportActionBar().setTitle("xx");
+
         if(miestnost != null && miestnost.getId() > 0){
+
             txt_Miestnost.setText(miestnost.getNazov());
+            //boolean aa = jeSklad.isChecked();
+
+            //boolean ab = miestnost.isJeSklad();
+
             jeSklad.setChecked(miestnost.isJeSklad());
+        //    aa = jeSklad.isChecked();
+          //  aa = miestnost.isJeSklad();
+
+            // resultMiestnost.setJeSklad(jeSklad.isChecked());
+
         }
     }
 
@@ -93,7 +113,8 @@ public class DetailMiestnostiActivity extends AppCompatActivity {
         resultMiestnost.setNazov(itemName);
         resultMiestnost.setJeSklad(jeSklad.isChecked());
 
-        // ? long ako =  dm.ulozMiestnost(resultMiestnost);
+        // ulozenie do databazy
+        long ako =  dm.ulozMiestnost(resultMiestnost);
 
         Intent intent = new Intent();
         intent.putExtra("EXTRA_MIESTNOST", resultMiestnost);

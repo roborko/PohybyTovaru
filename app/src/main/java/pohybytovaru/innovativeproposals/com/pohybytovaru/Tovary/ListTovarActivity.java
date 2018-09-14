@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,6 +72,8 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         //TextView text1 = (TextView) findViewById(R.id.mnozstvo);
         // text1.setText(dataAdapter);
 
+      //  afterTextChanged
+
     }
 
     private void GetData() {
@@ -126,11 +129,13 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         startActivityForResult(intent, TOVAR_REQUEST_CODE, options.toBundle());
     }
 
-    //uzivatel stlacil dlho nejaku polozku
+    //uzivatel stlacil dlho nejaku polozku - zakazane
+
     @Override
     public boolean onItemLongClick(View view, Tovar item) {
-        int position = (int) view.getTag();
 
+        /*
+        int position = (int) view.getTag();
         dataAdapter.toggleItemSelection(position);
         selectedListItems = dataAdapter.getSelectedItemsCount();
         if (selectedListItems > 0) {
@@ -140,7 +145,9 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
         }
 
         this.onPrepareOptionsMenu(savedMenu);
-        return true;
+        return true; */
+
+        return false;
     }
 
     private void AddNewItem(Tovar item) {
@@ -270,8 +277,8 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
                 return false;
 
             case R.id.delete:
-                // todo daj kontrolu ci sa niekde pouziva
-                DeleteSelectedMiestnosti();
+                // todo pre release zaremuj
+              //  DeleteSelectedMiestnosti();
                 break;
         }
 
