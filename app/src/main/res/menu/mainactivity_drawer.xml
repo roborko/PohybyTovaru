@@ -47,6 +47,12 @@
                     android:icon="@drawable/ic_settings"
                     android:title="@string/settings" />
 
+                <item
+                    android:id="@+id/nav_import"
+                    android:icon="@drawable/ic_download"
+                    android:title="@string/importTovarov" />
+
+
             </menu>
         </item>
     </group>

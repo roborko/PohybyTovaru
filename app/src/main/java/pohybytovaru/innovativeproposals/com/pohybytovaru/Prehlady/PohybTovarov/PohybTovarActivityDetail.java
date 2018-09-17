@@ -577,7 +577,6 @@ public class PohybTovarActivityDetail extends OrmLiteAppCompatActivity<DatabaseH
         /*
 
 xx
-
         // pokial prijem, intentura alebo skartovanie tak focusuj
         if ((transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Add))) ||
                 (transactionType.getINTERNAL_NAME().equals(getString(R.string.TransactionType_Inventory))) ||

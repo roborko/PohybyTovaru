@@ -151,6 +151,7 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
         idVybratejBudovy = item.getId();
       //  sendEmail();
 
+        /* zakazame
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         // set title
         alertDialogBuilder.setTitle("Skutočne chcete zmazať budovu ?");
@@ -183,6 +184,7 @@ public class ListBudovaActivity extends OrmLiteAppCompatActivity<DatabaseHelper>
 
         // show it
         alertDialog.show();
+        */
 
         return true;
     }

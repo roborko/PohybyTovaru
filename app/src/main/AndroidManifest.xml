@@ -95,6 +95,12 @@
             android:parentActivityName=".MainActivity_"
             />
 
+        <activity android:name=".Tovary.ImportTovarov"
+            android:parentActivityName=".MainActivity_"
+            android:label="@string/importTovarov"
+            />
+
+
 
         <activity
             android:name=".Voziky.VozikListActivity_"

@@ -19,12 +19,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ListBudovaActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ListBudovaActivity_;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Budovy.ThreeLevelExpandableListView;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Database.DeafultValuesPopulator;
 
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Miestnosti.ListMiestnostiActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Models.MnozstvaTovaru;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovActivity;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MinimalneMnozstva.MinimalneMnozstvaTovarovAdapter;
@@ -33,7 +30,7 @@ import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovaro
 //import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.MnozstvaTovarov.ListMnozstvaTovarovActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Prehlady.PohybTovarov.PohybTovarActivity_;
 import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ListTovarActivity_;
-import pohybytovaru.innovativeproposals.com.pohybytovaru.Voziky.VozikListActivity_;
+import pohybytovaru.innovativeproposals.com.pohybytovaru.Tovary.ImportTovarov;
 
 
 @EActivity
@@ -135,6 +132,11 @@ potialto
 
             case R.id.nav_settings:
                 intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_import:
+                intent = new Intent(this, ImportTovarov.class);
                 startActivity(intent);
                 break;
         }

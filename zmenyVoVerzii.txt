@@ -81,11 +81,13 @@
 14.9.18
 - verzia pre dokumentaciu, odstranenie drobnych chyb
 
+17.9.18
+- import tovarov z cloudu, z fixnej https adresy
+
 
 UROB:
 - urob hlasenie chybajuceho mnozstva pre sklad, respektive to zaves na settings
 - dopln mnozstva tovarov podla miestnosti, umozni filtrovat
-- import tovarov cez csv
 
 vytvor pdf:
     https://developer.android.com/reference/android/print/pdf/PrintedPdfDocument

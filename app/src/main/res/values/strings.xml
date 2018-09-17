@@ -80,6 +80,7 @@
     <string name="navigation_drawer_voziky">Vozíky</string>
     <string name="activity_DetailVozik">Detail vozíka</string>
     <string name="lbl_error_hint_vozik_nazov">Názov vozíka musí byť vyplnený.</string>
+    <string name="importTovarov">Import tovarov</string>
 
 
 </resources>

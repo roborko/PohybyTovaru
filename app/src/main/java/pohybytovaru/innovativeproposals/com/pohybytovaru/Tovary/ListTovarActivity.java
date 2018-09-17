@@ -119,6 +119,7 @@ public class ListTovarActivity extends OrmLiteAppCompatActivity<DatabaseHelper> 
 
     @SuppressLint("RestrictedApi")
     public void onItemClick(View view, Tovar item) {
+
         Intent intent = new Intent(this, DetailTovarActivity_.class);
         intent.putExtra(CODE_INTENT_TOVAR, item);
 

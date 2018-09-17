@@ -108,6 +108,7 @@ public class DetailTovarActivity extends AppCompatActivity {
 
         if (!txt_MinMnozstvo.getText().toString().equalsIgnoreCase(""))
             tovar.setMinimalneMnozstvo(Double.valueOf(txt_MinMnozstvo.getText().toString()));
+
         tovar.setPoznamka(txt_Poznamka.getText().toString());
         tovar.setKodTovaru(txt_KodTovaru.getText().toString());
 

@@ -107,7 +107,6 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
         SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
         String format = s.format(new Date());
 
-
         File filePath = new File(String.valueOf(getBaseContext().getFilesDir()));
         File yourFile = new File(filePath + File.separator + "chybajuceMnozstva.csv");
         yourFile.createNewFile(); // vytvorenie !!!
@@ -140,8 +139,6 @@ public class MinimalneMnozstvaTovarovActivity extends AppCompatActivity {
         }
 
         writer.close();
-
-
 
       //zle  Uri uri = FileProvider.getUriForFile(this, "${applicationId}", new File(yourFile.toString()));
        Uri uri = FileProvider.getUriForFile(this, "pohybytovaru.innovativeproposals.com.FileProvider", yourFile);

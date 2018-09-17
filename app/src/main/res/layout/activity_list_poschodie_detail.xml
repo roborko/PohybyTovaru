@@ -54,12 +54,13 @@
             android:id="@+id/btn_Save"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:textSize="20sp"
             android:layout_below="@id/inputLayout_PoschodieName"
-            android:layout_height="wrap_content"
+
             android:text="@string/lbl_dialog_save" />
 
         <TextView
